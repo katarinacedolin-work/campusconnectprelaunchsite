@@ -23,11 +23,13 @@
     }
 
     html {
+      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
+      overflow-x: hidden;
       background: var(--paper);
       color: var(--ink);
       font-family: Inter, Arial, sans-serif;
@@ -51,11 +53,13 @@
     .shell {
       width: min(1180px, calc(100% - 40px));
       margin: auto;
+      container-type: inline-size;
     }
 
-    nav {
+    header {
       display: flex;
       align-items: center;
+      gap: 16px;
       padding: 18px 0 10px;
     }
 
@@ -71,16 +75,37 @@
       display: block;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      margin-left: auto;
-      margin-right: 32px;
-      font-size: 13px;
+    header .eyebrow {
+      flex-shrink: 1;
+      min-width: 0;
     }
 
-    .nav-links a:hover {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .instagram {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e8efff;
       color: var(--blue);
+    }
+
+    .instagram:hover {
+      background: var(--blue);
+      color: white;
+    }
+
+    .instagram svg {
+      width: 18px;
+      height: 18px;
     }
 
     .cta,
@@ -107,10 +132,14 @@
     .hero {
       min-height: 520px;
       display: grid;
-      grid-template-columns: 1.03fr 0.97fr;
+      grid-template-columns: minmax(0, 1.03fr) minmax(0, 0.97fr);
       align-items: center;
       gap: 30px;
-      padding: 32px 0 55px;
+      padding: 32px 0 12px;
+    }
+
+    .hero > div {
+      min-width: 0;
     }
 
     .eyebrow {
@@ -127,7 +156,7 @@
 
     h1 {
       max-width: 610px;
-      margin: 20px 0 10px;
+      margin: 0 0 10px;
       font-size: clamp(46px, 6vw, 76px);
       line-height: 0.98;
       letter-spacing: -5px;
@@ -145,16 +174,33 @@
       font-size: 15px;
     }
 
+    .hero-action {
+      grid-column: 1 / -1;
+      margin-top: 32px;
+    }
+
     .hero .cta {
-      margin-top: 16px;
-      padding: 15px 25px;
+      display: block;
+      position: relative;
+      z-index: 5;
+      width: calc(100vw - 48px);
+      max-width: none;
+      margin-top: 0;
+      margin-left: calc(24px - (100vw - 100cqw) / 2);
+      padding: 16px 28px;
+      border-radius: 12px;
+      text-align: center;
     }
 
     .microcopy {
       display: block;
-      margin-top: 12px;
-      color: #72798a;
-      font-size: 10px;
+      width: calc(100vw - 48px);
+      margin-top: 10px;
+      margin-left: calc(24px - (100vw - 100cqw) / 2);
+      color: #5c6474;
+      font-size: 13px;
+      line-height: 1.4;
+      text-align: center;
     }
 
     .hero-art {
@@ -306,6 +352,7 @@
       display: flex;
       align-items: center;
       gap: 18px;
+      margin-top: 36px;
       color: #626a7b;
       font-size: 11px;
       text-align: center;
@@ -320,11 +367,11 @@
     }
 
     .section {
-      padding: 58px 0;
+      padding: 36px 0 58px;
     }
 
     .section h2 {
-      margin-bottom: 8px;
+      margin: 0 0 8px;
       font-size: clamp(36px, 4vw, 54px);
       line-height: 1;
       letter-spacing: -3px;
@@ -356,7 +403,12 @@
       height: 54px;
       margin-bottom: 14px;
       border-radius: 50%;
-      font-size: 28px;
+      color: var(--ink);
+    }
+
+    .icon svg {
+      width: 26px;
+      height: 26px;
     }
 
     .purple {
@@ -382,88 +434,6 @@
       font-size: 12px;
     }
 
-    .waitlist {
-      position: relative;
-      overflow: hidden;
-      margin: 3px 0 10px;
-      padding: 27px 7.5%;
-      border-radius: 15px;
-      background: var(--blue);
-      color: white;
-    }
-
-    .waitlist::before,
-    .waitlist::after {
-      position: absolute;
-      color: rgba(255, 255, 255, 0.22);
-      font-size: 140px;
-      font-weight: 900;
-      line-height: 0.6;
-    }
-
-    .waitlist::before {
-      content: "2";
-      top: 12px;
-      left: -9px;
-    }
-
-    .waitlist::after {
-      content: "6";
-      right: 9px;
-      bottom: -9px;
-    }
-
-    .waitlist-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-
-    .waitlist h2 {
-      margin-bottom: 2px;
-      font-size: 32px;
-      letter-spacing: -2px;
-    }
-
-    .waitlist p {
-      margin-bottom: 14px;
-      color: #dce5ff;
-      font-size: 12px;
-    }
-
-    .form {
-      display: flex;
-      max-width: 570px;
-      gap: 8px;
-      margin: auto;
-    }
-
-    .form input {
-      min-width: 0;
-      flex: 1;
-      padding: 13px 14px;
-      border: 0;
-      border-radius: 5px;
-      outline: none;
-    }
-
-    .form button {
-      padding: 13px 22px;
-      border: 0;
-      border-radius: 5px;
-      background: var(--yellow);
-      color: var(--ink);
-      font-weight: 900;
-    }
-
-    .success {
-      display: none;
-      margin-top: 12px;
-      color: var(--yellow);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
     footer {
       display: flex;
       align-items: center;
@@ -483,12 +453,8 @@
         width: min(100% - 28px, 580px);
       }
 
-      .nav-links {
-        display: none;
-      }
-
       .hero {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 8px;
         padding-top: 40px;
       }
@@ -513,14 +479,6 @@
         min-height: 135px;
       }
 
-      .form {
-        flex-direction: column;
-      }
-
-      .form button {
-        width: 100%;
-      }
-
       footer {
         flex-wrap: wrap;
         gap: 10px;
@@ -531,27 +489,28 @@
 
 <body>
   <div class="shell">
-    <nav aria-label="Main navigation">
+    <header>
       <a class="logo" href="#top">
         <span>campus</span>
         <span>connect</span>
       </a>
 
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#for-sellers">For sellers</a>
-      </div>
+      <div class="header-actions">
+        <span class="eyebrow">Launching first at SDSU</span>
 
-      <button class="cta sheet-link" type="button">
-        Join the waitlist
-      </button>
-    </nav>
+        <a class="instagram" href="https://www.instagram.com/campusconnectsdsu?mdxt=enpuaXhsNmdzNjRy&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Campus Connect on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </a>
+      </div>
+    </header>
 
     <main id="top">
       <section class="hero">
         <div>
-          <span class="eyebrow">Launching first at SDSU</span>
-
           <h1>
             Your campus.
             <span class="blue">Your marketplace.</span>
@@ -561,14 +520,6 @@
             Buy and sell secondhand finds, shop student-made goods,
             and book services from students at your school.
           </p>
-
-          <button class="cta sheet-link" type="button">
-            Join the launch waitlist
-          </button>
-
-          <small class="microcopy">
-            Get an email when Campus Connect launches at SDSU.
-          </small>
         </div>
 
         <div class="hero-art" aria-hidden="true">
@@ -594,11 +545,17 @@
           <div class="spark one">⌁</div>
           <div class="spark two">⌁</div>
         </div>
-      </section>
 
-      <div class="rule">
-        <span>By students. For students. Connected by campus.</span>
-      </div>
+        <div class="hero-action">
+          <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfgQsJle7a-6mZD_Ugvd4fux4w8FbCeEUx9kQ9jjQpibM8H-w/viewform">
+            Join the launch waitlist
+          </a>
+
+          <small class="microcopy">
+            Get an email when Campus Connect launches at SDSU.
+          </small>
+        </div>
+      </section>
 
       <section class="section" id="about">
         <h2>Big ideas start on campus.</h2>
@@ -609,48 +566,45 @@
 
         <div class="cards" id="for-sellers">
           <article class="card">
-            <div class="icon purple">⌂</div>
+            <div class="icon purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="4.5" width="17" height="16" rx="2"></rect>
+                <path d="M8 3v3M16 3v3M3.5 9.5h17"></path>
+                <path d="M8.6 14.4l2.1 2.1 4.7-4.7"></path>
+              </svg>
+            </div>
             <h3>Offer a service</h3>
             <p>Tutoring, photography, beauty and more.</p>
           </article>
 
           <article class="card">
-            <div class="icon pink">♧</div>
+            <div class="icon pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10.2 5.6 4.5h12.8L20 10.2"></path>
+                <path d="M4 10.2h16V20H4z"></path>
+                <path d="M10 20v-5.5h4V20"></path>
+              </svg>
+            </div>
             <h3>Sell what you make</h3>
             <p>Give your creations a student storefront.</p>
           </article>
 
           <article class="card">
-            <div class="icon gold">▤</div>
+            <div class="icon gold" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16.2 7H10a4.5 4.5 0 0 0-4.5 4.5"></path>
+                <path d="M13.6 4.2 16.6 7 13.6 9.8"></path>
+                <path d="M7.8 17H14a4.5 4.5 0 0 0 4.5-4.5"></path>
+                <path d="M10.4 19.8 7.4 17l3-2.8"></path>
+              </svg>
+            </div>
             <h3>Pass it on</h3>
             <p>Find a new home for clothes, books and furniture.</p>
           </article>
         </div>
-      </section>
 
-      <section class="waitlist">
-        <div class="waitlist-content">
-          <h2>Your campus is next.</h2>
-
-          <p>
-            Join the waitlist to hear when Campus Connect opens at SDSU.
-          </p>
-
-          <form class="form" id="waitlist-form">
-            <input
-              id="email"
-              type="email"
-              placeholder="Your email address"
-              aria-label="Your email address"
-              required
-            />
-
-            <button type="submit">Join the waitlist</button>
-          </form>
-
-          <div class="success" id="success" role="status">
-            You're on the list — we'll be in touch.
-          </div>
+        <div class="rule">
+          <span>By students. For students. Connected by campus.</span>
         </div>
       </section>
     </main>
@@ -661,37 +615,8 @@
         <span>connect</span>
       </a>
 
-      <span>Built by students at SDSU.</span>
       <a href="#top">Privacy</a>
     </footer>
   </div>
-
-  <script>
-    const GOOGLE_SHEET_URL = "PASTE_GOOGLE_SHEET_URL_HERE";
-
-    document.querySelectorAll(".sheet-link").forEach((button) => {
-      button.addEventListener("click", () => {
-        if (GOOGLE_SHEET_URL.includes("PASTE_")) {
-          alert("Add your Google Sheet URL in the code before publishing.");
-          return;
-        }
-
-        window.open(
-          GOOGLE_SHEET_URL,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      });
-    });
-
-    document
-      .getElementById("waitlist-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        document.getElementById("success").style.display = "block";
-        event.currentTarget.reset();
-      });
-  </script>
 </body>
 </html>
