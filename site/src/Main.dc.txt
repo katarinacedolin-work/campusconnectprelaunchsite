@@ -40,7 +40,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 .cc-tilt:hover{box-shadow:0 34px 70px rgba(21,21,21,.14)}
 .cc-bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
 .cc-fan{position:relative;width:290px;height:310px;perspective:900px;transform-style:preserve-3d;flex:none}
-.cc-fan-card{position:absolute;left:0;top:0;width:250px;box-sizing:border-box;padding:18px;border-radius:22px;background:#fff;border:1px solid #E6E6DF;box-shadow:0 22px 44px rgba(21,21,21,.10);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.cc-fan-card{position:absolute;left:0;top:0;width:250px;box-sizing:border-box;padding:18px;border-radius:22px;background:#202128;color:#FAFAF7;border:1px solid rgba(250,250,247,.12);box-shadow:0 22px 44px rgba(0,0,0,.45);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .cc-fan-3{transform:translate3d(6px,8px,-90px) rotateY(-20deg) rotateZ(-3deg)}
 .cc-fan-2{transform:translate3d(20px,84px,-45px) rotateY(-20deg) rotateZ(-3deg)}
 .cc-fan-1{transform:translate3d(34px,160px,0) rotateY(-20deg) rotateZ(-3deg)}
@@ -48,7 +48,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 .cc-tilt:hover .cc-fan-2{transform:translate3d(24px,86px,-20px) rotateY(-8deg) rotateZ(-1deg)}
 .cc-tilt:hover .cc-fan-1{transform:translate3d(48px,178px,40px) rotateY(-8deg) rotateZ(3deg)}
 .cc-stack{position:relative;width:300px;height:250px;perspective:900px;transform-style:preserve-3d;flex:none}
-.cc-stack-card{position:absolute;width:200px;box-sizing:border-box;padding:14px;border-radius:20px;background:#FAFAF7;color:#151515;box-shadow:0 24px 44px rgba(10,30,80,.22);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.cc-stack-card{position:absolute;width:200px;box-sizing:border-box;padding:14px;border-radius:20px;background:#202128;color:#FAFAF7;border:1px solid rgba(250,250,247,.12);box-shadow:0 24px 44px rgba(0,0,0,.45);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .cc-stack-a{left:0;top:60px;transform:rotateY(24deg) translateZ(-40px)}
 .cc-stack-b{left:50px;top:30px;transform:rotateY(24deg) translateZ(0)}
 .cc-stack-c{left:100px;top:0;transform:rotateY(24deg) translateZ(40px)}
@@ -192,35 +192,35 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </header>
 
 <!-- ============ PILLARS (BENTO) ============ -->
-<section style="padding: clamp(90px, 11vw, 150px) 0 clamp(70px, 8vw, 110px)">
+<section style="padding: clamp(90px, 11vw, 150px) 0 clamp(70px, 8vw, 110px); background: #0E0F12; color: #FAFAF7">
 <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
 <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 60px; margin-bottom: 60px">
 <div style="flex: 1 1 600px; min-width: 0">
-<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">What we do</p>
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #6E8BFF">What we do</p>
 <h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Four ways we help student companies grow.</h2>
 </div>
-<p style="flex: 0 1 380px; margin: 0; font-size: 17px; color: #55554F">Everything a startup accelerator offers — scaled for a campus, built around the semester, and connected to customers who live down the hall.</p>
+<p style="flex: 0 1 380px; margin: 0; font-size: 17px; color: #A3A3A0">Everything a startup accelerator offers — scaled for a campus, built around the semester, and connected to customers who live down the hall.</p>
 </div>
 
 <div class="cc-bento">
-<article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #FFFFFF; border: 1px solid #E6E6DF; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
+<article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
 <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; align-items: center; gap: 14px">
 <span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #FF6B6B; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"></path></svg></span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6B66">Curriculum</span>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Curriculum</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3vw, 42px); line-height: 1.02; letter-spacing: -0.04em">Learn the business while you build it.</h3>
-<p style="margin: 0; color: #55554F; max-width: 420px">Practical modules on pricing, marketing, legal basics and money — applied to the business you're actually running.</p>
-<a href="Academy.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #151515; font-weight: 600">Explore the Academy <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<p style="margin: 0; color: #A3A3A0; max-width: 420px">Practical modules on pricing, marketing, legal basics and money — applied to the business you're actually running.</p>
+<a href="Academy.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #FAFAF7; font-weight: 600">Explore the Academy <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
 <div class="cc-fan" aria-hidden="true">
-<div class="cc-fan-card cc-fan-3"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 03</p><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Marketing on a student budget</p><div style="height: 6px; border-radius: 999px; background: #F0F0EA"></div></div>
-<div class="cc-fan-card cc-fan-2"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 02</p><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Price what you sell</p><div style="height: 6px; border-radius: 999px; background: #F0F0EA; overflow: hidden"><div style="width: 62%; height: 100%; border-radius: 999px; background: #FF6B6B"></div></div></div>
-<div class="cc-fan-card cc-fan-1"><div style="display: flex; justify-content: space-between; align-items: center"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 01</p><span style="display: flex; width: 22px; height: 22px; border-radius: 50%; background: #151515; color: #FAFAF7; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span></div><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Validate your idea</p><div style="height: 6px; border-radius: 999px; background: #FF6B6B"></div></div>
+<div class="cc-fan-card cc-fan-3"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 03</p><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Marketing on a student budget</p><div style="height: 6px; border-radius: 999px; background: rgba(250,250,247,0.12)"></div></div>
+<div class="cc-fan-card cc-fan-2"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 02</p><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Price what you sell</p><div style="height: 6px; border-radius: 999px; background: rgba(250,250,247,0.12); overflow: hidden"><div style="width: 62%; height: 100%; border-radius: 999px; background: #FF6B6B"></div></div></div>
+<div class="cc-fan-card cc-fan-1"><div style="display: flex; justify-content: space-between; align-items: center"><p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8A8A84">Module 01</p><span style="display: flex; width: 22px; height: 22px; border-radius: 50%; background: #FF6B6B; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span></div><p style="margin: 6px 0 12px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 16px; line-height: 1.2">Validate your idea</p><div style="height: 6px; border-radius: 999px; background: #FF6B6B"></div></div>
 </div>
 </article>
 
-<article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #151515; color: #FAFAF7; display: flex; flex-direction: column; gap: 16px">
+<article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 14px">
 <span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #B28CFF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Office hours</span>
@@ -234,31 +234,31 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </div>
 </article>
 
-<article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #F6C945; color: #151515; display: flex; flex-direction: column; gap: 16px">
+<article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #151515; color: #F6C945; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #3D3420">Investors</span>
+<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #F6C945; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Investors</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 30px; line-height: 1.05; letter-spacing: -0.035em">Investors meet you one-on-one.</h3>
-<p style="margin: 0; max-width: 420px; color: #3D3420">Investors see a profile of you and your business, and can accept one-on-one calls with the founders they want to meet.</p>
-<a href="Contact.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #151515; font-weight: 600">Investors, get involved <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<p style="margin: 0; max-width: 420px; color: #A3A3A0">Investors see a profile of you and your business, and can accept one-on-one calls with the founders they want to meet.</p>
+<a href="Contact.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #FAFAF7; font-weight: 600">Investors, get involved <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </article>
 
-<article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #67C7FF; color: #151515; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
+<article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
 <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #151515; color: #67C7FF; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #14384D">Marketplace</span>
+<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #67C7FF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Marketplace</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3vw, 42px); line-height: 1.02; letter-spacing: -0.04em">Sell to your campus from day one.</h3>
-<p style="margin: 0; color: #14384D; max-width: 400px">A verified campus marketplace where student brands — fashion labels, bands, videographers, food companies — sell to the people around them.</p>
-<a href="Demo.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #151515; color: #FAFAF7; font-weight: 600; font-size: 14px">Try the live demo
+<p style="margin: 0; color: #A3A3A0; max-width: 400px">A verified campus marketplace where student brands — fashion labels, bands, videographers, food companies — sell to the people around them.</p>
+<a href="Demo.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #FAFAF7; color: #151515; font-weight: 600; font-size: 14px">Try the live demo
 <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
 <div class="cc-stack" aria-hidden="true">
-<div class="cc-stack-card cc-stack-a"><img src="/assets/card-soft-gel-set-by-zoe.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Soft gel set by Zoe</p><p style="margin: 0; font-size: 12px; color: #6B6B66">$45.00 / 90 min</p></div>
-<div class="cc-stack-card cc-stack-b"><img src="/assets/card-grad-portraits-with-maya.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Grad portraits with Maya</p><p style="margin: 0; font-size: 12px; color: #6B6B66">$65.00 / 45 min</p></div>
-<div class="cc-stack-card cc-stack-c"><img src="/assets/card-calculus-ii-tutoring.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Calculus II tutoring</p><p style="margin: 0; font-size: 12px; color: #6B6B66">$30.00 / hour</p></div>
+<div class="cc-stack-card cc-stack-a"><img src="/assets/card-nail-art-add-on.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Soft gel set by Zoe</p><p style="margin: 0; font-size: 12px; color: #A3A3A0">$45.00 / 90 min</p></div>
+<div class="cc-stack-card cc-stack-b"><img src="/assets/card-grad-portraits-with-maya.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Grad portraits with Maya</p><p style="margin: 0; font-size: 12px; color: #A3A3A0">$65.00 / 45 min</p></div>
+<div class="cc-stack-card cc-stack-c"><img src="/assets/card-calculus-ii-tutoring.jpg" alt="" style="display: block; width: 100%; height: 70px; border-radius: 12px; object-fit: cover"><p style="margin: 10px 0 2px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 14px">Calculus II tutoring</p><p style="margin: 0; font-size: 12px; color: #A3A3A0">$30.00 / hour</p></div>
 </div>
 </article>
 </div>
