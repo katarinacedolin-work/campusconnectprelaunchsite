@@ -1,3 +1,10 @@
 [build]
   publish = "site"
   command = ""
+
+# Serve files exactly as committed: no link rewriting or "pretty URL" changes.
+[build.processing]
+  skip_processing = true
+
+[build.processing.html]
+  pretty_urls = false

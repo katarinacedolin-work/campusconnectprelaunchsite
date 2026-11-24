@@ -12,7 +12,7 @@ The Campus Connect marketing site, exported from the Claude Design canvas as a s
 
 - `site/` – everything Netlify serves
   - `index.html` and `*.dc.html` – one small page shell per page (the file names match the links between pages)
-  - `src/` – each page's design source (`.dc.html`), including the shared Nav, Footer and the two live demos
+  - `src/` – each page's design source (`.dc.txt`, plain text so Netlify never rewrites them), including the shared Nav, Footer and the two live demos
   - `assets/` – images and stylesheets
   - `dc-runtime.js` – renders the design sources in the browser (React, bundled)
 - `runtime-src/dc-runtime.js` – source of the runtime

@@ -29,7 +29,8 @@ for f in sorted(os.listdir(project)):
         continue
     t = rewrite(open(os.path.join(project, f)).read())
     used |= set(re.findall(r'/assets/([^"\')\s]+)', t))
-    open(os.path.join(out, 'src', f), 'w').write(t)
+    # Sources use a .txt extension so hosts never treat or rewrite them as HTML pages
+    open(os.path.join(out, 'src', f[:-len('.html')] + '.txt'), 'w').write(t)
 
 for name in ('market-app.css', 'academy-app.css'):
     t = rewrite(open(os.path.join(css_dir, name)).read())

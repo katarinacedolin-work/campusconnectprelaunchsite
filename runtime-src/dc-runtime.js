@@ -257,7 +257,7 @@ function compile(name, html) {
 
 async function load(name) {
   if (sources.has(name)) return sources.get(name);
-  const res = await fetch(SRC_DIR + name + '.dc.html');
+  const res = await fetch(SRC_DIR + name + '.dc.txt');
   if (!res.ok) throw new Error('Could not load ' + name + ' (' + res.status + ')');
   const def = compile(name, await res.text());
   sources.set(name, def);
