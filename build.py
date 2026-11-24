@@ -6,7 +6,7 @@ Usage: python3 build.py <project_dir> <assets_dir> <asset_urls_json> <css_dir> <
 import json, os, re, shutil, sys, html
 
 project, assets_dir, urls_json, css_dir, out = sys.argv[1:6]
-PAGES = ['Main', 'Program', 'Marketplace', 'Academy', 'Universities', 'Contact', 'Demo']
+PAGES = ['Main', 'Program', 'Marketplace', 'Academy', 'Universities', 'Businesses', 'Contact', 'Demo']
 
 blob_to_file = {v.split('/')[-1]: k for k, v in json.load(open(urls_json)).items()}
 blob_to_file['ccb2cf527026a7a29d7f10759b2a8c50'] = 'market-app.css'
