@@ -14,34 +14,37 @@
 body{margin:0}
 </style>
 </helmet>
-<footer style="font-family: Inter, system-ui, sans-serif; color: #151515; background: #FAFAF7; overflow: hidden">
+<footer style="font-family: Inter, system-ui, sans-serif; color: {{ fg }}; background: {{ bg }}; overflow: hidden">
 <div style="max-width: 1400px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 64px) 0">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #DEDED7">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid {{ line }}">
 <div style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 18px">
-<a href="Main.dc.html" aria-label="Campus Connect home" style="display: flex; align-items: center; gap: 12px; color: #151515; text-decoration: none; min-height: 44px">
+<a href="Main.dc.html" aria-label="Campus Connect home" style="display: flex; align-items: center; gap: 12px; color: {{ fg }}; text-decoration: none; min-height: 44px">
 <span style="display: flex; width: 44px; height: 44px; border-radius: 13px; background: #3157FF; align-items: center; justify-content: center"><svg viewBox="0 0 100 100" width="28" height="28" aria-hidden="true" style="color: #FAFAF7"><path d="M53.45 32 A28 28 0 1 0 53.45 68 L38 50 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"></path><path d="M66 27 L93 50 L66 73 Z" fill="currentColor" stroke="currentColor" stroke-width="10" stroke-linejoin="round"></path></svg></span>
 <span style="font-family: Manrope, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.03em">campus connect</span>
 </a>
-<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #55554F">A university program and student marketplace for the founders already on your campus.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: {{ muted }}">A university program and student marketplace for the founders already on your campus.</p>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 40px 72px; font-size: 15px">
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6B66">Program</span><a href="Program.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Curriculum</a><a href="Academy.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Academy</a><a href="Program.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">How it works</a></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6B66">Marketplace</span><a href="Marketplace.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Shop</a><a href="Marketplace.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Sell</a><a href="Marketplace.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">School services</a><a href="Businesses.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Student businesses</a></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6B66">Partner</span><a href="Universities.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Universities</a><a href="Demo.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Live demo</a><a href="Contact.dc.html" style="color: #151515; text-decoration: none; padding: 6px 0">Contact</a></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: {{ subtle }}">Program</span><a href="Program.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Curriculum</a><a href="Academy.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Academy</a><a href="Program.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">How it works</a></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: {{ subtle }}">Marketplace</span><a href="Marketplace.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Shop</a><a href="Marketplace.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Sell</a><a href="Marketplace.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">School services</a><a href="Businesses.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Student businesses</a></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: {{ subtle }}">Partner</span><a href="Universities.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Universities</a><a href="Demo.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Live demo</a><a href="Contact.dc.html" style="color: {{ fg }}; text-decoration: none; padding: 6px 0">Contact</a></div>
 </div>
 </div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 22px 0; font-size: 13px; color: #6B6B66">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 22px 0; font-size: 13px; color: {{ subtle }}">
 <span>© 2026 Campus Connect</span>
 <span>Your campus is full of talent.</span>
 </div>
-<p aria-hidden="true" style="margin: 0 0 -0.16em; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(64px, 14.5vw, 226px); line-height: 0.86; letter-spacing: -0.065em; color: #151515; white-space: nowrap">campus connect</p>
+<p aria-hidden="true" style="margin: 0 0 -0.16em; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(64px, 14.5vw, 226px); line-height: 0.86; letter-spacing: -0.065em; color: {{ fg }}; white-space: nowrap">campus connect</p>
 </div>
 </footer>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":560}}'>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":560}}'>
 class Component extends DCLogic {
   renderVals() {
-    return {};
+    const dark = this.props.dark ?? false;
+    return dark
+      ? { bg: '#0E0F12', fg: '#FAFAF7', line: 'rgba(250,250,247,0.12)', muted: '#A3A3A0', subtle: '#8C8C88' }
+      : { bg: '#FAFAF7', fg: '#151515', line: '#DEDED7', muted: '#55554F', subtle: '#6B6B66' };
   }
 }
 </script>

@@ -42,7 +42,7 @@ class Component extends DCLogic {
       { id: 'marketplace', label: 'Marketplace', href: 'Marketplace.dc.html' },
       { id: 'academy', label: 'Academy', href: 'Academy.dc.html' },
       { id: 'universities', label: 'Universities', href: 'Universities.dc.html' },
-      { id: 'businesses', label: 'Businesses', href: 'Businesses.dc.html' }
+      { id: 'businesses', label: 'Student businesses', href: 'Businesses.dc.html' }
     ];
     const links = defs.map((d) => {
       const on = d.id === active;
