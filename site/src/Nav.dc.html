@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Connect — Navigation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="font-family: Inter, system-ui, sans-serif; color: #FAFAF7; padding: 0 clamp(12px, 3vw, 40px)">
+<nav aria-label="Main" style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; padding: 8px 8px 8px 16px; border-radius: 30px; background: rgba(21,21,21,0.68); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 1px solid rgba(250,250,247,0.12); box-shadow: 0 14px 40px rgba(0,0,0,0.18)">
+<a href="Main.dc.html" aria-label="Campus Connect home" style="display: flex; align-items: center; gap: 10px; color: #FAFAF7; min-height: 44px; text-decoration: none">
+<span style="display: flex; width: 34px; height: 34px; border-radius: 10px; background: #3157FF; align-items: center; justify-content: center">
+<svg viewBox="0 0 100 100" width="22" height="22" aria-hidden="true" style="color: #FAFAF7"><path d="M53.45 32 A28 28 0 1 0 53.45 68 L38 50 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"></path><path d="M66 27 L93 50 L66 73 Z" fill="currentColor" stroke="currentColor" stroke-width="10" stroke-linejoin="round"></path></svg>
+</span>
+<span style="font-family: Manrope, sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.03em">campus connect</span>
+</a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 14px">
+<sc-for list="{{ links }}" as="l" hint-placeholder-count="4">
+<a href="{{ l.href }}" aria-current="{{ l.current }}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; background: {{ l.bg }}; color: {{ l.color }}; font-weight: 500; text-decoration: none">{{ l.label }}</a>
+</sc-for>
+</div>
+<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 999px; background: {{ ctaBg }}; color: {{ ctaFg }}; font-size: 14px; font-weight: 600; text-decoration: none">Partner with us
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>
+</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","program","marketplace","academy","universities","demo","contact"],"default":"home"},"$preview":{"width":1440,"height":62}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'home';
+    const defs = [
+      { id: 'program', label: 'Program', href: 'Program.dc.html' },
+      { id: 'marketplace', label: 'Marketplace', href: 'Marketplace.dc.html' },
+      { id: 'academy', label: 'Academy', href: 'Academy.dc.html' },
+      { id: 'universities', label: 'Universities', href: 'Universities.dc.html' },
+      { id: 'demo', label: 'Live demo', href: 'Demo.dc.html' }
+    ];
+    const links = defs.map((d) => {
+      const on = d.id === active;
+      return {
+        label: d.label, href: d.href,
+        current: on ? 'page' : 'false',
+        bg: on ? 'rgba(250,250,247,0.14)' : 'transparent',
+        color: on ? '#FAFAF7' : '#C9C9C4'
+      };
+    });
+    const onContact = active === 'contact';
+    return {
+      links,
+      ctaBg: onContact ? '#3157FF' : '#FAFAF7',
+      ctaFg: onContact ? '#FAFAF7' : '#151515'
+    };
+  }
+}
+</script>
+</body>
+</html>

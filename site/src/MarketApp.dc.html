@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Connect — Marketplace app (demo)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/assets/market-app.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-app="1" class="{{ rootClass }}" style="height: {{ screenH }}; border-radius: {{ screenRadius }}; font-family: Inter, system-ui, sans-serif; color: #151515">
+
+<!-- HEADER -->
+<header class="mk-header">
+<button type="button" class="mk-brand" onClick="{{ goHome }}" aria-label="Campus Connect home, SDSU">
+<img src="{{ logo }}" alt="Campus Connect"><span class="sep" aria-hidden="true">·</span><img src="{{ sdsu }}" alt="SDSU">
+</button>
+<nav class="mk-nav" aria-label="Primary navigation">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="6"><button type="button" class="{{ n.cls }}" aria-current="{{ n.current }}" onClick="{{ n.go }}">{{ n.label }}</button></sc-for>
+</nav>
+<div class="mk-actions">
+<button type="button" class="mk-switch" onClick="{{ switchMode }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.repeat }}"></path></svg>Switch to selling</button>
+<button type="button" class="mk-icon-btn" onClick="{{ toggleNotifs }}" aria-label="Notifications" aria-expanded="{{ notifOpen }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.bell }}"></path></svg><sc-if value="{{ notifCount }}" hint-placeholder-val="{{ false }}"><span class="mk-badge">{{ notifCount }}</span></sc-if></button>
+<button type="button" class="mk-icon-btn" onClick="{{ goInbox }}" aria-label="Messages"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chat }}"></path></svg><sc-if value="{{ unreadCount }}" hint-placeholder-val="{{ false }}"><span class="mk-badge">{{ unreadCount }}</span></sc-if></button>
+<button type="button" class="mk-avatar" onClick="{{ goYou }}" aria-label="Your profile">KC</button>
+</div>
+</header>
+
+<sc-if value="{{ notifOpen }}" hint-placeholder-val="{{ false }}">
+<div class="mk-pop mk-fade" role="dialog" aria-label="Notifications">
+<div class="mk-pop-head"><span>Notifications</span><button type="button" class="mk-text" onClick="{{ markAllRead }}">Mark all read</button></div>
+<sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+<button type="button" class="{{ n.cls }}" onClick="{{ n.open }}"><span class="mk-note-dot {{ n.accent }}" aria-hidden="true">{{ n.emoji }}</span><span><b>{{ n.title }}</b><span>{{ n.body }}</span><span>{{ n.at }}</span></span></button>
+</sc-for>
+</div>
+</sc-if>
+
+<div data-scroller="1" class="mk-scroll">
+<div class="mk-page">
+
+<!-- ===== HOME ===== -->
+<sc-if value="{{ v.home }}" hint-placeholder-val="{{ true }}">
+<div class="mk-fade">
+<section class="mk-hero">
+<div class="mk-hero-copy">
+<div class="eyebrow">The student marketplace</div>
+<h1>Someone on campus does that.</h1>
+<form class="mk-hero-search" onSubmit="{{ heroSubmit }}">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.search }}"></path></svg>
+<input type="search" aria-label="Search the marketplace" placeholder="What do you need?" value="{{ heroQ }}" onChange="{{ onHeroQ }}">
+<button type="submit" class="mk-primary"><span>Find it</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button>
+</form>
+</div>
+<div class="mk-hero-art" aria-hidden="true">
+<span class="blob1"></span><span class="blob2"></span>
+<span class="mk-floating">Real students · Real reviews</span>
+<div class="mk-art-card mk-art-main"><div class="t">Grad portraits with Maya</div><img class="mk-art-photo" src="{{ heroPhoto }}" alt=""><div><span class="p">$65</span><br><span class="muted small">45 min · Student verified</span></div></div>
+<div class="mk-art-card mk-art-small"><div class="t">Handmade ceramic mug</div><div class="p">$18</div><div class="small">Local pickup</div></div>
+</div>
+</section>
+<section class="mk-split">
+<div class="mk-mode book"><div class="eyebrow">Book</div><h3>Make time for the thing.</h3><button type="button" class="mk-primary" onClick="{{ goBook }}">Explore services <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+<div class="mk-mode shop"><div class="eyebrow">Shop</div><h3>Made on campus.</h3><button type="button" class="mk-secondary" onClick="{{ goShop }}">Browse products <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+</section>
+<section class="mk-section"><div class="mk-section-head"><h2>Popular on campus</h2><button type="button" class="mk-text" onClick="{{ goSearchAll }}">See all <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+<div class="mk-row"><sc-for list="{{ popular }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div></section>
+<section class="mk-section"><div class="mk-section-head"><h2>Campus stores</h2></div>
+<div class="mk-row"><sc-for list="{{ featuredStores }}" as="s" hint-placeholder-count="4">
+<article class="mk-card"><button type="button" onClick="{{ s.open }}">
+<div class="mk-store-banner {{ s.accent }}" aria-hidden="true">{{ s.previews }}</div>
+<div class="mk-store-body"><div class="mk-store-mark" aria-hidden="true">{{ s.emoji }}</div><div class="mk-title" style="margin-top: 10px">{{ s.name }}</div><div class="mk-metaline" style="-webkit-line-clamp: 2">{{ s.tagline }}</div><div class="mk-seller"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg><b>{{ s.rating }}</b> · {{ s.followers }} followers</div></div>
+</button></article>
+</sc-for></div></section>
+<section class="mk-section"><div class="mk-section-head"><h2>Book again</h2><button type="button" class="mk-text" onClick="{{ goYou }}">View bookings <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+<div class="mk-row"><sc-for list="{{ bookAgain }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div></section>
+<section class="mk-section"><div class="mk-section-head"><h2>Recommended</h2><button type="button" class="mk-text" onClick="{{ goSearchAll }}">Browse more <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+<div class="mk-grid"><sc-for list="{{ recommended }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div></section>
+<section class="mk-sell"><div class="eyebrow">For student sellers</div><h2>Turn what you know into what you earn.</h2><button type="button" class="mk-primary" onClick="{{ switchMode }}">Start selling <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></section>
+</div>
+</sc-if>
+
+<!-- ===== BROWSE (book / shop / search) ===== -->
+<sc-if value="{{ v.browse }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-browse-head"><div><div class="eyebrow">{{ br.eyebrow }}</div><h1>{{ br.title }}</h1></div></div>
+<label class="mk-search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.search }}"></path></svg><input type="search" aria-label="Search the marketplace" placeholder="What do you need?" value="{{ q }}" onChange="{{ onQ }}"><kbd>⌘ K</kbd></label>
+<div class="mk-chips" role="group" aria-label="Categories">
+<sc-for list="{{ br.chips }}" as="c" hint-placeholder-count="8"><button type="button" class="{{ c.cls }}" aria-pressed="{{ c.on }}" onClick="{{ c.pick }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="{{ c.color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ c.icon }}"></path></svg>{{ c.name }}</button></sc-for>
+</div>
+<sc-if value="{{ br.showSchool }}" hint-placeholder-val="{{ false }}">
+<section class="mk-section" style="margin-top: 26px"><div class="mk-section-head"><h2>School-provided services</h2></div>
+<div class="mk-row">
+<sc-for list="{{ br.school }}" as="s" hint-placeholder-count="3">
+<article class="mk-card"><button type="button" onClick="{{ s.open }}">
+<div class="mk-visual {{ s.accent }}"><sc-if value="{{ s.photo }}"><img src="{{ s.photo }}" alt=""></sc-if><sc-if value="{{ s.noPhoto }}"><span class="emoji" aria-hidden="true">{{ s.emoji }}</span></sc-if><span class="mk-school"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.school }}"></path></svg>School-provided service</span></div>
+<div class="mk-body"><div class="mk-title">{{ s.title }}</div><div class="mk-metaline">{{ s.hours }}</div><div class="mk-seller"><b>{{ s.provider }}</b></div></div>
+</button></article>
+</sc-for>
+</div></section>
+</sc-if>
+<div class="mk-results-head"><span class="muted small">{{ br.count }}</span>
+<label class="small muted" style="display: flex; align-items: center; gap: 8px">Sort <select class="mk-select" value="{{ sort }}" onChange="{{ onSort }}"><option value="recommended">Recommended</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="rating">Top rated</option></select></label></div>
+<sc-if value="{{ br.empty }}" hint-placeholder-val="{{ false }}">
+<div class="mk-empty"><h3>No matches yet.</h3><p class="muted">Try another category or search for something nearby.</p><button type="button" class="mk-ghost" onClick="{{ clearFilters }}">Clear filters</button></div>
+</sc-if>
+<div class="mk-grid"><sc-for list="{{ results }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for>
+<sc-if value="{{ br.showAd }}" hint-placeholder-val="{{ false }}">
+<a class="mk-ad" href="https://ouryardthrift.com/" target="_blank" rel="noopener noreferrer"><span><span class="eyebrow">On campus · Sponsored</span><b>Our Yard</b><span>Buy and sell with students at your school, and unlock deals from local businesses near campus.</span></span><span class="mk-ghost" style="color: #fff; border-color: rgba(255,255,255,.4)">Open Our Yard</span></a>
+</sc-if>
+<sc-for list="{{ results2 }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div>
+</div>
+</sc-if>
+
+<!-- ===== SCHOOL SERVICE DETAIL ===== -->
+<sc-if value="{{ v.school }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ goBook }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to Book</button></div>
+<div class="mk-detail">
+<div class="mk-detail-visual {{ ss.accent }}"><sc-if value="{{ ss.photo }}"><img src="{{ ss.photo }}" alt=""></sc-if><sc-if value="{{ ss.noPhoto }}"><span class="emoji" aria-hidden="true">{{ ss.emoji }}</span></sc-if></div>
+<div>
+<div class="eyebrow">{{ ss.category }} · School-provided service</div>
+<h1>{{ ss.title }}</h1>
+<p class="lede">{{ ss.description }}</p>
+<div class="mk-detail-actions"><a class="mk-primary" href="{{ ss.website }}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">Visit website <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></a></div>
+<div class="mk-seller-card"><div><div class="small muted">Provided by</div><div class="mk-seller-name">{{ ss.provider }}</div><span class="mk-school inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.school }}"></path></svg>School-provided service</span></div></div>
+<div class="mk-block"><h3>Hours</h3><div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.calendar }}"></path></svg></span><strong>{{ ss.hours }}</strong></div><p class="muted small">This service is run by the university. Their site has the request form and the latest hours.</p></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===== LISTING DETAIL ===== -->
+<sc-if value="{{ v.listing }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ backFromDetail }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to {{ sel.backLabel }}</button><button type="button" class="mk-ghost" onClick="{{ share }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.share }}"></path></svg>Share</button></div>
+<div class="mk-detail">
+<div>
+<div class="mk-detail-visual {{ sel.accent }}"><sc-if value="{{ sel.photo }}"><img src="{{ sel.photo }}" alt=""></sc-if><sc-if value="{{ sel.noPhoto }}"><span class="emoji" aria-hidden="true">{{ sel.emoji }}</span></sc-if></div>
+<p class="small muted" style="margin-top: 10px">Demo imagery — the real product would use seller-approved portfolio or product photos.</p>
+</div>
+<div>
+<div class="eyebrow">{{ sel.eyebrow }}</div>
+<h1>{{ sel.title }}</h1>
+<sc-if value="{{ sel.isTicket }}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin-bottom: 8px">{{ sel.schedule }}</p></sc-if>
+<p class="lede">{{ sel.description }}</p>
+<div class="mk-detail-actions">
+<button type="button" class="mk-primary" disabled="{{ sel.buyDisabled }}" onClick="{{ startCheckout }}">{{ sel.buyLabel }}</button>
+<button type="button" class="mk-icon-btn" style="width: 46px; height: 46px; border-radius: 12px" onClick="{{ messageSeller }}" aria-label="Message seller"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chat }}"></path></svg></button>
+</div>
+<sc-if value="{{ sel.hasStore }}" hint-placeholder-val="{{ true }}">
+<div class="mk-seller-card"><div class="mk-seller-main"><span class="mk-thumb {{ sel.storeAccent }}" aria-hidden="true">{{ sel.storeEmoji }}</span><div><div class="small muted">Sold by</div><div class="mk-seller-name">{{ sel.storeName }}</div><div class="mk-seller-sub">Run by {{ sel.seller }} · <span class="mk-verified"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>Student verified</span> · ★ {{ sel.rating }}</div></div></div><button type="button" class="mk-text" style="color: #2b8fd4" onClick="{{ openSelStore }}">Visit store <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+</sc-if>
+
+<sc-if value="{{ sel.isService }}" hint-placeholder-val="{{ true }}">
+<div class="mk-block"><h3>When can it happen?</h3><p class="muted small">Pick a slot that works for you. The seller confirms the appointment after checkout.</p>
+<div class="mk-opts" role="group" aria-label="Available times"><sc-for list="{{ sel.slots }}" as="s" hint-placeholder-count="4"><button type="button" class="{{ s.cls }}" aria-pressed="{{ s.on }}" onClick="{{ s.pick }}">{{ s.label }}</button></sc-for></div>
+<div class="mk-info" style="margin-top: 16px"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.check }}"></path></svg></span><div><small>Where</small><strong>{{ sel.meeting }}</strong></div></div>
+</div>
+</sc-if>
+<sc-if value="{{ sel.isProduct }}" hint-placeholder-val="{{ false }}">
+<div class="mk-block"><h3>Pickup details</h3>
+<div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.check }}"></path></svg></span><strong>{{ sel.availability }}</strong></div>
+<div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.handshake }}"></path></svg></span><strong>Meet in public and message in the app</strong></div>
+<div class="mk-qty" role="group" aria-label="Quantity"><button type="button" onClick="{{ dec }}" aria-label="Decrease quantity"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.minus }}"></path></svg></button><output aria-live="polite">{{ qty }}</output><button type="button" onClick="{{ inc }}" aria-label="Increase quantity"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.plus }}"></path></svg></button></div>
+<span class="small muted" style="margin-left: 10px">{{ sel.available }} available</span>
+</div>
+</sc-if>
+<sc-if value="{{ sel.isTicket }}" hint-placeholder-val="{{ false }}">
+<div class="mk-block"><h3>At the door</h3>
+<div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.calendar }}"></path></svg></span><div><small>Date and time</small><strong>{{ sel.dateTime }}</strong></div></div>
+<div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.check }}"></path></svg></span><div><small>Location</small><strong>{{ sel.location }}</strong></div></div>
+<p class="mk-price" style="font-size: 22px; margin: 6px 0">{{ sel.ticketPrice }}</p>
+<p class="muted small">Buying this gives you a QR code. {{ sel.host }} scans it once at the door, and that scan marks the ticket used.</p>
+<span class="small muted">{{ sel.available }} left</span>
+</div>
+</sc-if>
+</div>
+</div>
+<sc-if value="{{ sel.hasMore }}" hint-placeholder-val="{{ false }}">
+<section class="mk-section"><div class="mk-section-head"><h2>More from {{ sel.storeName }}</h2><button type="button" class="mk-text" onClick="{{ openSelStore }}">Visit store <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button></div>
+<div class="mk-row"><sc-for list="{{ moreFromStore }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div></section>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- ===== CHECKOUT ===== -->
+<sc-if value="{{ v.checkout }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ backToListing }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to listing</button><span class="small muted">Demo checkout · no payment is processed</span></div>
+<div class="mk-checkout">
+<section class="mk-panel">
+<div class="eyebrow">{{ co.eyebrow }}</div>
+<h1>{{ co.heading }}</h1>
+<p class="lede">{{ co.lede }}</p>
+<div class="mk-steps"><sc-for list="{{ co.steps }}" as="s" hint-placeholder-count="3"><div class="mk-step"><span class="mk-step-n">{{ s.n }}</span><div><strong>{{ s.title }}</strong><p>{{ s.text }}</p></div></div></sc-for></div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px"><button type="button" class="mk-primary" onClick="{{ confirmOrder }}">{{ co.confirmLabel }} <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.arrow }}"></path></svg></button><button type="button" class="mk-ghost" onClick="{{ helpToast }}">Questions about this order?</button></div>
+</section>
+<aside class="mk-summary">
+<div class="mk-sum-visual"><span class="mk-thumb {{ co.accent }}"><sc-if value="{{ co.photo }}"><img src="{{ co.photo }}" alt=""></sc-if><sc-if value="{{ co.noPhoto }}">{{ co.emoji }}</sc-if></span><div><strong>{{ co.title }}</strong><div class="small muted">{{ co.sub }}</div></div></div>
+<div class="mk-sum-line"><span>{{ co.lineLabel }}</span><strong>{{ co.total }}</strong></div>
+<div class="mk-sum-line"><span>Platform fee</span><strong>$0.00</strong></div>
+<div class="mk-sum-line total"><span>Total</span><strong>{{ co.total }}</strong></div>
+<p class="mk-disclaimer">This is a prototype only. No real account, order or payment is created.</p>
+</aside>
+</div>
+</div>
+</sc-if>
+
+<!-- ===== ORDER ===== -->
+<sc-if value="{{ v.order }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ goYou }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to You</button></div>
+<div class="mk-success">
+<sc-if value="{{ ord.notTicket }}" hint-placeholder-val="{{ true }}"><span class="mk-success-mark"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.check }}"></path></svg></span></sc-if>
+<div class="eyebrow">{{ ord.eyebrow }}</div>
+<h1>{{ ord.heading }}</h1>
+<p class="lede" style="margin: 0 auto">{{ ord.lede }}</p>
+<sc-if value="{{ ord.isTicket }}" hint-placeholder-val="{{ false }}">
+<div class="mk-pass"><div><div class="eyebrow">Valid</div><h2>{{ ord.title }}</h2><p style="color: rgba(255,255,255,.75); margin-top: 6px">{{ ord.when }}</p><p class="mk-pass-code">{{ ord.code }}</p><p style="color: rgba(255,255,255,.6); font-size: 12px; margin-top: 6px">Show this QR code at the door. One scan marks it used.</p></div>
+<div class="mk-qr"><div role="img" aria-label="Ticket QR code" style="display: grid; grid-template-columns: repeat(25, 5px); grid-template-rows: repeat(25, 5px)"><sc-for list="{{ ord.qr }}" as="r" hint-placeholder-count="25"><span style="background: {{ r.f }}"></span></sc-for></div></div></div>
+</sc-if>
+<sc-if value="{{ ord.notTicket }}" hint-placeholder-val="{{ true }}">
+<div class="mk-order-card"><sc-for list="{{ ord.rows }}" as="r" hint-placeholder-count="5"><div class="mk-order-row"><span>{{ r.label }}</span><strong>{{ r.value }}</strong></div></sc-for></div>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px"><button type="button" class="mk-primary" onClick="{{ goYou }}">View activity</button><button type="button" class="mk-ghost" onClick="{{ goHome }}">Keep exploring</button></div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===== STORE ===== -->
+<sc-if value="{{ v.store }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ goHome }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to Home</button></div>
+<section class="mk-store-hero">
+<div class="mk-store-hero-banner {{ st.accent }}" aria-hidden="true">{{ st.previews }}</div>
+<div class="mk-store-hero-body">
+<div><div class="mk-store-hero-mark" aria-hidden="true">{{ st.emoji }}</div><h1 style="margin: 12px 0 4px">{{ st.name }}</h1><p class="muted">{{ st.handle }} · {{ st.tagline }}</p>
+<div class="mk-stats"><span><b>{{ st.rating }}</b> ★ ({{ st.reviews }})</span><span><b>{{ st.sales }}</b> sales</span><span><b>{{ st.followers }}</b> followers</span></div></div>
+<div style="display: flex; gap: 8px"><button type="button" class="{{ st.followCls }}" onClick="{{ toggleFollow }}">{{ st.followLabel }}</button><button type="button" class="mk-ghost" onClick="{{ messageStore }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chat }}"></path></svg>Message</button></div>
+</div>
+</section>
+<sc-if value="{{ st.announcement }}" hint-placeholder-val="{{ false }}"><div class="mk-announce">{{ st.announcement }}</div></sc-if>
+<div class="mk-tabs" role="tablist" aria-label="Store sections"><sc-for list="{{ st.tabs }}" as="t" hint-placeholder-count="3"><button type="button" role="tab" aria-selected="{{ t.on }}" class="{{ t.cls }}" onClick="{{ t.pick }}">{{ t.label }}</button></sc-for></div>
+<sc-if value="{{ st.isShop }}" hint-placeholder-val="{{ true }}">
+<div class="mk-chips" style="margin: 0 0 14px" role="group" aria-label="Collections"><sc-for list="{{ st.colls }}" as="c" hint-placeholder-count="4"><button type="button" class="{{ c.cls }}" aria-pressed="{{ c.on }}" onClick="{{ c.pick }}" style="flex: none; width: auto; min-height: 38px; flex-direction: row; padding: 0 14px; border-radius: 999px">{{ c.name }}</button></sc-for></div>
+<div class="mk-grid"><sc-for list="{{ storeListings }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div>
+</sc-if>
+<sc-if value="{{ st.isReviews }}" hint-placeholder-val="{{ false }}">
+<div class="mk-board-grid"><sc-for list="{{ st.reviewList }}" as="r" hint-placeholder-count="3"><div class="mk-review"><div style="display: flex; justify-content: space-between; gap: 8px"><b>{{ r.author }}</b><span style="color: #e7a900">{{ r.stars }}</span></div><p style="margin-top: 8px; font-size: 14px">{{ r.text }}</p></div></sc-for></div>
+</sc-if>
+<sc-if value="{{ st.isAbout }}" hint-placeholder-val="{{ false }}">
+<div class="mk-panel"><p class="lede" style="color: #151515">{{ st.about }}</p>
+<div class="mk-block"><h3>Policies</h3><p class="small" style="margin-bottom: 8px"><b>Cancellation.</b> {{ st.cancellation }}</p><p class="small" style="margin-bottom: 8px"><b>Pickup.</b> {{ st.pickup }}</p><p class="small"><b>Hours.</b> {{ st.hours }}</p></div></div>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- ===== JOB BOARD ===== -->
+<sc-if value="{{ v.jobs }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-browse-head"><div><div class="eyebrow">Campus work</div><h1>Job Board</h1></div><button type="button" class="mk-primary" onClick="{{ postToast }}">Post a job <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.plus }}"></path></svg></button></div>
+<label class="mk-search" style="margin-bottom: 18px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.search }}"></path></svg><input type="search" aria-label="Search jobs" placeholder="Search jobs" value="{{ jobQ }}" onChange="{{ onJobQ }}"></label>
+<div class="mk-board-grid"><sc-for list="{{ jobs }}" as="b" hint-placeholder-count="4">
+<article class="mk-card"><button type="button" onClick="{{ b.open }}">
+<div class="mk-board-visual {{ b.accent }}"><sc-if value="{{ b.photo }}"><img src="{{ b.photo }}" alt=""></sc-if><sc-if value="{{ b.noPhoto }}"><span class="emoji" aria-hidden="true">{{ b.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ b.kicker }}</span><span class="mk-board-title">{{ b.title }}</span><span class="mk-board-meta">{{ b.meta }}</span><span class="mk-board-sum">{{ b.summary }}</span><span class="mk-board-price">{{ b.price }}</span></div>
+</button></article>
+</sc-for></div>
+</div>
+</sc-if>
+
+<!-- ===== HOUSING ===== -->
+<sc-if value="{{ v.housing }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-browse-head"><div><div class="eyebrow">Near SDSU</div><h1>Housing &amp; subleases</h1></div><button type="button" class="mk-primary" onClick="{{ postToast }}">Post a place <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.plus }}"></path></svg></button></div>
+<section><div class="mk-section-head"><h2>Real estate agents</h2></div>
+<div class="mk-row">
+<sc-for list="{{ agents }}" as="a" hint-placeholder-count="4">
+<article class="mk-card"><button type="button" onClick="{{ a.open }}">
+<div class="mk-visual {{ a.accent }}"><sc-if value="{{ a.photo }}"><img src="{{ a.photo }}" alt=""></sc-if><span class="mk-agent"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.home }}"></path></svg>Licensed agent</span></div>
+<div class="mk-body"><div class="mk-title">{{ a.name }}</div><div class="mk-metaline">{{ a.summary }}</div><div class="mk-seller"><b>{{ a.brokerage }}</b></div><div class="mk-meta"><span class="mk-price">Free <small>/ consult</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ a.rating }} <span class="muted">({{ a.reviews }})</span></span></div></div>
+</button></article>
+</sc-for>
+</div></section>
+<section class="mk-section"><div class="mk-section-head"><h2>Nearby apartment buildings</h2></div><div class="mk-board-grid"><sc-for list="{{ apartments }}" as="b" hint-placeholder-count="4">
+<article class="mk-card"><button type="button" onClick="{{ b.open }}">
+<div class="mk-board-visual {{ b.accent }}"><sc-if value="{{ b.photo }}"><img src="{{ b.photo }}" alt=""></sc-if><sc-if value="{{ b.noPhoto }}"><span class="emoji" aria-hidden="true">{{ b.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ b.kicker }}</span><span class="mk-board-title">{{ b.title }}</span><span class="mk-board-meta">{{ b.meta }}</span><span class="mk-board-sum">{{ b.summary }}</span><span class="mk-board-price">{{ b.price }}</span></div>
+</button></article>
+</sc-for></div></section>
+<section class="mk-section"><div class="mk-section-head"><h2>Posted by students</h2></div><div class="mk-board-grid"><sc-for list="{{ homes }}" as="b" hint-placeholder-count="4">
+<article class="mk-card"><button type="button" onClick="{{ b.open }}">
+<div class="mk-board-visual {{ b.accent }}"><sc-if value="{{ b.photo }}"><img src="{{ b.photo }}" alt=""></sc-if><sc-if value="{{ b.noPhoto }}"><span class="emoji" aria-hidden="true">{{ b.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ b.kicker }}</span><span class="mk-board-title">{{ b.title }}</span><span class="mk-board-meta">{{ b.meta }}</span><span class="mk-board-sum">{{ b.summary }}</span><span class="mk-board-price">{{ b.price }}</span></div>
+</button></article>
+</sc-for></div></section>
+</div>
+</sc-if>
+
+<!-- ===== BOARD DETAIL (job / place / building / agent) ===== -->
+<sc-if value="{{ v.board }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-top-row"><button type="button" class="mk-back" onClick="{{ bd.back }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronLeft }}"></path></svg>Back to {{ bd.backLabel }}</button></div>
+<div class="mk-detail">
+<div class="mk-detail-visual {{ bd.accent }}"><sc-if value="{{ bd.photo }}"><img src="{{ bd.photo }}" alt=""></sc-if><sc-if value="{{ bd.noPhoto }}"><span class="emoji" aria-hidden="true">{{ bd.emoji }}</span></sc-if></div>
+<div>
+<div class="eyebrow">{{ bd.eyebrow }}</div>
+<h1>{{ bd.title }}</h1>
+<span class="mk-price" style="font-size: 26px">{{ bd.price }}</span>
+<sc-if value="{{ bd.hasAction }}" hint-placeholder-val="{{ true }}"><div class="mk-detail-actions"><button type="button" class="mk-primary" onClick="{{ bd.action }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chat }}"></path></svg>{{ bd.actionLabel }}</button></div></sc-if>
+<sc-if value="{{ bd.hasPerson }}" hint-placeholder-val="{{ true }}">
+<div class="mk-seller-card"><div class="mk-seller-main"><span class="mk-face"><sc-if value="{{ bd.personPhoto }}"><img src="{{ bd.personPhoto }}" alt=""></sc-if><sc-if value="{{ bd.noPersonPhoto }}">{{ bd.initials }}</sc-if></span><div><div class="small muted">{{ bd.personLabel }}</div><div class="mk-seller-name">{{ bd.person }}</div><div class="mk-seller-sub">{{ bd.personSub }}</div></div></div></div>
+</sc-if>
+<div class="mk-block"><h3>Description</h3><p style="font-size: 15px">{{ bd.summary }}</p></div>
+<div class="mk-block"><h3>{{ bd.factsTitle }}</h3><div class="mk-facts"><sc-for list="{{ bd.facts }}" as="f" hint-placeholder-count="3"><div class="mk-info"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.check }}"></path></svg></span><strong>{{ f.text }}</strong></div></sc-for></div><div class="mk-note-box">{{ bd.note }}</div></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===== TICKETS ===== -->
+<sc-if value="{{ v.tickets }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade mk-tickets">
+<div>
+<div class="mk-browse-head"><div><div class="eyebrow">On campus stores</div><h1>Tickets</h1></div></div>
+<div class="mk-board-grid"><sc-for list="{{ ticketList }}" as="c" hint-placeholder-count="4">
+<sc-if value="{{ c.notTicket }}" hint-placeholder-val="{{ true }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if><sc-if value="{{ c.hasCaption }}"><span class="mk-caption">{{ c.caption }}</span></sc-if></div>
+<div class="mk-body"><div class="mk-title">{{ c.title }}</div><sc-if value="{{ c.hasMeta }}"><div class="mk-metaline">{{ c.meta }}</div></sc-if>
+<div class="mk-seller"><span class="mk-mini"><sc-if value="{{ c.sp }}"><img src="{{ c.sp }}" alt=""></sc-if><sc-if value="{{ c.noSp }}">{{ c.initials }}</sc-if></span><b>{{ c.seller }}</b><svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="Student verified" style="flex: none; color: #3157ff"><path d="M12 1.5 14.45 3.75 17.55 2.95 18.55 6.05 21.65 7.05 20.85 10.15 23.1 12 20.85 13.85 21.65 16.95 18.55 17.95 17.55 21.05 14.45 20.25 12 22.5 9.55 20.25 6.45 21.05 5.45 17.95 2.35 16.95 3.15 13.85 0.9 12 3.15 10.15 2.35 7.05 5.45 6.05 6.45 2.95 9.55 3.75Z" fill="currentColor"></path><path d="M7.4 12.3 10.6 15.5 16.9 8.9" fill="none" stroke="#fff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="mk-meta"><span class="mk-price">{{ c.price }} <small>{{ c.unit }}</small></span><span class="mk-rating"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="{{ ic.star }}"></path></svg>{{ c.rating }} <span class="muted">({{ c.reviews }})</span></span></div></div>
+</button></article>
+</sc-if>
+<sc-if value="{{ c.isTicket }}" hint-placeholder-val="{{ false }}">
+<article class="mk-card"><button type="button" onClick="{{ c.open }}">
+<div class="mk-board-visual {{ c.accent }}"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}"><span class="emoji" aria-hidden="true">{{ c.emoji }}</span></sc-if></div>
+<div class="mk-board-body"><span class="mk-kicker">{{ c.kicker }}</span><span class="mk-board-title">{{ c.title }}</span><span class="mk-board-meta">{{ c.schedule }}</span><span class="mk-board-sum">{{ c.summary }}</span><span class="mk-board-price">{{ c.tprice }}</span></div>
+</button></article>
+</sc-if>
+</sc-for></div>
+<sc-if value="{{ hasMyTickets }}" hint-placeholder-val="{{ false }}">
+<section class="mk-section"><div class="mk-section-head"><h2>Your tickets</h2></div><div class="mk-activity"><sc-for list="{{ myTickets }}" as="o" hint-placeholder-count="1"><button type="button" class="mk-act" onClick="{{ o.open }}"><span class="mk-act-main"><span class="mk-thumb {{ o.accent }}"><sc-if value="{{ o.photo }}"><img src="{{ o.photo }}" alt=""></sc-if></span><span><b>{{ o.title }}</b><small>Show QR code · {{ o.code }}</small></span></span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.chevronRight }}"></path></svg></button></sc-for></div></section>
+</sc-if>
+</div>
+<section class="mk-tchat" aria-label="Ticket chat">
+<div class="mk-tchat-head">
+<div class="mk-tchat-top"><strong style="display: flex; align-items: center; gap: 8px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3157ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.ticket }}"></path></svg>Ticket chat</strong>
+<span style="display: flex; gap: 6px"><button type="button" class="{{ tc.resellCls }}" onClick="{{ tc.openResell }}">Resell</button><button type="button" class="{{ tc.requestCls }}" onClick="{{ tc.openRequest }}">Request</button></span></div>
+<label class="mk-search" style="height: 38px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ ic.search }}"></path></svg><input type="search" aria-label="Search tickets" placeholder="Search tickets" value="{{ tc.q }}" onChange="{{ tc.onQ }}" style="height: 36px"></label>
+</div>
+<sc-if value="{{ tc.formOpen }}" hint-placeholder-val="{{ false }}">
+<form class="mk-tform" onSubmit="{{ tc.submit }}">
+<label class="small" style="font-weight: 800">Event<input required="" value="{{ tc.event }}" onChange="{{ tc.onEvent }}" placeholder="{{ tc.eventPh }}" style="width: 100%; margin-top: 4px"></label>
+<sc-if value="{{ tc.isResell }}" hint-placeholder-val="{{ true }}"><label class="small" style="font-weight: 800">Price<input required="" inputmode="decimal" value="{{ tc.price }}" onChange="{{ tc.onPrice }}" placeholder="25" style="width: 100%; margin-top: 4px"></label></sc-if>
+<div style="display: flex; gap: 8px"><button type="submit" class="mk-primary" style="min-height: 38px">Post</button><button type="button" class="mk-ghost" style="min-height: 38px" onClick="{{ tc.close }}">Cancel</button></div>
+</form>
+</sc-if>
+<div class="mk-msgs"><sc-for list="{{ tc.posts }}" as="p" hint-placeholder-count="4"><div class="{{ p.cls }}"><span style="flex: 1; min-width: 0"><b>{{ p.name }}</b>{{ p.line }}</span><sc-if value="{{ p.notMine }}"><button type="button" class="mk-pill-btn" style="width: 32px; padding: 0" onClick="{{ p.dm }}" aria-label="Private message {{ p.name }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.send }}"></path></svg></button></sc-if></div></sc-for></div>
+</section>
+</div>
+</sc-if>
+
+<!-- ===== INBOX ===== -->
+<sc-if value="{{ v.inbox }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-browse-head"><div><div class="eyebrow">Messages</div><h1>Inbox</h1></div></div>
+<div class="mk-inbox">
+<div class="mk-convos" role="list"><sc-for list="{{ convos }}" as="c" hint-placeholder-count="3"><button type="button" role="listitem" class="{{ c.cls }}" onClick="{{ c.open }}"><span class="mk-mini" style="width: 40px; height: 40px; font-size: 12px"><sc-if value="{{ c.photo }}"><img src="{{ c.photo }}" alt=""></sc-if><sc-if value="{{ c.noPhoto }}">{{ c.initials }}</sc-if></span><span style="min-width: 0; flex: 1"><b>{{ c.name }}</b><small>{{ c.context }}</small><small>{{ c.last }}</small></span><sc-if value="{{ c.unread }}"><span class="mk-badge" style="position: static">1</span></sc-if></button></sc-for></div>
+<section class="mk-chat" aria-label="Conversation">
+<div class="mk-chat-head"><span class="mk-mini" style="width: 36px; height: 36px; font-size: 11px"><sc-if value="{{ thread.photo }}"><img src="{{ thread.photo }}" alt=""></sc-if><sc-if value="{{ thread.noPhoto }}">{{ thread.initials }}</sc-if></span><div><b>{{ thread.name }}</b><small>{{ thread.context }}</small></div></div>
+<div class="mk-msgs" aria-live="polite"><sc-for list="{{ thread.messages }}" as="m" hint-placeholder-count="3"><div class="{{ m.cls }}">{{ m.text }}</div></sc-for></div>
+<form class="mk-composer" onSubmit="{{ sendMsg }}"><input aria-label="Write a message" placeholder="Write a message…" value="{{ draft }}" onChange="{{ onDraft }}"><button type="submit" class="mk-primary" style="min-height: 44px" aria-label="Send message"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ ic.send }}"></path></svg></button></form>
+</section>
+</div>
+</div>
+</sc-if>
+
+<!-- ===== YOU ===== -->
+<sc-if value="{{ v.you }}" hint-placeholder-val="{{ false }}">
+<div class="mk-fade">
+<div class="mk-you"><span class="mk-face">KC</span><div><h2 style="margin-bottom: 4px">Katarina Cedolin</h2><p class="muted small">kcedolin@sdsu.edu · San Diego State University · <span class="mk-verified">Student verified</span></p></div></div>
+<div class="mk-section-head"><h2>Your activity</h2></div>
+<div class="mk-activity"><sc-for list="{{ activity }}" as="o" hint-placeholder-count="2"><button type="button" class="mk-act" onClick="{{ o.open }}"><span class="mk-act-main"><span class="mk-thumb {{ o.accent }}"><sc-if value="{{ o.photo }}"><img src="{{ o.photo }}" alt=""></sc-if><sc-if value="{{ o.noPhoto }}">{{ o.emoji }}</sc-if></span><span><b>{{ o.title }}</b><small>{{ o.sub }}</small></span></span><span class="mk-status">{{ o.status }}</span></button></sc-for></div>
+</div>
+</sc-if>
+
+</div>
+</div>
+
+<nav class="mk-bottom" aria-label="Mobile navigation">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="6"><button type="button" class="{{ n.bcls }}" aria-current="{{ n.current }}" onClick="{{ n.go }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ n.icon }}"></path></svg>{{ n.short }}</button></sc-for>
+</nav>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div class="mk-toast" role="status">{{ toast }}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"device":{"editor":"enum","options":["phone","desktop"],"default":"phone"},"screenH":{"editor":null},"screenRadius":{"editor":null},"resetKey":{"editor":null},"initialView":{"editor":null},"initialCat":{"editor":null},"$preview":{"width":390,"height":790}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.D = this.data();
+    this.state = this.initial();
+  }
+
+  data() { return {"categories":[{"name":"Learn","dot":"sky","kind":"service","icon":"book-open"},{"name":"Create","dot":"lilac","kind":"service","icon":"palette"},{"name":"Beauty","dot":"coral","kind":"service","icon":"sparkles"},{"name":"Tech","dot":"mint","kind":"service","icon":"laptop"},{"name":"Lifestyle","dot":"butter","kind":"service","icon":"sun"},{"name":"Help","dot":"sky","kind":"service","icon":"hand-helping"},{"name":"Events","dot":"coral","kind":"service","icon":"calendar-star"},{"name":"Furniture","dot":"butter","kind":"product","icon":"lamp"},{"name":"Clothing","dot":"lilac","kind":"product","icon":"shirt"},{"name":"Textbooks","dot":"sky","kind":"product","icon":"book"}],"listings":[{"id":"maya-portraits","kind":"service","category":"Create","title":"Grad portraits with Maya","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.9","reviews":18,"completed":28,"price":65,"unit":"45 min","accent":"coral","emoji":"📸","tag":"Popular","description":"Natural, colorful graduation portraits around campus. You get 20 edited photos delivered within five days.","meeting":"Love Library steps or another campus spot","slots":["Today · 4:00 PM","Today · 5:00 PM","Tomorrow · 11:00 AM","Sat · 2:00 PM"],"availability":"Today · 4:00 PM"},{"id":"noah-calculus","kind":"service","category":"Learn","title":"Calculus II tutoring","seller":"Noah Williams","initials":"NW","sellerId":"noah-williams","storeId":"noah-studies","rating":"5.0","reviews":11,"completed":19,"price":30,"unit":"hour","accent":"sky","emoji":"∫","tag":"New this week","description":"Patient, practical tutoring for sequences, series and exam prep. Bring the problems you are stuck on.","meeting":"Library study room or video call","slots":["Today · 6:00 PM","Wed · 3:30 PM","Thu · 5:00 PM","Sun · 12:00 PM"],"availability":"Today · 6:00 PM"},{"id":"zoe-nails","kind":"service","category":"Beauty","title":"Soft gel set by Zoe","seller":"Zoe Rivera","initials":"ZR","sellerId":"zoe-rivera","storeId":"zoe-nail-studio","rating":"4.8","reviews":26,"completed":34,"price":45,"unit":"90 min","accent":"lilac","emoji":"💅","tag":"Student favorite","description":"Simple, glossy gel sets with custom color and tiny details. A calm appointment between classes.","meeting":"On-campus beauty studio","slots":["Fri · 4:30 PM","Sat · 11:00 AM","Sat · 1:00 PM","Sun · 3:00 PM"],"availability":"Fri · 4:30 PM"},{"id":"ari-video","kind":"service","category":"Tech","title":"Short-form video edit","seller":"Ari Patel","initials":"AP","sellerId":"ari-patel","storeId":"ari-edits","rating":"4.9","reviews":9,"completed":14,"price":40,"unit":"per video","accent":"mint","emoji":"🎬","tag":"Portfolio ready","description":"A punchy social edit from your raw clips: captions, pacing, music and one revision included.","meeting":"Digital delivery","slots":["Tue · 2:00 PM","Wed · 1:00 PM","Thu · 4:00 PM"],"availability":"Next opening · Tue"},{"id":"leo-move","kind":"service","category":"Help","title":"Move-out help","seller":"Leo Thompson","initials":"LT","sellerId":"leo-thompson","storeId":"leo-lifts","rating":"4.9","reviews":7,"completed":12,"price":25,"unit":"hour","accent":"butter","emoji":"📦","tag":"Useful now","description":"One extra pair of hands for boxes, small furniture and a tidy move between campus housing.","meeting":"Your residence hall","slots":["Sat · 10:00 AM","Sat · 1:00 PM","Sun · 10:00 AM"],"availability":"Sat · 10:00 AM"},{"id":"leo-carry","kind":"service","category":"Help","title":"Furniture carry","seller":"Leo Thompson","initials":"LT","sellerId":"leo-thompson","storeId":"leo-lifts","rating":"4.8","reviews":5,"completed":8,"price":30,"unit":"hour","accent":"butter","emoji":"🪑","description":"A second person for a desk, dresser or mini fridge. Leo meets you at the hall and carries it to the car or the new room.","meeting":"Your residence hall","slots":["Sat · 1:00 PM","Sun · 11:00 AM","Sun · 2:00 PM"],"availability":"Sat · 1:00 PM"},{"id":"leo-reset","kind":"service","category":"Help","title":"Dorm reset","seller":"Leo Thompson","initials":"LT","sellerId":"leo-thompson","storeId":"leo-lifts","rating":"5.0","reviews":4,"completed":6,"price":40,"unit":"2 hours","accent":"mint","emoji":"🧹","description":"A two-hour reset before a tour or a parent visit: trash out, surfaces wiped, and the room put back together.","meeting":"Your residence hall","slots":["Sun · 12:00 PM","Fri · 4:00 PM"],"availability":"Sun · 12:00 PM"},{"id":"taylor-laundry","kind":"service","category":"Help","title":"Laundry run","seller":"Taylor Brooks","initials":"TB","sellerId":"taylor-brooks","storeId":"dorm-drop","rating":"4.8","reviews":9,"completed":14,"price":18,"unit":"run","accent":"sky","emoji":"👕","description":"Pickup from your hall, a wash and dry, and the bag back at your door the same evening.","meeting":"Your residence hall","slots":["Today · 5:00 PM","Tomorrow · 10:00 AM","Thu · 6:00 PM"],"availability":"Today · 5:00 PM"},{"id":"taylor-grocery","kind":"service","category":"Help","title":"Grocery run","seller":"Taylor Brooks","initials":"TB","sellerId":"taylor-brooks","storeId":"dorm-drop","rating":"4.9","reviews":11,"completed":16,"price":12,"unit":"run","accent":"mint","emoji":"🛒","description":"Send a short list. Taylor shops Viejas or the market and drops the bags at your hall.","meeting":"Your residence hall","slots":["Today · 4:00 PM","Tomorrow · 3:00 PM","Sat · 11:00 AM"],"availability":"Today · 4:00 PM"},{"id":"jordan-boxes","kind":"service","category":"Help","title":"Boxes to the car","seller":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","storeId":"dorm-reset","rating":"4.7","reviews":6,"completed":9,"price":20,"unit":"hour","accent":"coral","emoji":"📫","description":"Load labeled boxes from your room out to a car at the hall loop. You book the hour and meet Jordan downstairs.","meeting":"Residence hall loop","slots":["Sat · 9:00 AM","Sat · 12:00 PM","Sun · 9:00 AM"],"availability":"Sat · 9:00 AM"},{"id":"mia-headshots","kind":"service","category":"Create","title":"LinkedIn headshots","seller":"Mia Torres","initials":"MT","sellerId":"mia-torres","storeId":"mia-torres-studio","rating":"4.7","reviews":13,"completed":21,"price":50,"unit":"30 min","accent":"sky","emoji":"🪪","tag":"Career ready","description":"Clean, confident headshots for internships, student orgs and the next opportunity.","meeting":"Student union courtyard","slots":["Thu · 12:00 PM","Thu · 1:00 PM","Fri · 11:00 AM"],"availability":"Thu · 12:00 PM"},{"id":"maya-events","kind":"service","category":"Events","title":"Event & org photo coverage","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"5.0","reviews":6,"completed":9,"price":120,"unit":"2 hours","accent":"butter","emoji":"🎉","tag":"Book early","description":"Candid coverage for club socials, formals and org events. 60+ edited photos delivered within a week.","meeting":"Your event venue on or near campus","slots":["Sat · 6:00 PM","Sun · 5:00 PM","Fri · 7:00 PM"],"availability":"Sat · 6:00 PM"},{"id":"noah-linear","kind":"service","category":"Learn","title":"Linear algebra tutoring","seller":"Noah Williams","initials":"NW","sellerId":"noah-williams","storeId":"noah-studies","rating":"4.9","reviews":7,"completed":10,"price":30,"unit":"hour","accent":"mint","emoji":"🧮","description":"Matrices, eigenvalues and proofs explained with pictures first and symbols second.","meeting":"Library study room or video call","slots":["Tomorrow · 2:00 PM","Wed · 6:00 PM","Fri · 1:00 PM"],"availability":"Tomorrow · 2:00 PM"},{"id":"noah-cram","kind":"service","category":"Learn","title":"Midterm cram session (group)","seller":"Noah Williams","initials":"NW","sellerId":"noah-williams","storeId":"noah-studies","rating":"5.0","reviews":9,"completed":12,"price":15,"unit":"per person · 2 hr","accent":"butter","emoji":"📝","tag":"Group rate","description":"A focused two-hour review with up to six students. Practice exam, worked solutions and plenty of questions.","meeting":"Library group study room","slots":["Thu · 7:00 PM","Sun · 4:00 PM"],"availability":"Thu · 7:00 PM"},{"id":"zoe-art","kind":"service","category":"Beauty","title":"Nail art add-on","seller":"Zoe Rivera","initials":"ZR","sellerId":"zoe-rivera","storeId":"zoe-nail-studio","rating":"4.9","reviews":10,"completed":14,"price":15,"unit":"30 min","accent":"coral","emoji":"🎨","description":"Tiny hearts, chrome tips, florals or your own idea added to any set. Bring a reference photo.","meeting":"On-campus beauty studio","slots":["Fri · 6:00 PM","Sat · 3:00 PM"],"availability":"Fri · 6:00 PM"},{"id":"riley-wheel","kind":"service","category":"Create","title":"Intro to the pottery wheel","seller":"Riley Kim","initials":"RK","sellerId":"riley-kim","storeId":"riley-clay","rating":"4.9","reviews":5,"completed":7,"price":35,"unit":"90 min","accent":"butter","emoji":"🏺","tag":"Small class","description":"Learn to center, open and pull your first cylinder. Clay and glazing included; pieces ready in two weeks.","meeting":"Art North ceramics studio","slots":["Wed · 5:00 PM","Sat · 10:00 AM"],"availability":"Wed · 5:00 PM"},{"id":"sam-scans","kind":"service","category":"Create","title":"Film developing & scans","seller":"Sam Okafor","initials":"SO","sellerId":"sam-okafor","storeId":"film-and-frames","rating":"5.0","reviews":8,"completed":11,"price":18,"unit":"per roll","accent":"sky","emoji":"🖨️","description":"Drop off 35mm color film and get high-res scans back in-app within four days. Negatives returned in sleeves.","meeting":"Student Union entrance","slots":["Mon · drop-off","Thu · drop-off"],"availability":"Drop-off Mon or Thu"},{"id":"ari-thumbnails","kind":"service","category":"Tech","title":"YouTube thumbnail design","seller":"Ari Patel","initials":"AP","sellerId":"ari-patel","storeId":"ari-edits","rating":"4.8","reviews":6,"completed":9,"price":20,"unit":"per thumbnail","accent":"coral","emoji":"🖼️","description":"Bold, readable thumbnails built from your footage. Two concepts and one round of tweaks.","meeting":"Digital delivery","slots":["Tue · 10:00 AM","Thu · 10:00 AM"],"availability":"Next opening · Tue"},{"id":"cubbies-reserve","kind":"service","category":"Lifestyle","title":"Summer storage reservation","seller":"College Cubbies","initials":"CC","sellerId":"college-cubbies","storeId":"college-cubbies","rating":"4.9","reviews":22,"completed":40,"price":49,"unit":"reservation","accent":"butter","emoji":"📦","tag":"5 boxes included","description":"Hold a summer storage spot. The reservation includes five boxes, tape, door-to-door pickup on the May move-out dates, and $100 of coverage on each item. Storage after that is priced per item, per month.","meeting":"Your dorm, apartment, or house","slots":["May 12 · morning","May 13 · morning","May 14 · afternoon","May 15 · morning"],"certification":"valet storage","storeOnly":true,"availability":"May 12–15 pickup"},{"id":"desk-lamp","kind":"product","category":"Furniture","title":"Vintage desk lamp","seller":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","storeId":"dorm-reset","rating":"4.9","reviews":8,"completed":10,"price":24,"unit":"each","accent":"butter","emoji":"💡","description":"Warm little desk lamp with a brass finish. Works perfectly and makes a dorm room feel less like a dorm room.","meeting":"Local pickup near Love Library","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near the library","quantityAvailable":2},{"id":"film-camera","kind":"product","category":"Tech","title":"35mm film camera","seller":"Sam Okafor","initials":"SO","sellerId":"sam-okafor","storeId":"film-and-frames","rating":"5.0","reviews":6,"completed":8,"price":70,"unit":"one camera","accent":"lilac","emoji":"📷","description":"A tested 35mm point-and-shoot with a fresh battery. Great for campus events and weekend trips.","meeting":"Student Union entrance","merchandiseType":"resale","condition":"Like new","availability":"Pickup at Student Union","quantityAvailable":1},{"id":"calc-textbook","kind":"product","category":"Textbooks","title":"Calculus II textbook","seller":"Emily Park","initials":"EP","sellerId":"emily-park","storeId":"emily-book-swap","rating":"4.8","reviews":5,"completed":7,"price":35,"unit":"one book","accent":"sky","emoji":"📚","description":"Used, highlighted in the useful places and ready for the next student. Includes the original study notes.","meeting":"Engineering building lobby","merchandiseType":"resale","condition":"Used — good","availability":"Pickup near Engineering","quantityAvailable":1},{"id":"vintage-hoodie","kind":"product","category":"Clothing","title":"Vintage campus hoodie","seller":"Chris Nguyen","initials":"CN","sellerId":"chris-nguyen","storeId":"aztec-thrift","rating":"4.9","reviews":12,"completed":15,"price":28,"unit":"size M","accent":"coral","emoji":"🧥","description":"Soft broken-in hoodie in a faded red. Size M, relaxed fit, no stains or weird surprises.","meeting":"Campanile walk","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near Campanile","quantityAvailable":1},{"id":"ceramic-mug","kind":"product","category":"Student-made","title":"Handmade ceramic mug","seller":"Riley Kim","initials":"RK","sellerId":"riley-kim","storeId":"riley-clay","rating":"4.8","reviews":4,"completed":6,"price":18,"unit":"one mug","accent":"mint","emoji":"☕","description":"A one-of-a-kind student-made mug with a soft blue glaze and just enough room for a late-night study drink.","meeting":"Art North studio lobby","merchandiseType":"new","condition":"New","availability":"Pickup near Art North","quantityAvailable":3},{"id":"mini-fan","kind":"product","category":"Dorm","title":"Quiet desk fan","seller":"Taylor Brooks","initials":"TB","sellerId":"taylor-brooks","storeId":"dorm-drop","rating":"4.7","reviews":3,"completed":4,"price":15,"unit":"one fan","accent":"sky","emoji":"🌀","description":"Small, quiet and perfect for a warm dorm room. Three speeds and a USB cable included.","meeting":"Tenochca front desk","merchandiseType":"resale","condition":"Good condition","availability":"Pickup at Tenochca","quantityAvailable":1},{"id":"maya-presets","kind":"product","category":"Create","title":"Lightroom preset pack","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.9","reviews":14,"completed":22,"price":12,"unit":"digital pack","accent":"coral","emoji":"🎛️","description":"The eight warm, colorful presets Maya uses for her campus portraits. Works on desktop and mobile Lightroom.","meeting":"Digital delivery in the app","merchandiseType":"new","condition":"Digital download","availability":"Instant digital delivery","quantityAvailable":99},{"id":"maya-prints","kind":"product","category":"Create","title":"Campus photo print (8×10)","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.8","reviews":4,"completed":11,"price":15,"unit":"one print","accent":"sky","emoji":"🌅","description":"Golden-hour prints of Hepner Hall and the Campanile on matte paper. A nice little dorm wall upgrade.","meeting":"Love Library steps","merchandiseType":"new","condition":"New","availability":"Pickup near Love Library","quantityAvailable":3},{"id":"maya-jeans","kind":"product","category":"Clothing","title":"Vintage straight-leg jeans","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.8","reviews":3,"completed":5,"price":26,"unit":"W28","accent":"sky","emoji":"👖","description":"Mid-wash, high-rise and perfectly broken in. Waist 28, inseam 30.","meeting":"Art North studio lobby","merchandiseType":"resale","condition":"Good condition","availability":"Pickup at Art North","quantityAvailable":1},{"id":"maya-tote","kind":"product","category":"Clothing","title":"Canvas tote bag","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.7","reviews":2,"completed":4,"price":10,"unit":"one bag","accent":"butter","emoji":"👜","description":"Sturdy canvas tote that fits a laptop, a water bottle and too many snacks.","meeting":"Love Library steps","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near Love Library","quantityAvailable":2},{"id":"noah-guide","kind":"product","category":"Textbooks","title":"Calc II study guide","seller":"Noah Williams","initials":"NW","sellerId":"noah-williams","storeId":"noah-studies","rating":"5.0","reviews":12,"completed":30,"price":8,"unit":"printed + PDF","accent":"sky","emoji":"📘","description":"A 40-page guide to series, integration techniques and the problems that show up on every midterm.","meeting":"Love Library front desk","merchandiseType":"new","condition":"New","availability":"Pickup at the library","quantityAvailable":20},{"id":"zoe-pressons","kind":"product","category":"Beauty","title":"Custom press-on set","seller":"Zoe Rivera","initials":"ZR","sellerId":"zoe-rivera","storeId":"zoe-nail-studio","rating":"4.8","reviews":7,"completed":9,"price":25,"unit":"one set","accent":"lilac","emoji":"💖","description":"Hand-painted reusable press-ons sized to you. Comes with glue, tabs and a tiny file.","meeting":"On-campus beauty studio","merchandiseType":"new","condition":"Made to order","availability":"Pickup at the beauty studio","quantityAvailable":5},{"id":"jordan-rug","kind":"product","category":"Furniture","title":"Soft area rug (4×6)","seller":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","storeId":"dorm-reset","rating":"4.9","reviews":2,"completed":3,"price":30,"unit":"one rug","accent":"coral","emoji":"🧶","description":"Plush cream rug that makes a dorm floor feel warm. Freshly cleaned.","meeting":"Local pickup near Love Library","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near the library","quantityAvailable":1},{"id":"jordan-mirror","kind":"product","category":"Furniture","title":"Full-length mirror","seller":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","storeId":"dorm-reset","rating":"4.8","reviews":2,"completed":2,"price":20,"unit":"one mirror","accent":"sky","emoji":"🪞","description":"Over-the-door or leaning mirror with a thin black frame. No cracks, hardware included.","meeting":"Local pickup near Love Library","merchandiseType":"resale","condition":"Like new","availability":"Pickup near the library","quantityAvailable":1},{"id":"jordan-shelf","kind":"product","category":"Furniture","title":"Small bookshelf","seller":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","storeId":"dorm-reset","rating":"4.9","reviews":1,"completed":1,"price":25,"unit":"one shelf","accent":"butter","emoji":"🗄️","description":"Three-shelf white bookcase, about waist height. Fits under most lofted beds.","meeting":"Local pickup near Love Library","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near the library","quantityAvailable":1},{"id":"riley-planter","kind":"product","category":"Student-made","title":"Speckled planter","seller":"Riley Kim","initials":"RK","sellerId":"riley-kim","storeId":"riley-clay","rating":"4.9","reviews":3,"completed":5,"price":22,"unit":"one planter","accent":"mint","emoji":"🪴","description":"Wheel-thrown planter with a drainage hole and speckled cream glaze. Fits a small pothos perfectly.","meeting":"Art North studio lobby","merchandiseType":"new","condition":"New","availability":"Pickup near Art North","quantityAvailable":4},{"id":"sam-film","kind":"product","category":"Tech","title":"Color film roll (36 exp)","seller":"Sam Okafor","initials":"SO","sellerId":"sam-okafor","storeId":"film-and-frames","rating":"5.0","reviews":5,"completed":16,"price":14,"unit":"one roll","accent":"butter","emoji":"🎞️","description":"Fresh, fridge-stored ISO 400 color film. Pairs nicely with the film developing service.","meeting":"Student Union entrance","merchandiseType":"new","condition":"New","availability":"Pickup at Student Union","quantityAvailable":12},{"id":"chris-crewneck","kind":"product","category":"Clothing","title":"Faded Aztecs crewneck","seller":"Chris Nguyen","initials":"CN","sellerId":"chris-nguyen","storeId":"aztec-thrift","rating":"4.8","reviews":5,"completed":6,"price":24,"unit":"size L","accent":"lilac","emoji":"👕","description":"Early-2000s Aztecs crewneck with a cracked vintage print. Size L, boxy fit.","meeting":"Campanile walk","merchandiseType":"resale","condition":"Good condition","availability":"Pickup near Campanile","quantityAvailable":1},{"id":"cubbies-medium","kind":"product","category":"Dorm","title":"Medium box","seller":"College Cubbies","initials":"CC","sellerId":"college-cubbies","storeId":"college-cubbies","rating":"4.9","reviews":14,"completed":30,"price":25,"unit":"month","accent":"butter","emoji":"📦","description":"One medium box in summer storage. College Cubbies prices it at $25 a month with a four-month minimum, picks it up with your reservation, and brings it back in August.","meeting":"Your dorm, apartment, or house","storeOnly":true,"merchandiseType":"storage","condition":"Summer storage","availability":"Picked up with your reservation","quantityAvailable":40},{"id":"cubbies-large","kind":"product","category":"Dorm","title":"Large box","seller":"College Cubbies","initials":"CC","sellerId":"college-cubbies","storeId":"college-cubbies","rating":"4.8","reviews":9,"completed":18,"price":30,"unit":"month","accent":"sky","emoji":"📫","description":"One large box in summer storage, $30 a month with a four-month minimum. It rides with your reservation and comes back for fall move-in.","meeting":"Your dorm, apartment, or house","storeOnly":true,"merchandiseType":"storage","condition":"Summer storage","availability":"Picked up with your reservation","quantityAvailable":40},{"id":"cubbies-suitcase","kind":"product","category":"Dorm","title":"Large suitcase","seller":"College Cubbies","initials":"CC","sellerId":"college-cubbies","storeId":"college-cubbies","rating":"4.9","reviews":11,"completed":22,"price":30,"unit":"month","accent":"lilac","emoji":"🧳","description":"One large suitcase in summer storage, $30 a month with a four-month minimum. Leave it packed. They pick it up and return it in the fall.","meeting":"Your dorm, apartment, or house","storeOnly":true,"merchandiseType":"storage","condition":"Summer storage","availability":"Picked up with your reservation","quantityAvailable":40},{"id":"cubbies-desk","kind":"product","category":"Furniture","title":"Desk","seller":"College Cubbies","initials":"CC","sellerId":"college-cubbies","storeId":"college-cubbies","rating":"4.8","reviews":6,"completed":10,"price":40,"unit":"month","accent":"coral","emoji":"🪑","description":"One desk in summer storage, $40 a month with a four-month minimum. Student movers load it at your place and deliver it back before fall.","meeting":"Your dorm, apartment, or house","storeOnly":true,"merchandiseType":"storage","condition":"Summer storage","availability":"Picked up with your reservation","quantityAvailable":20},{"id":"maya-open-studio","kind":"ticket","category":"Events","title":"Open studio night","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.9","reviews":18,"completed":28,"price":10,"unit":"ticket","accent":"coral","emoji":"🎨","description":"One admission to the VisCom Collective open studio. Photos on the wall, prints for sale, and the door list is this QR code.","meeting":"Art North studio","availability":"Sat · 7:00 PM","quantityAvailable":40,"host":"VisCom Collective","date":"Sat","time":"7:00 PM","location":"Art North studio","summary":"A Saturday studio night. Student price, mobile entry."},{"id":"sam-film-night","kind":"ticket","category":"Events","title":"Slow Hours live","seller":"Sam Okafor","initials":"SO","sellerId":"sam-okafor","storeId":"film-and-frames","rating":"5.0","reviews":19,"completed":35,"price":12,"unit":"ticket","accent":"lilac","emoji":"🎸","description":"Slow Hours plays a full set in the Student Union theatre. Buy it from the store and bring the QR code to the door.","meeting":"Student Union theatre","availability":"Fri · 8:00 PM","quantityAvailable":60,"host":"Slow Hours","date":"Fri","time":"8:00 PM","location":"Student Union theatre","summary":"A student-band set. One admission, mobile entry."},{"id":"ticket-aztecs","kind":"ticket","category":"Events","title":"Aztecs vs. Boise State","seller":"Chris Nguyen","initials":"CN","sellerId":"chris-nguyen","storeId":"aztec-thrift","rating":"4.9","reviews":12,"completed":15,"price":25,"unit":"ticket","accent":"coral","emoji":"🏈","description":"Student-section seats for Saturday's game. Your QR code is the ticket at the gate.","meeting":"Student section","availability":"Sat · 7:30 PM","quantityAvailable":40,"host":"Snapdragon Stadium","date":"Sat","time":"7:30 PM","location":"Student section","summary":"Student-section seats for Saturday's game. Digital ticket transfers in the app."},{"id":"ticket-show","kind":"ticket","category":"Events","title":"Open Air concert","seller":"Maya Chen","initials":"MC","sellerId":"maya-chen","storeId":"maya-makes-photo","rating":"4.9","reviews":18,"completed":28,"price":40,"unit":"ticket","accent":"lilac","emoji":"🎤","description":"A Friday lawn ticket for the Open Air concert. Student price, and the QR code is your mobile entry.","meeting":"Lawn","availability":"Fri · 8:00 PM","quantityAvailable":80,"host":"Cal Coast Credit Union Open Air","date":"Fri","time":"8:00 PM","location":"Lawn","summary":"A Friday lawn ticket. Student price, mobile entry."},{"id":"ticket-formal","kind":"ticket","category":"Events","title":"Org formal guest ticket","seller":"Zoe Rivera","initials":"ZR","sellerId":"zoe-rivera","storeId":"zoe-nail-studio","rating":"4.8","reviews":26,"completed":34,"price":35,"unit":"ticket","accent":"butter","emoji":"✨","description":"One extra guest ticket for the spring formal. Dinner is included, and the QR code gets you in.","meeting":"Downtown","availability":"Sat · 6:00 PM","quantityAvailable":12,"host":"Delta Gamma","date":"Sat","time":"6:00 PM","location":"Downtown","summary":"One extra guest ticket for the spring formal. Includes dinner."},{"id":"ticket-comedy","kind":"ticket","category":"Events","title":"Comedy night","seller":"Ari Patel","initials":"AP","sellerId":"ari-patel","storeId":"ari-edits","rating":"4.9","reviews":15,"completed":23,"price":12,"unit":"ticket","accent":"mint","emoji":"😂","description":"Campus comedy showcase at the Aztec Student Union. General admission, doors at 7:30, and the QR code is your ticket.","meeting":"General admission","availability":"Thu · 8:00 PM","quantityAvailable":50,"host":"Conrad Prebys Aztec Student Union","date":"Thu","time":"8:00 PM","location":"General admission","summary":"Campus comedy showcase. General admission, doors at 7:30."}],"schoolServices":[{"id":"sdsu-safe-ride","category":"Help","title":"SDSU Safe Ride","provider":"SDSU Transportation","accent":"coral","emoji":"🚐","hours":"Mon–Fri · 7:00 PM–3:30 AM","description":"Free rides for students, faculty and staff from more than 30 campus locations. Request one in the SDSU Safe app.","website":"https://transportation.sdsu.edu/commuting/saferide","websiteLabel":"Visit website"},{"id":"mslc","category":"Learn","title":"Math & Science Learning Center","provider":"Love Library Room 328","accent":"mint","emoji":"📐","hours":"Drop in · no appointment","description":"Free drop-in tutoring and course office hours for math and science. Come during the posted hours.","website":"https://mslc.sdsu.edu/","websiteLabel":"Visit website"},{"id":"as-headshots","category":"Create","title":"Free professional headshots","provider":"A.S. Career Advantage","accent":"sky","emoji":"🪪","hours":"Tue & Fri · 8:30–10:30 AM","description":"Free headshots for current SDSU students at The Backdoor Studio. Walk-ins are welcome, and an appointment is recommended.","website":"https://as.sdsu.edu/careeradvantage/","websiteLabel":"Visit website"}],"sellers":[{"id":"maya-chen","name":"Maya Chen","initials":"MC","campus":"SDSU · Senior · Design","bio":"Photographer, design student and the person behind the camera at your favorite campus events.","rating":"4.9","reviews":18,"completed":28,"response":"under an hour","accent":"coral","certification":"photographer","handle":"@mayamakes"},{"id":"noah-williams","name":"Noah Williams","initials":"NW","campus":"SDSU · Junior · Mathematics","bio":"I like making intimidating problems feel manageable. Bring the one that is bothering you.","rating":"5.0","reviews":11,"completed":19,"response":"a few hours","accent":"sky","certification":"tutor","handle":"@noahstudies"},{"id":"zoe-rivera","name":"Zoe Rivera","initials":"ZR","campus":"SDSU · Senior · Psychology","bio":"Soft gel sets, tiny details and a relaxing appointment between the busy parts of college.","rating":"4.8","reviews":26,"completed":34,"response":"two hours","accent":"lilac","certification":"nail tech","handle":"@zoecreates"},{"id":"jordan-lee","name":"Jordan Lee","initials":"JL","campus":"SDSU · Senior · Business","bio":"Selling the useful things I am done with so they can have a second life on campus.","rating":"4.9","reviews":8,"completed":10,"response":"same day","accent":"butter","certification":"campus helper","handle":"@jordanlists"},{"id":"ari-patel","name":"Ari Patel","initials":"AP","campus":"SDSU · Sophomore · Film","bio":"I edit for student creators and clubs. Fast turnarounds, clean captions and good music choices.","rating":"4.9","reviews":15,"completed":23,"response":"same day","accent":"mint","certification":"video editor","handle":"@ariedits"},{"id":"leo-thompson","name":"Leo Thompson","initials":"LT","campus":"SDSU · Junior · Kinesiology","bio":"Strong, careful and on time. I help students move without the stress.","rating":"4.9","reviews":7,"completed":12,"response":"a few hours","accent":"butter","certification":"campus helper","handle":"@leolifts"},{"id":"mia-torres","name":"Mia Torres","initials":"MT","campus":"SDSU · Senior · Communication","bio":"Headshots that look like you on a good day, ready for LinkedIn and org pages.","rating":"4.7","reviews":13,"completed":21,"response":"under a day","accent":"sky","certification":"photographer","handle":"@miatorres"},{"id":"sam-okafor","name":"Sam Okafor","initials":"SO","campus":"SDSU · Junior · Art","bio":"Film nerd. I test every camera I sell and develop film for friends on the side.","rating":"5.0","reviews":19,"completed":35,"response":"two hours","accent":"lilac","certification":"photo lab tech","handle":"@samshootsfilm"},{"id":"emily-park","name":"Emily Park","initials":"EP","campus":"SDSU · Senior · Engineering","bio":"Passing along the STEM textbooks that got me through, notes included.","rating":"4.8","reviews":5,"completed":7,"response":"next day","accent":"sky","certification":null,"handle":"@emilyreads"},{"id":"chris-nguyen","name":"Chris Nguyen","initials":"CN","campus":"SDSU · Junior · Marketing","bio":"I dig through thrift stores for vintage Aztecs gear so you do not have to.","rating":"4.9","reviews":17,"completed":21,"response":"an hour","accent":"coral","certification":null,"handle":"@aztecthrift"},{"id":"riley-kim","name":"Riley Kim","initials":"RK","campus":"SDSU · Senior · Studio Art","bio":"Ceramics major making small-batch mugs and planters, and teaching friends the wheel.","rating":"4.9","reviews":12,"completed":18,"response":"a day","accent":"mint","certification":"ceramics instructor","handle":"@rileyclay"},{"id":"taylor-brooks","name":"Taylor Brooks","initials":"TB","campus":"SDSU · Sophomore · Biology","bio":"Small dorm essentials I no longer need, priced to move.","rating":"4.7","reviews":3,"completed":4,"response":"same day","accent":"sky","certification":"campus helper","handle":"@taylordorm"},{"id":"college-cubbies","name":"College Cubbies","initials":"CC","campus":"SDSU · Student-run","bio":"Valet summer storage started by SDSU students. They pick up from your place, store it, and bring it back in the fall.","rating":"4.9","reviews":48,"completed":500,"response":"the same day","accent":"butter","certification":null,"handle":"@collegecubbies"},{"id":"katarina-cedolin","name":"Katarina Cedolin","initials":"KC","campus":"SDSU · Student","bio":"A student seller on Campus Connect.","rating":"New","reviews":0,"completed":0,"response":"soon","accent":"lilac","certification":null,"handle":"@katarina"}],"stores":[{"id":"maya-makes-photo","sellerId":"maya-chen","name":"Maya Makes Photo","handle":"@mayamakes","emoji":"📸","accent":"coral","tagline":"Portraits, events and prints from around campus","about":"Maya has photographed hundreds of SDSU students, from grad portraits to club formals. This store has her sessions, the prints and presets people keep asking about, and a small rack of vintage pieces from her own closet.","announcement":"Grad season is here — spring weekends are filling up fast.","rating":"4.9","reviews":52,"sales":92,"followers":400,"collections":[{"name":"Featured","listingIds":["maya-portraits","maya-events","maya-presets"]},{"name":"Sessions","listingIds":["maya-portraits","maya-mini","maya-events"]},{"name":"Prints & presets","listingIds":["maya-prints","maya-presets"]},{"name":"Closet","listingIds":["maya-sundress","maya-jeans","maya-tote"]},{"name":"Tickets","listingIds":["maya-open-studio","ticket-show"]}],"reviewsSample":[{"author":"Priya S.","rating":5,"text":"Maya made the session feel easy. The photos looked like me, not a stock photo.","listingId":"maya-portraits"},{"author":"Delta Gamma","rating":5,"text":"She covered our formal and had previews up the next morning.","listingId":"maya-events"},{"author":"Marcus T.","rating":4,"text":"The presets are great on mobile. One felt a little orange on indoor shots.","listingId":"maya-presets"},{"author":"Jess L.","rating":5,"text":"The sundress was exactly as described and Maya was super flexible on pickup.","listingId":"maya-sundress"},{"author":"Omar K.","rating":5,"text":"Tote is sturdier than it looks. Easy handoff.","listingId":"maya-tote"}],"policies":{"cancellation":"Free cancellation up to 24 hours before a session. Reschedule once for free. Closet pieces can be returned within 24 hours of pickup if they don't fit.","pickup":"Prints and closet pieces pick up at the Love Library steps or Art North. Presets are delivered in the app.","hours":"Sessions weekdays after 3 PM and most weekends"}},{"id":"noah-studies","sellerId":"noah-williams","name":"Noah Studies","handle":"@noahstudies","emoji":"∫","accent":"sky","tagline":"Math tutoring that makes it click","about":"One-on-one and group math help for lower-division courses, plus the study guide Noah wishes he had as a freshman.","announcement":"Midterm cram sessions are open for Calc II and Linear Algebra.","rating":"5.0","reviews":28,"sales":71,"followers":164,"collections":[{"name":"Featured","listingIds":["noah-calculus","noah-cram"]},{"name":"1:1 tutoring","listingIds":["noah-calculus","noah-linear"]},{"name":"Study materials","listingIds":["noah-guide"]}],"reviewsSample":[{"author":"Hannah R.","rating":5,"text":"Went from a C to a B+ on the second midterm. Noah is so patient.","listingId":"noah-calculus"},{"author":"Luis M.","rating":5,"text":"The cram session practice exam was almost identical in style to the real one.","listingId":"noah-cram"}],"policies":{"cancellation":"Cancel up to 12 hours before a session for a full refund.","pickup":"Printed guides pick up at the Love Library front desk.","hours":"Afternoons and evenings, Sunday through Thursday"}},{"id":"zoe-nail-studio","sellerId":"zoe-rivera","name":"Zoe's Nail Studio","handle":"@zoecreates","emoji":"💅","accent":"lilac","tagline":"Soft gel sets and tiny details between classes","about":"Calm, tidy nail appointments on campus, plus custom press-ons for when you can't make it in.","announcement":"","rating":"4.8","reviews":43,"sales":57,"followers":241,"collections":[{"name":"Appointments","listingIds":["zoe-nails","zoe-art"]},{"name":"Take-home","listingIds":["zoe-pressons"]},{"name":"Tickets","listingIds":["ticket-formal"]}],"reviewsSample":[{"author":"Ava C.","rating":5,"text":"Lasted three weeks with zero lifting. Booking again.","listingId":"zoe-nails"},{"author":"Sofia G.","rating":4,"text":"Press-ons were gorgeous, sizing was slightly big on one nail.","listingId":"zoe-pressons"}],"policies":{"cancellation":"Free cancellation up to 24 hours before. Late cancellations lose the deposit.","pickup":"Press-ons pick up at the beauty studio.","hours":"Thursday through Sunday"}},{"id":"dorm-reset","sellerId":"jordan-lee","name":"Dorm Reset","handle":"@jordanlists","emoji":"🛋️","accent":"butter","tagline":"Gently used dorm upgrades, ready for pickup","about":"Jordan is graduating and clearing out four years of dorm and apartment finds. Everything is cleaned and tested.","announcement":"Moving out May 15 — everything must go.","rating":"4.9","reviews":8,"sales":10,"followers":47,"collections":[{"name":"Lighting","listingIds":["desk-lamp"]},{"name":"Decor","listingIds":["jordan-rug","jordan-mirror"]},{"name":"Storage","listingIds":["jordan-shelf"]}],"reviewsSample":[{"author":"Ben W.","rating":5,"text":"Lamp works perfectly and Jordan helped me carry the shelf to my car.","listingId":"desk-lamp"}],"policies":{"cancellation":"Orders can be cancelled any time before pickup.","pickup":"Pickup near Love Library. Bigger items can be walked to nearby dorms.","hours":"Pickups weekdays 12–6 PM"}},{"id":"riley-clay","sellerId":"riley-kim","name":"Riley Clay","handle":"@rileyclay","emoji":"🏺","accent":"mint","tagline":"Handmade ceramics and beginner wheel classes","about":"Small-batch mugs and planters from a ceramics major, plus relaxed intro classes on the wheel.","announcement":"Spring glaze drop coming next week.","rating":"4.9","reviews":12,"sales":18,"followers":133,"collections":[{"name":"Mugs","listingIds":["ceramic-mug"]},{"name":"Planters","listingIds":["riley-planter"]},{"name":"Classes","listingIds":["riley-wheel"]}],"reviewsSample":[{"author":"Nina P.","rating":5,"text":"My favorite mug now. The glaze is even prettier in person.","listingId":"ceramic-mug"},{"author":"Tom H.","rating":5,"text":"The wheel class was so fun, Riley is a great teacher.","listingId":"riley-wheel"}],"policies":{"cancellation":"Classes can be moved up to 48 hours before.","pickup":"Pickup at the Art North studio lobby.","hours":"Studio hours Wednesday and Saturday"}},{"id":"film-and-frames","sellerId":"sam-okafor","name":"Film & Frames","handle":"@samshootsfilm","emoji":"📷","accent":"butter","tagline":"Tested film cameras, fresh rolls and scans","about":"Everything you need to shoot film on campus: tested cameras, fresh film and a student-run developing service.","announcement":"","rating":"5.0","reviews":19,"sales":35,"followers":176,"collections":[{"name":"Cameras","listingIds":["film-camera"]},{"name":"Film","listingIds":["sam-film"]},{"name":"Lab","listingIds":["sam-scans"]},{"name":"Tickets","listingIds":["sam-film-night"]}],"reviewsSample":[{"author":"Kai D.","rating":5,"text":"Camera works great and Sam showed me how to load it.","listingId":"film-camera"},{"author":"Rosa E.","rating":5,"text":"Scans came back in three days and look amazing.","listingId":"sam-scans"}],"policies":{"cancellation":"Cameras come with a 7-day it-works guarantee.","pickup":"Pickup and film drop-off at the Student Union entrance.","hours":"Monday and Thursday drop-offs"}},{"id":"ari-edits","sellerId":"ari-patel","name":"Ari Edits","handle":"@ariedits","emoji":"🎬","accent":"mint","tagline":"Short-form edits and thumbnails that pop","about":"Video edits and thumbnail design for student creators, clubs and small campus businesses.","announcement":"","rating":"4.9","reviews":15,"sales":23,"followers":92,"collections":[{"name":"Video","listingIds":["ari-video"]},{"name":"Design","listingIds":["ari-thumbnails"]},{"name":"Tickets","listingIds":["ticket-comedy"]}],"reviewsSample":[{"author":"SDSU Dance Club","rating":5,"text":"Our recruitment reel got 3x our usual views.","listingId":"ari-video"}],"policies":{"cancellation":"Full refund before editing starts.","pickup":"All work is delivered in the app.","hours":"Replies weekdays"}},{"id":"leo-lifts","sellerId":"leo-thompson","name":"Leo Lifts","handle":"@leolifts","emoji":"📦","accent":"butter","tagline":"Extra hands for move-in and move-out","about":"Book Leo by the hour for boxes, small furniture and dorm-to-apartment moves.","announcement":"Move-out weekends book up fast.","rating":"4.9","reviews":7,"sales":12,"followers":38,"collections":[],"reviewsSample":[{"author":"Grace Y.","rating":5,"text":"On time and super careful with my mirror.","listingId":"leo-move"}],"policies":{"cancellation":"Free cancellation up to 24 hours before.","pickup":"Leo meets you at your residence hall.","hours":"Weekends"}},{"id":"mia-torres-studio","sellerId":"mia-torres","name":"Mia Torres Studio","handle":"@miatorres","emoji":"🪪","accent":"sky","tagline":"Headshots for internships and orgs","about":"Clean, confident headshots in 30 minutes, edited and delivered within three days.","announcement":"","rating":"4.7","reviews":13,"sales":21,"followers":64,"collections":[],"reviewsSample":[{"author":"Dev A.","rating":5,"text":"Got two interview callbacks the week I updated my LinkedIn.","listingId":"mia-headshots"}],"policies":{"cancellation":"Free cancellation up to 24 hours before.","pickup":"Photos delivered in the app.","hours":"Thursday and Friday midday"}},{"id":"emily-book-swap","sellerId":"emily-park","name":"Emily's Book Swap","handle":"@emilyreads","emoji":"📚","accent":"sky","tagline":"Used STEM textbooks at student prices","about":"Engineering and math textbooks with helpful notes, priced well under the bookstore.","announcement":"","rating":"4.8","reviews":5,"sales":7,"followers":21,"collections":[],"reviewsSample":[{"author":"Chris L.","rating":5,"text":"The notes in the margins actually helped.","listingId":"calc-textbook"}],"policies":{"cancellation":"Cancel any time before pickup.","pickup":"Engineering building lobby.","hours":"Weekday mornings"}},{"id":"aztec-thrift","sellerId":"chris-nguyen","name":"Aztec Thrift","handle":"@aztecthrift","emoji":"🧥","accent":"coral","tagline":"Vintage campus sweats and tees","about":"Hand-picked vintage SDSU and Aztecs gear, washed and ready to wear.","announcement":"Game-day restock Friday.","rating":"4.9","reviews":17,"sales":21,"followers":205,"collections":[{"name":"Sweats","listingIds":["vintage-hoodie","chris-crewneck"]},{"name":"Tickets","listingIds":["ticket-aztecs"]}],"reviewsSample":[{"author":"Jay R.","rating":5,"text":"Hoodie is so soft. Chris had it ready right on time.","listingId":"vintage-hoodie"}],"policies":{"cancellation":"Cancel any time before pickup.","pickup":"Pickup along the Campanile walk.","hours":"Afternoons"}},{"id":"dorm-drop","sellerId":"taylor-brooks","name":"Taylor's Dorm Drop","handle":"@taylordorm","emoji":"🌀","accent":"sky","tagline":"Small dorm essentials, quick pickup","about":"The little things that make a dorm room livable, passed along after freshman year.","announcement":"","rating":"4.7","reviews":3,"sales":4,"followers":12,"collections":[],"reviewsSample":[{"author":"Mo S.","rating":5,"text":"Fan is super quiet, exactly as described.","listingId":"mini-fan"}],"policies":{"cancellation":"Cancel any time before pickup.","pickup":"Tenochca front desk.","hours":"Evenings"}},{"id":"college-cubbies","sellerId":"college-cubbies","name":"College Cubbies","handle":"@collegecubbies","emoji":"📦","accent":"butter","tagline":"Valet summer storage, picked up at your door","about":"College Cubbies is student-run storage for SDSU. They drop off packing supplies, pick up from your dorm or apartment, keep everything in climate-controlled storage for the summer, and deliver it back in the fall. You pay per item, per month, with a four-month minimum. Each item includes $100 of coverage.","announcement":"Complimentary pickup is May 12–15. Fall delivery is Aug 8 and Aug 18–22.","rating":"4.9","reviews":48,"sales":500,"followers":70,"collections":[{"name":"Reserve","listingIds":["cubbies-reserve"]},{"name":"What you store","listingIds":["cubbies-medium","cubbies-large","cubbies-suitcase","cubbies-desk"]}],"reviewsSample":[{"author":"Mina L.","rating":5,"text":"The boxes showed up before finals, and pickup was at my apartment.","listingId":"cubbies-reserve"},{"author":"Jordan P.","rating":5,"text":"My desk and boxes were back the day I moved into the new place.","listingId":"cubbies-desk"}],"policies":{"cancellation":"The reservation holds your pickup window. Message them if your move-out date changes.","pickup":"Door-to-door at your dorm, apartment, or house. Complimentary on May 12–15. Other dates add a convenience fee.","hours":"Fall delivery on Aug 8 and Aug 18–22"}}],"jobs":[{"id":"job-arc","title":"Lifeguard","kicker":"Aztec Recreation Center","meta":"Evenings and weekends · On campus","price":"$17.50/hr","accent":"sky","emoji":"🏊","poster":"Sam Ortiz","initials":"SO","summary":"Watch the ARC pool during open swims and intramurals. Current certification required, or ARC will schedule the class.","facts":[["Schedule","Evenings and weekends"],["Where","Aztec Recreation Center"],["Type","On-campus job"]]},{"id":"job-library","title":"Library desk assistant","kicker":"Love Library","meta":"10–15 hrs/week · Student assistant","price":"$16.75/hr","accent":"lilac","emoji":"📚","poster":"Elena Park","initials":"EP","summary":"Check out materials, answer desk questions, and shelve returns between classes.","facts":[["Schedule","10–15 hours a week"],["Where","Love Library"],["Type","Student assistant"]]},{"id":"job-research","title":"Research assistant","kicker":"Psychology lab","meta":"Spring semester · Flexible hours","price":"$18/hr","accent":"mint","emoji":"🧪","poster":"Avery Cole","initials":"AC","summary":"Help run study sessions and keep participant notes organized. Psychology coursework is a plus.","facts":[["Schedule","Flexible, about 8 hours a week"],["Where","Life Sciences"],["Type","Research"]]},{"id":"job-cafe","title":"Opening barista","kicker":"Aztec Cafe","meta":"Weekday mornings · Food service","price":"$16.50/hr","accent":"butter","emoji":"☕","poster":"Chris Nguyen","initials":"CN","summary":"Open the cafe before the first class rush. Training is paid.","facts":[["Schedule","Weekday mornings"],["Where","Student Union"],["Type","Campus dining"]]},{"id":"job-events","title":"Event staff","kicker":"Associated Students","meta":"Game days and org nights","price":"$16/hr","accent":"coral","emoji":"🎟️","poster":"Jordan Hale","initials":"JH","summary":"Set up, scan tickets, and reset rooms for campus events. Shifts are posted a week ahead.","facts":[["Schedule","Nights and weekends"],["Where","Around campus"],["Type","Event staff"]]},{"id":"job-note","title":"Note taker","kicker":"Student Disability Services","meta":"One class · Semester long","price":"$200/class","accent":"sky","emoji":"📝","poster":"Taylor Brooks","initials":"TB","summary":"Share clear notes from a class you are already taking. SDS matches you with a student who needs them.","facts":[["Schedule","Your current class"],["Where","Your classroom"],["Type","Semester role"]]}],"housing":[{"id":"home-college","title":"Private room in a 4-bedroom","kicker":"College Area","meta":"Jan–May · 8 minute walk","price":"$950/mo","accent":"butter","emoji":"🛏️","poster":"Riley Santos","initials":"RS","summary":"Furnished room in a student house. Utilities split four ways. Available when the current roommate studies abroad.","facts":[["Dates","January through May"],["Rent","$950 a month"],["Place","College Area, 8 minute walk"]]},{"id":"home-studio","title":"Summer studio sublease","kicker":"South Campus Plaza","meta":"May 20–Aug 10 · Furnished","price":"$1,400/mo","accent":"sky","emoji":"🏢","poster":"Alex Kim","initials":"AK","summary":"A furnished studio for the summer, with the gym and a shuttle stop downstairs.","facts":[["Dates","May 20 through August 10"],["Rent","$1,400 a month"],["Place","South Campus Plaza"]]},{"id":"home-shared","title":"Shared room, spring only","kicker":"University Towers","meta":"Jan–May · One roommate","price":"$720/mo","accent":"mint","emoji":"🪴","poster":"Jordan Ellis","initials":"JE","summary":"One side of a shared double. The roommate is a junior in business and is keeping the lease.","facts":[["Dates","January through May"],["Rent","$720 a month"],["Place","University Towers"]]},{"id":"home-house","title":"Master bedroom sublease","kicker":"Rolando","meta":"Now–July · Private bath","price":"$1,100/mo","accent":"coral","emoji":"🏠","poster":"Noah Brooks","initials":"NB","summary":"Master bedroom with its own bathroom in a house of four students. Street parking and a short bus ride to campus.","facts":[["Dates","Now through July"],["Rent","$1,100 a month"],["Place","Rolando"]]}],"apartments":[{"id":"apt-plaza","title":"South Campus Plaza","kicker":"On campus","meta":"Trolley stop downstairs · Gym","price":"From $1,650/mo","accent":"sky","emoji":"🏢","summary":"Studios and shared units on the south edge of campus, with a market and the trolley at the door.","facts":[["Where","South Campus Plaza"],["Walk","On campus"],["Homes","Studios and shares"]]},{"id":"apt-blvd","title":"BLVD63","kicker":"College Area","meta":"El Cajon Blvd · Short walk","price":"From $1,400/mo","accent":"butter","emoji":"🌆","summary":"A College Area building a short walk up the hill, with studios and a few larger floor plans.","facts":[["Where","El Cajon Boulevard"],["Walk","About 12 minutes"],["Homes","Studios and one-bedrooms"]]},{"id":"apt-granada","title":"The Granada","kicker":"Montezuma Road","meta":"Across from campus","price":"From $1,500/mo","accent":"mint","emoji":"🌿","summary":"Apartments across Montezuma from campus. A crosswalk and you are on the edge of school.","facts":[["Where","Montezuma Road"],["Walk","About 8 minutes"],["Homes","Studios and one-bedrooms"]]},{"id":"apt-towers","title":"University Towers","kicker":"55th Street","meta":"Walk to class · Furnished options","price":"From $1,200/mo","accent":"lilac","emoji":"🗼","summary":"A tall student building with furnished rooms and shares, close enough to walk between classes.","facts":[["Where","55th Street"],["Walk","About 10 minutes"],["Homes","Furnished shares and privates"]]},{"id":"apt-unscripted","title":"Unscripted","kicker":"College Area","meta":"Furnished studios","price":"From $1,550/mo","accent":"coral","emoji":"✨","summary":"Furnished studios near campus for a student who wants their own door and a short commute.","facts":[["Where","College Area"],["Walk","About 15 minutes"],["Homes","Furnished studios"]]},{"id":"apt-fiftysix","title":"Fifty Six East","kicker":"56th Street","meta":"Walk or a short bus","price":"From $1,350/mo","accent":"sky","emoji":"🏠","summary":"Apartments just east of campus. Walk it on a nice day, or catch the bus along the hill.","facts":[["Where","56th Street"],["Walk","About 15 minutes"],["Homes","Studios and one-bedrooms"]]}],"agents":[{"id":"agent-camila","name":"Camila Reyes","initials":"CR","brokerage":"College Area Homes","focus":"College Area","summary":"Studios and shared houses a short walk from campus.","rating":"4.9","reviews":18,"accent":"coral"},{"id":"agent-owen","name":"Owen Blake","initials":"OB","brokerage":"Plaza Residential","focus":"South Campus Plaza","summary":"Furnished units by the trolley, gym, and shuttle stop.","rating":"4.8","reviews":24,"accent":"mint"},{"id":"agent-sofia","name":"Sofia Nguyen","initials":"SN","brokerage":"Rolando Homes","focus":"Rolando","summary":"Student houses with street parking and a short bus ride.","rating":"4.9","reviews":15,"accent":"sky"},{"id":"agent-malik","name":"Malik Johnson","initials":"MJ","brokerage":"Aztec Lease Co.","focus":"First leases","summary":"Help comparing rent, roommates, and move-in dates.","rating":"4.7","reviews":21,"accent":"butter"},{"id":"agent-harper","name":"Harper Diaz","initials":"HD","brokerage":"Campus Key Realty","focus":"Summer subleases","summary":"Short stays and summer takeovers near SDSU.","rating":"4.8","reviews":12,"accent":"lilac"},{"id":"agent-quinn","name":"Quinn Alvarez","initials":"QA","brokerage":"Trolley Line Living","focus":"A quick ride away","summary":"Places a bus or trolley ride from class, often for less.","rating":"4.9","reviews":16,"accent":"coral"},{"id":"agent-elise","name":"Elise Cho","initials":"EC","brokerage":"Mesa Realty","focus":"High-rise studios","summary":"Studios and shares with a front desk and a gym downstairs.","rating":"4.8","reviews":19,"accent":"sky"}],"ticketPosts":[{"id":"tpost-alex","kind":"resell","event":"Boise State","price":"25","name":"Alex Ruiz","initials":"AR","accent":"coral"},{"id":"tpost-priya","kind":"request","event":"the Open Air concert","name":"Priya Shah","initials":"PS","accent":"lilac"},{"id":"tpost-lena","kind":"resell","event":"spring formal","price":"35","name":"Lena Brooks","initials":"LB","accent":"butter"},{"id":"tpost-dana","kind":"request","event":"Comedy night","name":"Dana Kim","initials":"DK","accent":"mint"}],"orders":[{"id":"order-maya","listingId":"maya-portraits","kind":"service","status":"confirmed","when":"Today · 4:00 PM","quantity":1,"total":65},{"id":"order-lamp","listingId":"desk-lamp","kind":"product","status":"ready","when":"Pickup by Friday","quantity":1,"total":24}],"convos":[{"id":"maya","name":"Maya Chen","initials":"MC","sellerId":"maya-chen","context":"Grad portraits with Maya","unread":true,"messages":[{"from":"them","text":"Hey! Thanks for reaching out. What kind of photos are you thinking?"},{"from":"me","text":"Something natural around campus for graduation announcements."},{"from":"them","text":"4:00 PM works perfectly! Meet me at the Love Library steps and bring two outfits if you want variety."}]},{"id":"jordan","name":"Jordan Lee","initials":"JL","sellerId":"jordan-lee","context":"Vintage desk lamp","unread":true,"messages":[{"from":"them","text":"It is still available for pickup near the library."}]},{"id":"noah","name":"Noah Williams","initials":"NW","sellerId":"noah-williams","context":"Calculus II tutoring","unread":false,"messages":[{"from":"them","text":"I sent over the practice set. We can work through the series problems together."}]}],"notifs":[{"id":"notif-maya-booking","unread":true,"title":"Booking confirmed","body":"Grad portraits with Maya · Today · 4:00 PM","at":"2 min ago","emoji":"📸","accent":"coral","action":"order","orderId":"order-maya","conversationId":null,"storeId":null},{"id":"notif-lamp-pickup","unread":true,"title":"Ready for pickup","body":"Vintage desk lamp — Jordan marked your order ready.","at":"1 hr ago","emoji":"💡","accent":"butter","action":"order","orderId":"order-lamp","conversationId":null,"storeId":null},{"id":"notif-noah-review","unread":false,"title":"Leave a review","body":"How was Calculus II tutoring with Noah?","at":"Yesterday","emoji":"∫","accent":"sky","action":"inbox","orderId":null,"conversationId":"noah","storeId":null},{"id":"notif-store-follow","unread":false,"title":"Store update","body":"Maya Makes Photo posted a grad season announcement.","at":"Yesterday","emoji":"📸","accent":"coral","action":"store","orderId":null,"conversationId":null,"storeId":"maya-makes-photo"}],"photos":{"35mm film camera":"/assets/card-35mm-film-camera.jpg","aztecs vs. boise state":"/assets/card-aztecs-vs-boise-state.jpg","blvd63":"/assets/card-blvd63.jpg","calc ii study guide":"/assets/card-calc-ii-study-guide.jpg","calculus ii textbook":"/assets/card-calculus-ii-textbook.jpg","calculus ii tutoring":"/assets/card-calculus-ii-tutoring.jpg","camila reyes":"/assets/card-camila-reyes.jpg","campus photo print (8x10)":"/assets/card-campus-photo-print-8x10.jpg","color film roll (36 exp)":"/assets/card-color-film-roll-36-exp.jpg","comedy night":"/assets/card-comedy-night.jpg","custom press-on set":"/assets/card-custom-press-on-set.jpg","elise cho":"/assets/card-elise-cho.jpg","event & org photo coverage":"/assets/card-event-org-photo-coverage.jpg","event staff":"/assets/card-event-staff.jpg","fifty six east":"/assets/card-fifty-six-east.jpg","film developing & scans":"/assets/card-film-developing-scans.jpg","grad portraits with maya":"/assets/card-grad-portraits-with-maya.jpg","handmade ceramic mug":"/assets/card-handmade-ceramic-mug.jpg","harper diaz":"/assets/card-harper-diaz.jpg","intro to the pottery wheel":"/assets/card-intro-to-the-pottery-wheel.jpg","library desk assistant":"/assets/card-library-desk-assistant.jpg","lifeguard":"/assets/card-lifeguard.jpg","lightroom preset pack":"/assets/card-lightroom-preset-pack.jpg","linear algebra tutoring":"/assets/card-linear-algebra-tutoring.jpg","linkedin headshots":"/assets/card-linkedin-headshots.jpg","malik johnson":"/assets/card-malik-johnson.jpg","master bedroom sublease":"/assets/card-master-bedroom-sublease.jpg","midterm cram session (group)":"/assets/card-midterm-cram-session-group.jpg","nail art add-on":"/assets/card-nail-art-add-on.jpg","note taker":"/assets/card-note-taker.jpg","open air concert":"/assets/card-open-air-concert.jpg","open studio night":"/assets/card-open-studio-night.jpg","opening barista":"/assets/card-opening-barista.jpg","org formal guest ticket":"/assets/card-org-formal-guest-ticket.jpg","owen blake":"/assets/card-owen-blake.jpg","private room in a 4-bedroom":"/assets/card-private-room-in-a-4-bedroom.jpg","quiet desk fan":"/assets/card-quiet-desk-fan.jpg","quinn alvarez":"/assets/card-quinn-alvarez.jpg","research assistant":"/assets/card-research-assistant.jpg","sdsu safe ride":"/assets/card-sdsu-safe-ride.jpg","shared room, spring only":"/assets/card-shared-room-spring-only.jpg","short-form video edit":"/assets/card-short-form-video-edit.jpg","slow hours live":"/assets/card-slow-hours-live.jpg","sofia nguyen":"/assets/card-sofia-nguyen.jpg","soft gel set by zoe":"/assets/card-soft-gel-set-by-zoe.jpg","south campus plaza":"/assets/card-south-campus-plaza.jpg","speckled planter":"/assets/card-speckled-planter.jpg","summer studio sublease":"/assets/card-summer-studio-sublease.jpg","the granada":"/assets/card-the-granada.jpg","university towers":"/assets/card-university-towers.jpg","unscripted":"/assets/card-unscripted.jpg","vintage campus hoodie":"/assets/card-vintage-campus-hoodie.jpg","vintage desk lamp":"/assets/card-vintage-desk-lamp.jpg","youtube thumbnail design":"/assets/card-youtube-thumbnail-design.jpg"},"profiles":{"ari-patel":"/assets/profile-ari-patel.jpg","chris-nguyen":"/assets/profile-chris-nguyen.jpg","jordan-lee":"/assets/profile-jordan-lee.jpg","riley-kim":"/assets/profile-riley-kim.jpg","sam-okafor":"/assets/profile-sam-okafor.jpg","taylor-brooks":"/assets/profile-taylor-brooks.jpg","zoe-rivera":"/assets/profile-zoe-rivera.jpg","agent-sofia":"/assets/profile-sofia-nguyen.jpg","agent-quinn":"/assets/profile-quinn-alvarez.jpg"},"pool":["/assets/profile-ari-patel.jpg","/assets/profile-chris-nguyen.jpg","/assets/profile-jordan-lee.jpg","/assets/profile-riley-kim.jpg","/assets/profile-sam-okafor.jpg","/assets/profile-taylor-brooks.jpg","/assets/profile-zoe-rivera.jpg","/assets/profile-sofia-nguyen.jpg","/assets/profile-quinn-alvarez.jpg"],"icons":{"search":"M3 11a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M0 0m21 21-4.35-4.35","bell":"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0","home":"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22 L9 12 L15 12 L15 22","calendar":"M5 4H19a2 2 0 0 1 2 2V20a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2V6a2 2 0 0 1 2 -2ZM16 2L16 6M8 2L8 6M3 10L21 10","bag":"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4ZM3 6h18M16 10a4 4 0 0 1-8 0","chat":"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z","arrow":"M5 12h14M0 0m12 5 7 7-7 7","chevron-left":"m15 18-6-6 6-6","chevron-right":"m9 18 6-6-6-6","chevron-down":"m6 9 6 6 6-6","share":"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6 L12 2 L8 6M12 2L12 15","check":"M20 6 9 17l-5-5","plus":"M5 12h14M12 5v14","minus":"M5 12h14","close":"M18 6 6 18M0 0m6 6 12 12","star":"M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 L12 2Z","store":"m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4M2 7h20M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7","briefcase":"M4 7H20a2 2 0 0 1 2 2V19a2 2 0 0 1 -2 2H4a2 2 0 0 1 -2 -2V9a2 2 0 0 1 2 -2ZM16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16","bed":"M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9","ticket":"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2ZM13 5v2M13 17v2M13 11v2","send":"m22 2-7 20-4-9-9-4ZM22 2 11 13","grid":"M4 3H9a1 1 0 0 1 1 1V9a1 1 0 0 1 -1 1H4a1 1 0 0 1 -1 -1V4a1 1 0 0 1 1 -1ZM15 3H20a1 1 0 0 1 1 1V9a1 1 0 0 1 -1 1H15a1 1 0 0 1 -1 -1V4a1 1 0 0 1 1 -1ZM15 14H20a1 1 0 0 1 1 1V20a1 1 0 0 1 -1 1H15a1 1 0 0 1 -1 -1V15a1 1 0 0 1 1 -1ZM4 14H9a1 1 0 0 1 1 1V20a1 1 0 0 1 -1 1H4a1 1 0 0 1 -1 -1V15a1 1 0 0 1 1 -1Z","book-open":"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z","palette":"M13 6.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M17 10.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M8 7.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M6 12.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10a.9.9 0 0 0 .9-.9 1.2 1.2 0 0 0-.3-.8 1.6 1.6 0 0 0-.3-1 1.6 1.6 0 0 1 1.6-1.6h2c2.7 0 4.9-2.2 4.9-4.9C21.9 6 17.5 2 12 2z","sparkles":"m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3ZM5 3v4M19 17v4M3 5h4M17 19h4","laptop":"M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9M2 17h20M7 20h10","sun":"M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M12 2v2M12 20v2M0 0m4.93 4.93 1.41 1.41M0 0m17.66 17.66 1.41 1.41M2 12h2M20 12h2M0 0m6.34 17.66-1.41 1.41M0 0m19.07 4.93-1.41 1.41","hand-helping":"M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14M0 0m7 18 1.6-1.8a2 2 0 0 1 2.8-.2l.4.4a2 2 0 0 0 2.8 0l.4-.4a2 2 0 0 1 2.8.2L18 18M12 2v2","calendar-star":"M8 2v4M16 2v4M5 4H19a2 2 0 0 1 2 2V20a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2V6a2 2 0 0 1 2 -2ZM3 10h18M0 0m15 16-2 2-1.5-1.5","lamp":"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4","shirt":"M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z","book":"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20","repeat":"m17 2 4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M0 0m7 22-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3","handshake":"m11 17 2 2a1 1 0 1 0 3-3M0 0m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4M0 0m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8","school":"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0zM22 10v6M6 12.6V16a6 3 0 0 0 12 0v-3.4","user":"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M8 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0","clock":"M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M12 6 L12 12 L16 14","chevronLeft":"m15 18-6-6 6-6","chevronRight":"m9 18 6-6-6-6","chevronDown":"m6 9 6 6 6-6","bookOpen":"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z","handHelping":"M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14M0 0m7 18 1.6-1.8a2 2 0 0 1 2.8-.2l.4.4a2 2 0 0 0 2.8 0l.4-.4a2 2 0 0 1 2.8.2L18 18M12 2v2","calendarStar":"M8 2v4M16 2v4M5 4H19a2 2 0 0 1 2 2V20a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2V6a2 2 0 0 1 2 -2ZM3 10h18M0 0m15 16-2 2-1.5-1.5"},"logo":"/assets/campus-connect-logo.png","sdsu":"/assets/sdsu-logo.png"}; }
+
+  initial() {
+    const D = this.D || this.data();
+    const v = (this.props && this.props.initialView) || 'home';
+    return {
+      view: v, q: '', heroQ: '', cat: (this.props && this.props.initialCat) || 'All', sort: 'recommended',
+      sel: null, from: 'home', slot: null, qty: 1,
+      orders: D.orders.map((o) => Object.assign({}, o)), orderId: null,
+      convos: D.convos.map((c) => Object.assign({}, c, { messages: c.messages.slice() })), convoId: 'maya', draft: '',
+      notifs: D.notifs.map((n) => Object.assign({}, n)), notifOpen: false,
+      storeId: null, storeTab: 'shop', coll: 0, following: {},
+      board: null, jobQ: '',
+      tposts: D.ticketPosts.map((p) => Object.assign({}, p)), tKind: null, tEvent: '', tPrice: '', tQ: '',
+      toast: ''
+    };
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); clearTimeout(this._r); }
+  componentDidUpdate(prev) {
+    if (prev && prev.resetKey !== this.props.resetKey) { clearTimeout(this._t); this.setState(this.initial()); }
+  }
+
+  top(e) {
+    try {
+      const t = e && e.currentTarget;
+      const app = t && t.closest ? t.closest('[data-app]') : null;
+      const s = app ? app.querySelector('[data-scroller]') : null;
+      if (s) s.scrollTop = 0;
+    } catch (err) {}
+  }
+  flash(msg) { clearTimeout(this._t); this.setState({ toast: msg }); this._t = setTimeout(() => this.setState({ toast: '' }), 2400); }
+  go(view, extra) { return (e) => { this.top(e); this.setState(Object.assign({ view, notifOpen: false }, extra || {})); }; }
+
+  renderVals() {
+    const D = this.D, st = this.state, P = this.props || {};
+    const ic = D.icons;
+    const isPhone = (P.device ?? 'phone') === 'phone';
+    const money = (n) => (Number(n) === 0 ? 'Free' : '$' + Number(n).toFixed(2));
+    const tprice = (n) => { const v = Number(n); return !v ? 'Free' : Number.isInteger(v) ? '$' + v : '$' + v.toFixed(2); };
+    const key = (t) => String(t || '').toLowerCase().replace(/×/g, 'x').replace(/\s+/g, ' ').trim();
+    const photo = (t) => D.photos[key(t)] || '';
+    const face = (id) => {
+      if (!id) return '';
+      if (D.profiles[id]) return D.profiles[id];
+      let h = 0; const k = String(id);
+      for (let i = 0; i < k.length; i += 1) h = (h + k.charCodeAt(i) * (i + 1)) % D.pool.length;
+      return D.pool[h];
+    };
+    const getL = (id) => D.listings.find((l) => l.id === id);
+    const getStore = (id) => D.stores.find((s) => s.id === id);
+    const getSeller = (id) => D.sellers.find((s) => s.id === id);
+    const short = (t, n) => { const s = String(t || ''); return s.length > (n || 72) ? s.slice(0, (n || 72) - 1).trimEnd() + '…' : s; };
+    const matches = (q, ...f) => { const s = q.trim().toLowerCase(); return !s || f.join(' ').toLowerCase().split(/\s+/).join(' ').indexOf(s) !== -1 || s.split(/\s+/).every((w) => f.join(' ').toLowerCase().indexOf(w) !== -1); };
+
+    const openListing = (l, from) => (e) => { this.top(e); this.setState({ view: 'listing', sel: l.id, from: from || st.view, slot: null, qty: 1, notifOpen: false }); };
+    const card = (l, from) => {
+      const p = photo(l.title);
+      const seller = getSeller(l.sellerId) || {};
+      const cert = l.certification || seller.certification;
+      const caption = l.kind === 'service' ? (cert ? 'Certified ' + cert : '') : l.kind === 'product' ? (l.condition || 'Good condition') : '';
+      const mtype = l.merchandiseType === 'new' ? 'New & student-made' : l.merchandiseType === 'resale' ? 'Pre-owned' : '';
+      const meta = l.kind === 'product' ? [mtype, l.availability].filter(Boolean).join(' · ') : l.kind === 'service' ? short(l.description) : '';
+      const sp = face(l.sellerId);
+      const showUnit = l.price && l.unit && (l.kind === 'service' || l.unit === 'month');
+      return {
+        isTicket: l.kind === 'ticket', notTicket: l.kind !== 'ticket',
+        title: l.title, photo: p, noPhoto: !p, emoji: l.emoji, accent: l.accent,
+        caption, hasCaption: !!caption, meta, hasMeta: !!meta,
+        seller: l.seller, initials: l.initials, sp, noSp: !sp,
+        price: money(l.price), unit: showUnit ? '/ ' + l.unit : '', rating: l.rating, reviews: l.reviews,
+        kicker: l.host || l.seller, schedule: [l.date, l.time, l.location].filter(Boolean).join(' · '),
+        summary: short(l.summary || l.description, 90), tprice: tprice(l.price),
+        open: openListing(l, from)
+      };
+    };
+    const active = D.listings;
+    const shelf = active.filter((l) => !l.storeOnly);
+
+    // nav
+    const navDefs = [['home', 'Home', 'Home', 'home'], ['book', 'Book', 'Book', 'calendar'], ['shop', 'Shop', 'Shop', 'bag'], ['jobs', 'Job Board', 'Jobs', 'briefcase'], ['housing', 'Housing', 'Housing', 'bed'], ['tickets', 'Tickets', 'Tickets', 'ticket']];
+    const selL = st.sel ? getL(st.sel) : null;
+    const navActive = st.view === 'listing' || st.view === 'checkout' ? (selL && selL.kind === 'ticket' ? 'tickets' : selL && selL.kind === 'product' ? 'shop' : 'book')
+      : st.view === 'search' || st.view === 'school' ? 'book' : st.view === 'board' ? (st.board && st.board.kind === 'job' ? 'jobs' : 'housing') : st.view;
+    const nav = navDefs.map((n) => {
+      const on = navActive === n[0];
+      return { label: n[1], short: n[2], icon: ic[n[3]], current: on ? 'page' : 'false', cls: on ? 'on' : '', bcls: on ? 'on' : '',
+        go: this.go(n[0], { cat: 'All', q: '', board: null }) };
+    });
+
+    // notifications + messages
+    const notifs = st.notifs.map((n) => ({
+      title: n.title, body: n.body, at: n.at, emoji: n.emoji, accent: n.accent, cls: 'mk-note' + (n.unread ? ' unread' : ''),
+      open: (e) => {
+        const ns = this.state.notifs.map((x) => (x.id === n.id ? Object.assign({}, x, { unread: false }) : x));
+        this.top(e);
+        if (n.action === 'order') this.setState({ notifs: ns, notifOpen: false, view: 'order', orderId: n.orderId });
+        else if (n.action === 'inbox') this.setState({ notifs: ns, notifOpen: false, view: 'inbox', convoId: n.conversationId });
+        else this.setState({ notifs: ns, notifOpen: false, view: 'store', storeId: n.storeId, storeTab: 'shop', coll: 0 });
+      }
+    }));
+    const notifCount = st.notifs.filter((n) => n.unread).length;
+    const unreadCount = st.convos.filter((c) => c.unread).length;
+
+    const messageTo = (name, initials, context, personId) => {
+      let convos = this.state.convos.slice();
+      let c = convos.find((x) => x.name === name);
+      if (!c) { c = { id: 'c-' + Date.now(), name, initials, sellerId: personId, context, unread: false, messages: [] }; convos = [c].concat(convos); }
+      this.setState({ convos, convoId: c.id, view: 'inbox', notifOpen: false, draft: c.messages.length ? '' : 'Hi! Is this still available?' });
+    };
+
+    // home
+    const popular = shelf.filter((l) => l.kind !== 'ticket').sort((a, b) => b.reviews + b.completed - (a.reviews + a.completed)).slice(0, 8);
+    const booked = [...new Set(st.orders.map((o) => o.listingId))].map(getL).filter(Boolean);
+    const bookAgain = booked.concat(shelf.filter((l) => l.kind === 'service' && booked.indexOf(l) === -1)).slice(0, 8);
+    const shown = new Set(popular.concat(bookAgain));
+    const recommended = shelf.filter((l) => !shown.has(l)).concat(shelf.filter((l) => shown.has(l))).slice(0, 9);
+    const storeCard = (s) => {
+      const ls = active.filter((l) => l.storeId === s.id);
+      return { name: s.name, tagline: s.tagline, emoji: s.emoji, accent: s.accent, rating: s.rating, followers: s.followers, previews: ls.slice(0, 3).map((l) => l.emoji).join(' '),
+        open: (e) => { this.top(e); this.setState({ view: 'store', storeId: s.id, storeTab: 'shop', coll: 0 }); } };
+    };
+    const featuredStores = D.stores.slice().sort((a, b) => b.followers - a.followers).slice(0, 8).map(storeCard);
+
+    // browse
+    const kind = st.view === 'book' ? 'service' : st.view === 'shop' ? 'product' : 'all';
+    const q = st.q || '';
+    const searching = !!q.trim();
+    let results = active.filter((l) => {
+      if (kind !== 'all' && l.kind !== kind) return false;
+      if (kind === 'product' && l.merchandiseType === 'resale') return false;
+      if (l.storeOnly && !searching) return false;
+      if (st.cat !== 'All' && l.category !== st.cat) return false;
+      const store = getStore(l.storeId);
+      return matches(q, l.title, l.seller, l.category, l.description, store ? store.name : '');
+    });
+    const order = { 'price-low': (a, b) => a.price - b.price, 'price-high': (a, b) => b.price - a.price, rating: (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0) }[st.sort];
+    if (order) results = results.slice().sort(order);
+    const shopCats = new Set(active.filter((l) => l.kind === 'product' && l.merchandiseType !== 'resale' && !l.storeOnly).map((l) => l.category));
+    const dotColor = { sky: '#2b8fd4', lilac: '#8b5cf6', coral: '#e07a72', mint: '#2f9e6b', butter: '#c99708', cobalt: '#3157ff' };
+    const catDefs = [{ name: 'All', icon: 'grid', dot: 'cobalt' }].concat(D.categories.filter((c) => (kind === 'all' || c.kind === kind) && (kind !== 'product' || shopCats.has(c.name))).slice(0, kind === 'all' ? 7 : 10));
+    const chips = catDefs.map((c) => { const on = st.cat === c.name; return { name: c.name, icon: ic[c.icon] || ic.grid, color: dotColor[c.dot] || '#3157ff', on, cls: 'mk-chip' + (on ? ' on' : ''), pick: () => this.setState({ cat: c.name }) }; });
+    const schoolList = D.schoolServices.filter((s) => (st.cat === 'All' || s.category === st.cat) && matches(q, s.title, s.provider, s.category, s.description)).map((s) => {
+      const p = photo(s.title);
+      return { title: s.title, hours: s.hours, provider: s.provider, accent: s.accent, emoji: s.emoji, photo: p, noPhoto: !p, open: (e) => { this.top(e); this.setState({ view: 'school', sel: s.id }); } };
+    });
+    const resultCards = results.map((l) => card(l));
+    const half = kind === 'product' ? Math.ceil(resultCards.length / 2) : resultCards.length;
+    const br = {
+      eyebrow: kind === 'product' ? 'Shop' : kind === 'service' ? 'Book' : 'Search',
+      title: kind === 'service' ? 'Book something useful.' : kind === 'product' ? 'New and student-made.' : searching ? 'Results for “' + q.trim() + '”' : 'Find what you need.',
+      chips, school: schoolList, showSchool: kind !== 'product' && schoolList.length > 0,
+      count: results.length + (results.length === 1 ? ' result' : ' results') + ' · SDSU', empty: results.length === 0,
+      showAd: kind === 'product' && results.length > 0
+    };
+
+    // school detail
+    const S = D.schoolServices.find((s) => s.id === st.sel) || D.schoolServices[0];
+    const ssPhoto = photo(S.title);
+    const ss = Object.assign({}, S, { photo: ssPhoto, noPhoto: !ssPhoto });
+
+    // listing detail
+    const L = selL || D.listings[0];
+    const store = getStore(L.storeId);
+    const seller = getSeller(L.sellerId) || {};
+    const service = L.kind === 'service', ticket = L.kind === 'ticket';
+    const lp = photo(L.title);
+    const slots = (L.slots || []).map((s) => { const on = st.slot === s; return { label: s, on, cls: 'mk-opt' + (on ? ' on' : ''), pick: () => this.setState({ slot: s }) }; });
+    const soldOut = !service && L.quantityAvailable < 1;
+    const fromLabel = { home: 'Home', book: 'Book', shop: 'Shop', search: 'results', store: store ? store.name : 'store', tickets: 'Tickets', you: 'You' }[st.from] || (ticket ? 'Tickets' : service ? 'Book' : 'Shop');
+    const mtypeL = L.merchandiseType === 'new' ? 'New & student-made' : L.merchandiseType === 'resale' ? 'Pre-owned' : 'Product';
+    const more = store ? active.filter((l) => l.storeId === store.id && l.id !== L.id).slice(0, 8) : [];
+    const sel = {
+      title: L.title, description: L.description, accent: L.accent, emoji: L.emoji, photo: lp, noPhoto: !lp,
+      eyebrow: ticket ? (L.host || L.seller) : L.category + ' · ' + (service ? 'Service' : mtypeL),
+      isService: service, isProduct: L.kind === 'product', isTicket: ticket,
+      schedule: [L.date, L.time, L.location].filter(Boolean).join(' · '),
+      buyLabel: soldOut ? 'Sold out' : service ? (st.slot ? 'Book this time →' : 'Pick a time to book') : ticket ? 'Buy ticket →' : 'Buy now →',
+      buyDisabled: soldOut || (service && !st.slot),
+      hasStore: !!store, storeName: store ? store.name : '', storeEmoji: store ? store.emoji : '', storeAccent: store ? store.accent : '',
+      seller: L.seller, rating: L.rating, meeting: L.meeting, slots, availability: L.availability, available: L.quantityAvailable,
+      dateTime: [L.date, L.time].filter(Boolean).join(' · ') || L.availability, location: L.location || L.meeting, host: L.host || L.seller, ticketPrice: tprice(L.price),
+      backLabel: fromLabel, hasMore: more.length > 0
+    };
+    const moreFromStore = more;
+
+    // checkout
+    const qty = service || ticket ? 1 : st.qty;
+    const total = L.price * qty;
+    const priceLine = L.price ? (ticket ? tprice(L.price) : money(L.price)) + (service ? ' / ' + L.unit : ticket ? '' : ' each') : 'Free';
+    const co = {
+      eyebrow: ticket ? (L.host || L.seller) : service ? 'Book' : 'Shop',
+      heading: ticket ? 'Review your ticket.' : service ? 'Review your booking.' : 'Review your order.',
+      lede: ticket ? 'One purchase, one QR code. Bring it to the door.' : service ? 'Make sure the time, price and cancellation terms look right before you confirm.' : 'Make sure the seller, quantity and pickup details look right before you confirm.',
+      steps: [{ n: 1, title: L.title, text: (ticket ? (L.host || L.seller) : L.seller) + ' · ' + priceLine }].concat(service
+        ? [{ n: 2, title: st.slot || '', text: L.meeting + ' · ' + L.unit }, { n: 3, title: 'Cancellation terms', text: 'Free cancellation up to 24 hours before the appointment. Support is available from your order page.' }]
+        : ticket ? [{ n: 2, title: sel.schedule, text: L.host || L.seller }, { n: 3, title: 'Your QR code', text: 'It shows up as soon as you pay. They scan it once at the door.' }]
+          : [{ n: 2, title: qty + (qty === 1 ? ' item' : ' items'), text: L.availability + ' · ' + L.meeting }, { n: 3, title: 'Local handoff', text: 'We will show the pickup details after the seller confirms the order.' }]),
+      confirmLabel: L.price ? 'Confirm & pay ' + money(total) : 'Confirm · Free',
+      title: L.title, sub: ticket ? sel.schedule : L.seller, total: money(total), lineLabel: ticket ? 'Ticket' : service ? 'Service' : 'Item × ' + qty,
+      accent: L.accent, photo: lp, noPhoto: !lp, emoji: L.emoji
+    };
+
+    // order
+    const O = st.orders.find((o) => o.id === st.orderId) || st.orders[0];
+    const OL = getL(O.listingId) || L;
+    const status = { service: { requested: 'Awaiting confirmation', confirmed: 'Upcoming', completed: 'Completed' }, product: { requested: 'Awaiting confirmation', confirmed: 'Accepted', ready: 'Ready for pickup', completed: 'Picked up' }, ticket: { confirmed: 'Valid', completed: 'Used' } };
+    const ostatus = (o) => (status[o.kind] && status[o.kind][o.status]) || o.status;
+    const oServ = O.kind === 'service', oTicket = O.kind === 'ticket', waiting = O.status === 'requested';
+    const code = O.code || ('CC-' + O.id.slice(-4).toUpperCase() + '-' + String(OL.title.length * 7919 % 9000 + 1000));
+    const qr = [];
+    if (oTicket) {
+      let seed = 0; for (let i = 0; i < code.length; i += 1) seed = (seed * 31 + code.charCodeAt(i)) >>> 0;
+      const rnd = () => { seed = (seed * 1103515245 + 12345) >>> 0; return (seed >>> 16) & 1; };
+      const cells = [];
+      for (let y = 0; y < 25; y += 1) { cells.push([]); for (let x = 0; x < 25; x += 1) cells[y].push(false); }
+      const finder = (fx, fy) => { for (let i = 0; i < 7; i += 1) for (let j = 0; j < 7; j += 1) { const edge = i === 0 || j === 0 || i === 6 || j === 6; const core = i >= 2 && i <= 4 && j >= 2 && j <= 4; cells[fy + j][fx + i] = edge || core; } };
+      for (let y = 2; y < 23; y += 1) for (let x = 2; x < 23; x += 1) cells[y][x] = !!rnd();
+      [[2, 2], [16, 2], [2, 16]].forEach((p) => { for (let i = -1; i < 8; i += 1) for (let j = -1; j < 8; j += 1) { const yy = p[1] + j, xx = p[0] + i; if (yy >= 0 && yy < 25 && xx >= 0 && xx < 25) cells[yy][xx] = false; } finder(p[0], p[1]); });
+      for (let y = 0; y < 25; y += 1) for (let x = 0; x < 25; x += 1) qr.push({ f: cells[y][x] ? '#151515' : 'transparent' });
+    }
+    const ord = {
+      isTicket: oTicket, notTicket: !oTicket,
+      eyebrow: oTicket ? 'Ticket' : !oServ ? 'Order placed' : waiting ? 'Booking requested' : 'Booking confirmed',
+      heading: oTicket ? 'Your ticket is ready.' : !oServ ? 'That one is yours.' : waiting ? 'Your request is in.' : 'You are on the calendar.',
+      lede: oTicket ? (OL.seller || 'The seller') + ' scans the code at the door.' : waiting ? 'The seller has your request. You will get a notification when they answer.' : 'It is saved in your activity, and updates show up in your notifications.',
+      title: OL.title, when: [OL.date, OL.time, OL.location].filter(Boolean).join(' · '), code, qr,
+      rows: [{ label: oServ ? 'Service' : 'Product', value: OL.title }, oServ ? { label: 'When', value: O.when } : { label: 'Quantity', value: String(O.quantity) }, { label: 'Status', value: ostatus(O) }, { label: 'Total', value: money(O.total) }, { label: 'Order reference', value: 'CC-DEMO-' + O.id.slice(-4).toUpperCase() }]
+    };
+    const activity = st.orders.map((o) => {
+      const l = getL(o.listingId) || {}; const p = photo(l.title);
+      return { title: l.title, sub: [l.seller, o.when || ('Qty ' + o.quantity)].filter(Boolean).join(' · '), status: ostatus(o), accent: l.accent, emoji: l.emoji, photo: p, noPhoto: !p,
+        open: (e) => { this.top(e); this.setState({ view: 'order', orderId: o.id }); } };
+    });
+    const myTickets = st.orders.filter((o) => o.kind === 'ticket').map((o) => { const l = getL(o.listingId) || {}; return { title: l.title, code: o.code, accent: l.accent, photo: photo(l.title), open: (e) => { this.top(e); this.setState({ view: 'order', orderId: o.id }); } }; });
+
+    // store page
+    const ST = getStore(st.storeId) || D.stores[0];
+    const stListings = active.filter((l) => l.storeId === ST.id);
+    const colls = [{ name: 'All', listingIds: stListings.map((l) => l.id) }].concat(ST.collections || []);
+    const coll = colls[st.coll] || colls[0];
+    const storeListings = coll.listingIds.map(getL).filter((l) => l && stListings.indexOf(l) !== -1);
+    const following = !!st.following[ST.id];
+    const pol = ST.policies || {};
+    const stv = {
+      name: ST.name, handle: ST.handle, tagline: ST.tagline, emoji: ST.emoji, accent: ST.accent, rating: ST.rating, reviews: ST.reviews, sales: ST.sales,
+      followers: ST.followers + (following ? 1 : 0), announcement: ST.announcement || '', about: ST.about,
+      cancellation: pol.cancellation || 'Free cancellation up to 24 hours before.', pickup: pol.pickup || 'Pickup on campus.', hours: pol.hours || 'Varies by listing.',
+      previews: stListings.slice(0, 4).map((l) => l.emoji).join(' '),
+      followLabel: following ? 'Following' : 'Follow', followCls: following ? 'mk-ghost' : 'mk-primary',
+      tabs: [['shop', 'Shop'], ['reviews', 'Reviews (' + ST.reviews + ')'], ['about', 'About']].map((t) => { const on = st.storeTab === t[0]; return { label: t[1], on, cls: 'mk-tab' + (on ? ' on' : ''), pick: () => this.setState({ storeTab: t[0] }) }; }),
+      isShop: st.storeTab === 'shop', isReviews: st.storeTab === 'reviews', isAbout: st.storeTab === 'about',
+      colls: colls.map((c, i) => { const on = (st.coll || 0) === i; return { name: c.name, on, cls: 'mk-chip' + (on ? ' on' : ''), pick: () => this.setState({ coll: i }) }; }),
+      reviewList: (ST.reviewsSample || []).map((r) => ({ author: r.author, text: r.text, stars: '★★★★★'.slice(0, r.rating) }))
+    };
+
+    // boards
+    const boardCard = (item, kind) => {
+      const p = photo(item.title);
+      return { title: item.title, kicker: item.kicker, meta: item.meta, summary: item.summary, price: item.price, accent: item.accent, emoji: item.emoji, photo: p, noPhoto: !p,
+        open: (e) => { this.top(e); this.setState({ view: 'board', board: { kind, id: item.id } }); } };
+    };
+    const jobs = D.jobs.filter((j) => matches(st.jobQ || '', j.title, j.kicker, j.meta, j.summary, j.poster, j.price)).map((j) => boardCard(j, 'job'));
+    const apartments = D.apartments.map((a) => boardCard(a, 'apt'));
+    const homes = D.housing.map((h) => boardCard(h, 'home'));
+    const agents = D.agents.map((a) => { const p = photo(a.name) || face(a.id); return { name: a.name, summary: short(a.summary), brokerage: a.brokerage, rating: a.rating, reviews: a.reviews, accent: a.accent, photo: p,
+      open: (e) => { this.top(e); this.setState({ view: 'board', board: { kind: 'agent', id: a.id } }); } }; });
+    let bd = { facts: [] };
+    if (st.board) {
+      const k = st.board.kind;
+      const backJobs = k === 'job';
+      const back = this.go(backJobs ? 'jobs' : 'housing', { board: null });
+      if (k === 'agent') {
+        const a = D.agents.find((x) => x.id === st.board.id); const p = photo(a.name) || face(a.id);
+        bd = { back, backLabel: 'Housing', eyebrow: a.brokerage + ' · Agent', title: a.name, price: 'Free consult', accent: a.accent, photo: p, noPhoto: !p, emoji: '', summary: a.summary,
+          hasAction: true, actionLabel: 'Message ' + a.name.split(' ')[0], action: () => messageTo(a.name, a.initials, 'Housing consult', a.id),
+          hasPerson: true, personLabel: 'Real estate agent', person: a.name, personSub: a.brokerage, personPhoto: face(a.id), noPersonPhoto: !face(a.id), initials: a.initials,
+          factsTitle: 'How they help', facts: [['Focus', a.focus], ['Brokerage', a.brokerage], ['Consult', 'Free']].map((f) => ({ text: f[0] + ' · ' + f[1] })), note: 'Keep the conversation in the app. Tours and next steps get confirmed in messages.' };
+      } else {
+        const list = k === 'job' ? D.jobs : k === 'apt' ? D.apartments : D.housing;
+        const it = list.find((x) => x.id === st.board.id); const p = photo(it.title);
+        const apt = k === 'apt';
+        bd = { back, backLabel: backJobs ? 'Job Board' : 'Housing', eyebrow: it.kicker + ' · ' + (backJobs ? 'Job' : apt ? 'Apartment building' : 'Housing'), title: it.title, price: it.price, accent: it.accent, photo: p, noPhoto: !p, emoji: it.emoji, summary: it.summary,
+          hasAction: !apt, actionLabel: it.poster ? 'Message ' + it.poster.split(' ')[0] : '', action: () => messageTo(it.poster, it.initials, it.title, it.poster),
+          hasPerson: !apt, personLabel: backJobs ? 'Hiring contact' : 'Posted by', person: it.poster || '', personSub: 'Student verified', personPhoto: face(it.poster), noPersonPhoto: !face(it.poster), initials: it.initials || '',
+          factsTitle: backJobs ? 'The role' : apt ? 'The building' : 'The place', facts: (it.facts || []).map((f) => ({ text: f[0] + ' · ' + f[1] })),
+          note: apt ? 'Leasing is with the building. Student subleases are in Posted by students.' : backJobs ? 'Keep the conversation in the app. Pay and the schedule get confirmed in messages.' : 'Keep the conversation in the app. Rent, dates, and a tour get confirmed in messages.' };
+      }
+    }
+
+    // tickets
+    const ticketList = active.filter((l) => l.kind === 'ticket' && l.quantityAvailable > 0);
+    const tline = (p) => (p.kind === 'resell' ? 'Reselling a ' + p.event + ' ticket for $' + p.price : 'Looking for a ticket for ' + p.event);
+    const tc = {
+      q: st.tQ, onQ: (e) => this.setState({ tQ: e.target.value }),
+      formOpen: !!st.tKind, isResell: st.tKind === 'resell', event: st.tEvent, price: st.tPrice, eventPh: st.tKind === 'resell' ? 'e.g. Boise State' : 'e.g. Open Air concert',
+      resellCls: 'mk-pill-btn' + (st.tKind === 'resell' ? ' on' : ''), requestCls: 'mk-pill-btn' + (st.tKind === 'request' ? ' on' : ''),
+      openResell: () => this.setState({ tKind: this.state.tKind === 'resell' ? null : 'resell' }), openRequest: () => this.setState({ tKind: this.state.tKind === 'request' ? null : 'request' }),
+      close: () => this.setState({ tKind: null }),
+      onEvent: (e) => this.setState({ tEvent: e.target.value }), onPrice: (e) => this.setState({ tPrice: e.target.value }),
+      submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const s = this.state; if (!s.tEvent.trim()) return; this.setState({ tposts: s.tposts.concat([{ id: 'mine-' + Date.now(), kind: s.tKind, event: s.tEvent.trim(), price: (s.tPrice || '0').replace(/[^0-9.]/g, ''), name: 'Katarina Cedolin', initials: 'KC', mine: true }]), tKind: null, tEvent: '', tPrice: '' }); this.flash('Posted to ticket chat'); },
+      posts: st.tposts.filter((p) => matches(st.tQ || '', p.name, tline(p))).map((p) => ({ name: p.name, line: tline(p), notMine: !p.mine, cls: 'mk-tpost ' + (p.mine ? 'me' : 'them'), dm: () => messageTo(p.name, p.initials, tline(p), p.name) }))
+    };
+
+    // inbox
+    const T = st.convos.find((c) => c.id === st.convoId) || st.convos[0];
+    const convos = st.convos.map((c) => { const p = face(c.sellerId || c.name); const last = c.messages.length ? c.messages[c.messages.length - 1].text : 'New conversation'; return { name: c.name, initials: c.initials, context: c.context, last: short(last, 46), unread: c.unread && c.id !== T.id, photo: p, noPhoto: !p, cls: 'mk-convo' + (c.id === T.id ? ' on' : ''),
+      open: () => this.setState({ convoId: c.id, convos: this.state.convos.map((x) => (x.id === c.id ? Object.assign({}, x, { unread: false }) : x)) }) }; });
+    const tp = T ? face(T.sellerId || T.name) : '';
+    const thread = T ? { name: T.name, initials: T.initials, context: T.context, photo: tp, noPhoto: !tp, messages: T.messages.map((m) => ({ text: m.text, cls: 'mk-msg ' + (m.from === 'me' ? 'me' : 'them') })) } : { messages: [] };
+
+    return {
+      rootClass: 'mk' + (isPhone ? ' is-phone' : ''),
+      screenH: P.screenH ?? (isPhone ? '790px' : '860px'),
+      screenRadius: P.screenRadius ?? (isPhone ? '45px' : '0 0 21px 21px'),
+      ic, logo: D.logo, sdsu: D.sdsu, heroPhoto: photo('Grad portraits with Maya'),
+      nav, notifs, notifCount, unreadCount, notifOpen: !!st.notifOpen,
+      toggleNotifs: () => this.setState({ notifOpen: !this.state.notifOpen }),
+      markAllRead: () => this.setState({ notifs: this.state.notifs.map((n) => Object.assign({}, n, { unread: false })) }),
+      switchMode: () => this.flash('The Seller Hub is part of the full prototype — this demo shows the buyer side.'),
+      goHome: this.go('home', { cat: 'All', q: '' }), goBook: this.go('book', { cat: 'All' }), goShop: this.go('shop', { cat: 'All' }),
+      goSearchAll: this.go('search', { cat: 'All', q: '' }), goInbox: this.go('inbox'), goYou: this.go('you'),
+      v: { home: st.view === 'home', browse: ['book', 'shop', 'search'].indexOf(st.view) !== -1, school: st.view === 'school', listing: st.view === 'listing', checkout: st.view === 'checkout', order: st.view === 'order', store: st.view === 'store', jobs: st.view === 'jobs', housing: st.view === 'housing', board: st.view === 'board' && !!st.board, tickets: st.view === 'tickets', inbox: st.view === 'inbox', you: st.view === 'you' },
+      heroQ: st.heroQ, onHeroQ: (e) => this.setState({ heroQ: e.target.value }),
+      heroSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.top(e); this.setState({ view: 'search', q: this.state.heroQ, cat: 'All' }); },
+      popular: popular.map((l) => card(l, 'home')), bookAgain: bookAgain.map((l) => card(l, 'home')), recommended: recommended.map((l) => card(l, 'home')), featuredStores,
+      q, onQ: (e) => this.setState({ q: e.target.value }), sort: st.sort, onSort: (e) => this.setState({ sort: e.target.value }),
+      clearFilters: () => this.setState({ q: '', cat: 'All' }),
+      br, results: resultCards.slice(0, half), results2: resultCards.slice(half), ss,
+      sel, moreFromStore: moreFromStore.map((l) => card(l, 'store')), qty: st.qty,
+      inc: () => this.setState({ qty: Math.min(L.quantityAvailable || 9, (this.state.qty || 1) + 1) }), dec: () => this.setState({ qty: Math.max(1, (this.state.qty || 1) - 1) }),
+      backFromDetail: (e) => { this.top(e); const f = this.state.from; this.setState(f === 'store' ? { view: 'store' } : { view: ['home', 'book', 'shop', 'search', 'tickets', 'you'].indexOf(f) !== -1 ? f : (ticket ? 'tickets' : service ? 'book' : 'shop') }); },
+      openSelStore: (e) => { if (!store) return; this.top(e); this.setState({ view: 'store', storeId: store.id, storeTab: 'shop', coll: 0 }); },
+      messageSeller: () => messageTo(L.seller, L.initials, L.title, L.sellerId),
+      share: () => this.flash('Link copied'),
+      startCheckout: (e) => { if (sel.buyDisabled) return; this.top(e); this.setState({ view: 'checkout' }); },
+      backToListing: (e) => { this.top(e); this.setState({ view: 'listing' }); },
+      helpToast: () => this.flash('Support is available from your order page.'),
+      co,
+      confirmOrder: (e) => {
+        const id = 'order-' + Date.now().toString(36);
+        const o = { id, listingId: L.id, kind: L.kind, status: service ? 'requested' : 'confirmed', when: service ? this.state.slot : ticket ? '' : '', quantity: qty, total };
+        if (ticket) o.code = 'TIX-' + Date.now().toString(36).toUpperCase().slice(-6);
+        const note = { id: 'n-' + id, unread: true, title: service ? 'Booking requested' : ticket ? 'Ticket ready' : 'Order placed', body: L.title + (service ? ' · ' + this.state.slot : ''), at: 'Just now', emoji: L.emoji, accent: L.accent, action: 'order', orderId: id };
+        this.top(e);
+        this.setState({ orders: [o].concat(this.state.orders), orderId: id, view: 'order', notifs: [note].concat(this.state.notifs) });
+      },
+      ord, activity, myTickets, hasMyTickets: myTickets.length > 0,
+      st: stv, storeListings: storeListings.map((l) => card(l, 'store')),
+      toggleFollow: () => { const f = Object.assign({}, this.state.following); f[ST.id] = !f[ST.id]; this.setState({ following: f }); this.flash(f[ST.id] ? 'Following ' + ST.name : 'Unfollowed ' + ST.name); },
+      messageStore: () => { const s = getSeller(ST.sellerId) || {}; messageTo(s.name || ST.name, s.initials || 'CC', ST.name, ST.sellerId); },
+      jobs, jobQ: st.jobQ, onJobQ: (e) => this.setState({ jobQ: e.target.value }), apartments, homes, agents, bd,
+      postToast: () => this.flash('Posting is available in the full prototype.'),
+      ticketList: ticketList.map((l) => card(l, 'tickets')), tc,
+      convos, thread, draft: st.draft, onDraft: (e) => this.setState({ draft: e.target.value }),
+      sendMsg: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const text = (this.state.draft || '').trim(); if (!text) return;
+        const id = (this.state.convos.find((c) => c.id === this.state.convoId) || this.state.convos[0]).id;
+        this.setState({ draft: '', convos: this.state.convos.map((c) => (c.id === id ? Object.assign({}, c, { messages: c.messages.concat([{ from: 'me', text }]) }) : c)) });
+        clearTimeout(this._r);
+        this._r = setTimeout(() => this.setState({ convos: this.state.convos.map((c) => (c.id === id ? Object.assign({}, c, { messages: c.messages.concat([{ from: 'them', text: 'Sounds good! I will get back to you shortly.' }]) }) : c)) }), 1400);
+      },
+      toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

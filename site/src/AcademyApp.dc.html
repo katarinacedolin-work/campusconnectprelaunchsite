@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Connect — Academy app (demo)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/assets/academy-app.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-app="1" class="ac" style="height: {{ screenH }}; border-radius: {{ screenRadius }}; font-family: 'DM Sans', Arial, sans-serif; color: #101116">
+
+<aside class="ac-side" aria-label="Academy navigation">
+<button type="button" class="ac-brand" onClick="{{ goHome }}" aria-label="Campus Connect Academy home"><span class="ac-mark" aria-hidden="true"><span></span><span></span></span><span class="ac-brandtext">campus<br>connect<small>ACADEMY</small></span></button>
+<nav style="display: flex; flex-direction: column; gap: 2px; margin-top: 10px">
+<sc-for list="{{ side }}" as="s" hint-placeholder-count="7">
+<sc-if value="{{ s.isLabel }}" hint-placeholder-val="{{ false }}"><div class="ac-label">{{ s.label }}</div></sc-if>
+<sc-if value="{{ s.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" class="{{ s.cls }}" aria-current="{{ s.current }}" onClick="{{ s.go }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ s.icon }}"></path></svg>{{ s.label }}<sc-if value="{{ s.count }}"><i class="ac-count">{{ s.count }}</i></sc-if></button></sc-if>
+</sc-for>
+</nav>
+<button type="button" class="ac-me" onClick="{{ goProfile }}"><span class="ac-avatar">KC</span><span><strong>Katarina Cedolin</strong><small>Founder · View profile</small></span></button>
+</aside>
+
+<div class="ac-work">
+<header class="ac-bar">
+<form onSubmit="{{ onSearchSubmit }}" style="flex: 1; min-width: 0; display: flex"><input class="ac-search" type="search" aria-label="Search courses, documents, people" placeholder="Search courses, documents, people..." value="{{ searchQ }}" onChange="{{ onSearchQ }}"></form>
+<button type="button" class="ac-ask" onClick="{{ goDocuments }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg><span>Ask AI guide</span></button>
+<button type="button" class="ac-round" aria-label="Notifications" onClick="{{ noNotifs }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
+</header>
+<nav class="ac-mobnav" aria-label="Academy sections"><sc-for list="{{ mob }}" as="m" hint-placeholder-count="6"><button type="button" class="{{ m.cls }}" onClick="{{ m.go }}">{{ m.label }}</button></sc-for></nav>
+
+<div data-scroller="1" class="ac-scroll">
+<div class="ac-page">
+
+<!-- HOME -->
+<sc-if value="{{ v.home }}" hint-placeholder-val="{{ true }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Good morning, Katarina</div><h1 class="ac-title">Build the business<br>you came here to start.</h1></div></div>
+<div class="ac-pills"><span class="ac-pill"><b>{{ inProgress }}</b> courses in progress</span><span class="ac-pill"><b>{{ docsReady }}</b> documents ready</span><span class="ac-pill"><b>{{ sessions }}</b> {{ sessionWord }} booked</span></div>
+<section class="ac-grid2">
+<article class="ac-continue">
+<svg class="ac-compass" width="74" height="74" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f6d27a" stroke="#e2b34a" stroke-width="3"></circle><circle cx="32" cy="32" r="21" fill="#fff8e8"></circle><path d="M32 12l4 18 16 2-16 2-4 18-4-18-16-2 16-2z" fill="#2f3138"></path><path d="M32 18l2.2 12.2L46 32l-11.8 1.8L32 46l-2.2-12.2L18 32l11.8-1.8z" fill="#e25b52"></path><circle cx="32" cy="32" r="3" fill="#2f3138"></circle></svg>
+<div class="k">Continue learning</div>
+<h2>Business Basics Bootcamp</h2>
+<p>{{ basicsNote }}</p>
+<div class="ac-foot"><div class="ac-prog"><span style="width: {{ basicsPct }}%"></span></div><b>{{ basicsPct }}%</b><button type="button" class="ac-resume" onClick="{{ openBasics }}">Resume →</button></div>
+</article>
+<article class="ac-panel">
+<h3>Launch readiness</h3><p class="ac-panel-sub">How much of your foundation is in place</p>
+<div class="ac-ring-row"><div class="ac-ring" style="background: conic-gradient(#2458f5 0 {{ basicsPct }}%, #edf0f4 {{ basicsPct }}% 100%)"><b>{{ basicsPct }}%</b></div>
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot"></span><strong>Learning complete</strong></span><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot gray"></span>{{ remaining }}% remaining</span><small style="color: #6d717b; line-height: 1.35">{{ readyNote }}</small></div></div>
+</article>
+</section>
+<section class="ac-grid2b">
+<article class="ac-panel"><h3>Your next steps</h3><p class="ac-panel-sub">The fastest way to move forward this week.</p>
+<div class="ac-steps">
+<button type="button" class="ac-step" onClick="{{ openMarketing }}"><span class="ac-tick">✓</span><span><strong>Finish your Marketing Basics module</strong><br><small>8 minutes left · Pick up where you left off</small></span></button>
+<button type="button" class="ac-step" onClick="{{ goAbout }}"><span class="ac-tick">✓</span><span><strong>Complete your business profile</strong><br><small>Help experts and investors understand what you do</small></span></button>
+<button type="button" class="ac-step" onClick="{{ goOffice }}"><span class="{{ bookTickCls }}">{{ bookTick }}</span><span><strong>Book a 1:1 expert session</strong><br><small>Get feedback on your next move</small></span></button>
+</div></article>
+<article class="ac-panel"><h3>Weekly activity</h3><p class="ac-panel-sub">Lessons, documents, and sessions over 6 weeks.</p>
+<div class="ac-bars"><sc-for list="{{ bars }}" as="b" hint-placeholder-count="6"><div class="ac-barcol"><i style="height: {{ b.h }}%; background: {{ b.c }}"></i><small>{{ b.label }}</small></div></sc-for></div>
+</article>
+</section>
+</div>
+</sc-if>
+
+<!-- COURSES -->
+<sc-if value="{{ v.courses }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Learn · Courses</div><h1 class="ac-title">Interactive courses for<br>the business behind the idea.</h1><p class="ac-sub">Short, applied lessons that help you understand the essentials before you use the supporting documents.</p></div></div>
+<div class="ac-filters" role="group" aria-label="Filter courses"><sc-for list="{{ courseFilters }}" as="f" hint-placeholder-count="6"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-cards"><sc-for list="{{ courses }}" as="c" hint-placeholder-count="5">
+<article class="ac-card"><div class="ac-visual {{ c.color }}"><div class="ac-illus" aria-hidden="true">{{ c.emoji }}</div><span class="ac-tagpill">{{ c.length }}</span></div>
+<div class="ac-cardbody"><h3>{{ c.title }}</h3><p class="ac-desc">{{ c.desc }}</p><div class="ac-prog"><span style="width: {{ c.pct }}%"></span></div>
+<div class="ac-meta"><span>{{ c.status }}</span><button type="button" class="ac-linkbtn" onClick="{{ c.open }}">{{ c.cta }}</button></div></div></article>
+</sc-for></div>
+</div>
+</sc-if>
+
+<!-- LESSON -->
+<sc-if value="{{ v.lesson }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade ac-reader">
+<button type="button" class="ac-back" onClick="{{ goCourses }}">← All courses</button>
+<article class="ac-sheet">
+<div class="ac-eyebrow">{{ lesson.kicker }}</div>
+<h1>{{ lesson.title }}</h1>
+<p class="ac-note">{{ lesson.note }}</p>
+<div class="ac-prog" style="margin: 4px 0 16px"><span style="width: {{ lesson.pct }}%"></span></div>
+<sc-for list="{{ lesson.modules }}" as="m" hint-placeholder-count="3"><section class="ac-module"><h2>{{ m.h }}</h2><p>{{ m.p }}</p></section></sc-for>
+<div class="ac-takeaway"><strong>When you are done</strong>{{ lesson.takeaway }}</div>
+<div class="ac-actions"><button type="button" class="ac-primary" onClick="{{ markComplete }}">{{ lesson.markLabel }}</button><button type="button" class="ac-secondary" onClick="{{ goCourses }}">Back to courses</button></div>
+</article>
+</div>
+</sc-if>
+
+<!-- LIBRARY -->
+<sc-if value="{{ v.documents }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Your business library</div><h1 class="ac-title">Get answers from<br>the documents that matter.</h1><p class="ac-sub">Read practical guides, save templates, and ask the AI guide questions in plain English.</p></div></div>
+<div class="ac-chatbox">
+<div class="ac-docarea"><div class="ac-eyebrow">Featured guide · Marketing</div><h2>How to define your first customer</h2>
+<p class="ac-doccopy">Before you spend money on ads or design a perfect logo, get specific about who you are helping. A clear first customer gives every decision a direction.</p>
+<div class="ac-doccopy"><h4>Start with a real person, not a broad audience</h4><p>“College students” is a starting point. “Students who want graduation photos but do not know which photographer to trust” is a customer you can understand and serve.</p><h4>Use the three-question test</h4><p>What are they trying to do? What is getting in their way? What would make the next step feel easy? Write down the answers in their words.</p></div>
+<button type="button" class="ac-primary" style="margin-top: 18px" onClick="{{ openCustomerDoc }}">Read guide</button></div>
+<aside class="ac-chat" aria-label="AI guide"><div class="ac-chathead">✦ Ask the AI guide</div>
+<div class="ac-msgs" aria-live="polite"><sc-for list="{{ chat }}" as="m" hint-placeholder-count="3"><div class="{{ m.cls }}">{{ m.text }}</div></sc-for></div>
+<form class="ac-chatin" onSubmit="{{ sendChat }}"><input aria-label="Ask a follow-up" placeholder="Ask a follow-up…" value="{{ chatDraft }}" onChange="{{ onChatDraft }}"><button type="submit" aria-label="Send">↑</button></form>
+</aside>
+</div>
+<div class="ac-section-head"><h2>Browse your library</h2></div>
+<div class="ac-cards"><sc-for list="{{ docs }}" as="d" hint-placeholder-count="4">
+<article class="ac-card"><div class="ac-visual {{ d.color }}"><div class="ac-illus" aria-hidden="true">{{ d.emoji }}</div><span class="ac-tagpill">{{ d.tag }}</span></div>
+<div class="ac-cardbody"><h3>{{ d.title }}</h3><p class="ac-desc">{{ d.desc }}</p><button type="button" class="ac-primary" onClick="{{ d.open }}">{{ d.cta }}</button></div></article>
+</sc-for></div>
+</div>
+</sc-if>
+
+<!-- DOCUMENT -->
+<sc-if value="{{ v.doc }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade ac-reader">
+<button type="button" class="ac-back" onClick="{{ goDocuments }}">← Library</button>
+<article class="ac-sheet">
+<div class="ac-eyebrow">{{ doc.kicker }}</div>
+<h1>{{ doc.title }}</h1>
+<p class="ac-note">{{ doc.note }}</p>
+<sc-for list="{{ doc.sections }}" as="m" hint-placeholder-count="2"><section class="ac-module"><h2>{{ m.h }}</h2><p>{{ m.p }}</p></section></sc-for>
+<sc-for list="{{ doc.blanks }}" as="b" hint-placeholder-count="0"><div class="ac-blank"><b>{{ b.h }}</b><span>{{ b.p }}</span></div></sc-for>
+<div class="ac-takeaway"><strong>When you are done</strong>{{ doc.takeaway }}</div>
+<div class="ac-actions"><button type="button" class="ac-primary" onClick="{{ saveDoc }}">{{ doc.saveLabel }}</button><button type="button" class="ac-secondary" onClick="{{ goDocuments }}">Back to library</button></div>
+</article>
+</div>
+</sc-if>
+
+<!-- EXPERTS -->
+<sc-if value="{{ v.office }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Real people, real feedback</div><h1 class="ac-title">Bring your questions.<br>Leave with a next step.</h1><p class="ac-sub">Book a focused 30-minute session with someone who has been where you are.</p></div></div>
+<div class="ac-filters" role="group" aria-label="Filter experts"><sc-for list="{{ expertFilters }}" as="f" hint-placeholder-count="4"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-list"><sc-for list="{{ experts }}" as="e" hint-placeholder-count="3">
+<div class="ac-row"><div class="ac-person"><div class="ac-mini">{{ e.initials }}</div><span><strong>{{ e.name }}</strong><small>{{ e.area }} · ★ {{ e.rating }}</small></span></div>
+<span style="text-align: right"><small style="display: block; color: #6d717b">{{ e.when }}</small><button type="button" class="{{ e.cls }}" style="margin-top: 6px" onClick="{{ e.book }}">{{ e.label }}</button></span></div>
+</sc-for></div>
+<div class="ac-section-head"><h2>How to make the most of Experts</h2></div>
+<div class="ac-stats"><div class="ac-stat"><b>01</b><span>One decision you’re trying to make</span></div><div class="ac-stat"><b>02</b><span>A link, draft, or question to review</span></div><div class="ac-stat"><b>03</b><span>What a useful next step looks like</span></div></div>
+<section class="ac-materials"><h3>Recommended supporting materials</h3><p>Bring these materials so your expert can give more specific, useful feedback.</p>
+<div class="ac-mat-grid"><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">?</div><strong>One clear question</strong><small>The decision or challenge you want to work through.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">⌁</div><strong>A draft or link</strong><small>Bring your offer, profile, plan, or marketing copy.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▥</div><strong>Relevant numbers</strong><small>Pricing, sales, costs, or customer feedback.</small></div></div>
+<button type="button" class="ac-linkbtn" style="margin-top: 14px" onClick="{{ goDocuments }}">Find templates in Learn →</button></section>
+</div>
+</sc-if>
+
+<!-- INVESTORS -->
+<sc-if value="{{ v.investors }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Make the right introduction</div><h1 class="ac-title">Meet people who<br>can help you grow.</h1><p class="ac-sub">A curated space for student founders to share what they are building and find aligned mentors, partners, and early funders.</p></div></div>
+<div class="ac-panel" style="background: linear-gradient(120deg, #eef1ff, #fff); margin-bottom: 26px">
+<div style="display: flex; justify-content: space-between; gap: 20px; align-items: center"><div><div class="ac-eyebrow">Your founder profile</div><h3 style="margin: 0 0 6px">Make it easy for the right person to say “tell me more.”</h3><p class="ac-desc" style="margin: 0">Add your traction, what you need, and the kind of connection you want.</p></div><div style="font-size: 40px; font-weight: 800; color: #2458f5">72%</div></div>
+<div class="ac-prog"><span style="width: 72%"></span></div></div>
+<div class="ac-section-head"><h2>People worth meeting</h2></div>
+<div class="ac-cards"><sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
+<article class="ac-card"><div class="ac-visual {{ p.color }}"><div class="ac-illus" aria-hidden="true">{{ p.emoji }}</div><span class="ac-tagpill">{{ p.tag }}</span></div>
+<div class="ac-cardbody"><h3>{{ p.name }}</h3><p class="ac-desc">{{ p.desc }}</p><div class="ac-meta"><span>{{ p.role }}</span><button type="button" class="{{ p.cls }}" onClick="{{ p.act }}">{{ p.label }}</button></div></div></article>
+</sc-for></div>
+<section class="ac-materials"><h3>Recommended supporting materials</h3><p>Prepare these before requesting an investor or funding connection.</p>
+<div class="ac-mat-grid"><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▤</div><strong>Business snapshot</strong><small>What you do, who you serve, and why now.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▥</div><strong>Traction &amp; metrics</strong><small>Sales, customers, reviews, or progress so far.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">$</div><strong>Funding plan</strong><small>How much you need and what it will unlock.</small></div></div>
+<button type="button" class="ac-linkbtn" style="margin-top: 14px" onClick="{{ goDocuments }}">Find templates in Learn →</button></section>
+</div>
+</sc-if>
+
+<!-- BUSINESS PROFILE -->
+<sc-if value="{{ v.about }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Your business profile</div><h1 class="ac-title">About you</h1><p class="ac-sub">A simple snapshot of your business, what is working, and where you have the clearest opportunities to grow.</p></div></div>
+<div class="ac-profile"><span class="ac-avatar">MC</span><span><strong>Maya Makes Photo</strong><small>Photography · San Diego, CA · Student business</small></span><p>Natural, colorful portraits for students and campus milestones.</p></div>
+<div class="ac-section-head"><h2>Analytics overview</h2><span class="ac-tag">Last 30 days</span></div>
+<div class="ac-analytics">
+<div class="ac-stat"><b>$2,336</b><span>Earnings <span class="ac-up">↗ +2%</span></span></div>
+<div class="ac-stat"><b>60</b><span>Orders <span class="ac-up">↗ +3%</span></span></div>
+<div class="ac-stat"><b>1,247</b><span>Listing views <span class="ac-up">↗ +6%</span></span></div>
+<div class="ac-chart"><h3>Store performance</h3><p>Daily activity over the last 7 days</p>
+<svg viewBox="0 0 520 112" role="img" aria-label="Store performance trend over the last seven days" style="width: 100%; height: 100px; display: block; overflow: visible"><line x1="24" y1="18" x2="500" y2="18" stroke="#e8e9ed"></line><line x1="24" y1="48" x2="500" y2="48" stroke="#e8e9ed"></line><line x1="24" y1="78" x2="500" y2="78" stroke="#e8e9ed"></line><line x1="24" y1="98" x2="500" y2="98" stroke="#e8e9ed"></line><polyline points="24,68 104,78 184,54 264,64 344,34 424,48 500,22" fill="none" stroke="#2458f5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="500" cy="22" r="5" fill="#2458f5"></circle><text x="460" y="12" fill="#2458f5" font-size="10" font-weight="800">Today</text><text x="20" y="110" fill="#858994" font-size="9">Mon</text><text x="174" y="110" fill="#858994" font-size="9">Wed</text><text x="330" y="110" fill="#858994" font-size="9">Fri</text><text x="480" y="110" fill="#858994" font-size="9">Sun</text></svg></div>
+<div class="ac-stat"><b>4.8%</b><span>Conversion <span class="ac-down">↘ -3%</span></span></div>
+</div>
+<section class="ac-grid2b" style="grid-template-columns: 1fr 1fr">
+<div class="ac-panel"><h3 style="margin-bottom: 14px">Strengths</h3><div class="ac-steps">
+<div class="ac-check"><span class="ac-tick">✓</span><span><strong>Strong customer interest</strong><br><small>Your listing views are up 6% this period.</small></span></div>
+<div class="ac-check"><span class="ac-tick">✓</span><span><strong>Consistent order activity</strong><br><small>60 orders show steady demand for your offer.</small></span></div>
+<div class="ac-check"><span class="ac-tick">✓</span><span><strong>Clear visual identity</strong><br><small>Your photography style is easy to recognize.</small></span></div></div></div>
+<div class="ac-panel"><h3 style="margin-bottom: 14px">Places to grow</h3><div class="ac-steps">
+<div class="ac-check"><span class="ac-tick pending">!</span><span><strong>Improve conversion</strong><br><small>Turn more of your 1,247 listing views into orders.</small></span></div>
+<div class="ac-check"><span class="ac-tick pending">!</span><span><strong>Test a repeat-customer offer</strong><br><small>Encourage past clients to book their next session.</small></span></div>
+<div class="ac-check"><span class="ac-tick pending">!</span><span><strong>Clarify your best seller</strong><br><small>Highlight the package that brings the most value.</small></span></div></div></div>
+</section>
+</div>
+</sc-if>
+
+<!-- PROFILE -->
+<sc-if value="{{ v.profile }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><div class="ac-eyebrow">Your workspace</div><h1 class="ac-title">Katarina’s business<br>command center.</h1><p class="ac-sub">Keep your idea, progress, and next steps in one place.</p></div><button type="button" class="ac-primary" onClick="{{ editProfile }}">Edit profile</button></div>
+<div class="ac-grid2b" style="margin-top: 0">
+<div class="ac-panel"><h3 style="margin-bottom: 16px">About your business</h3>
+<div class="ac-person" style="margin-bottom: 20px"><span class="ac-avatar">KC</span><span><strong>Katarina Cedolin</strong><small>Founder · San Diego, CA</small></span></div>
+<div class="ac-row"><span><small style="color: #6d717b">Business name</small><br><strong>Campus Connect</strong></span><span class="ac-tag">Draft</span></div>
+<div class="ac-row" style="margin-top: 10px"><span><small style="color: #6d717b">What I’m building</small><br><strong>A better way for student businesses to grow</strong></span></div></div>
+<div class="ac-panel"><h3 style="margin-bottom: 16px">Workspace health</h3><div class="ac-steps">
+<div class="ac-check"><span class="ac-tick">✓</span><strong>Profile started</strong></div>
+<div class="ac-check"><span class="ac-tick">✓</span><strong>Learning plan created</strong></div>
+<div class="ac-check"><span class="{{ bookTickCls }}">{{ bookTick }}</span><strong>{{ healthBook }}</strong></div></div></div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div class="ac-toast" role="status">{{ toast }}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"screenH":{"editor":null},"screenRadius":{"editor":null},"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      view: 'home', lessonId: 'basics', docId: 'customer', courseFilter: 'all', expertFilter: 'all',
+      progress: { basics: 68, marketing: 34, money: 12, legit: 0, momentum: 0 },
+      booked: {}, intros: {}, saved: {}, searchQ: '', chatDraft: '',
+      chat: [
+        { me: false, text: 'Hi! I can explain this guide, help you apply it to your business, or point you to a template.' },
+        { me: true, text: 'How do I know if my customer is specific enough?' },
+        { me: false, text: 'Try to describe one real person and the moment they decide to look for help. If your answer includes a situation, a need, and a reason to choose you, you’re on the right track.' }
+      ],
+      toast: ''
+    };
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  top(e) {
+    try {
+      const t = e && e.currentTarget;
+      const app = t && t.closest ? t.closest('[data-app]') : null;
+      const s = app ? app.querySelector('[data-scroller]') : null;
+      if (s) s.scrollTop = 0;
+    } catch (err) {}
+  }
+  flash(msg) { clearTimeout(this._t); this.setState({ toast: msg }); this._t = setTimeout(() => this.setState({ toast: '' }), 2200); }
+  go(view, extra) { return (e) => { this.top(e); this.setState(Object.assign({ view }, extra || {})); }; }
+
+  renderVals() {
+    const st = this.state;
+    const COURSES = [
+      { id: 'basics', color: 'blue', emoji: '🧭', title: 'Business Basics Bootcamp', desc: 'Build a strong foundation across marketing, finance, operations, and legal.', length: '6 modules · 2h 40m', step: 16, topics: 'marketing finance operations legal setup' },
+      { id: 'marketing', color: 'lilac', emoji: '📣', title: 'Marketing That Gets Noticed', desc: 'Turn your idea into a clear offer, brand, and launch plan.', length: '4 modules · 1h 25m', step: 22, topics: 'marketing' },
+      { id: 'money', color: 'yellow', emoji: '📊', title: 'Money In, Money Out', desc: 'Pricing, bookkeeping, cash flow, and the numbers you need to know.', length: '5 modules · 1h 55m', step: 20, topics: 'finance' },
+      { id: 'legit', color: 'mint', emoji: '🧰', title: 'Make It Legit', desc: 'Choose a structure, register your business, and protect what you are building.', length: '3 modules · 55m', step: 34, topics: 'legal setup' },
+      { id: 'momentum', color: 'coral', emoji: '🛡️', title: 'Protect Your Momentum', desc: 'Understand risk, customer expectations, and the systems that keep you moving.', length: '4 modules · 1h', step: 25, topics: 'operations' }
+    ];
+    const LESSONS = {
+      basics: { kicker: 'Course · Module 5 of 6', title: 'Business Basics Bootcamp', note: 'About 8 minutes left in this module.', modules: [['What you are actually selling', 'A business is a promise: who you help, what changes for them, and what they pay. Write that in one sentence before you pick a name or a logo.'], ['A customer you could text', 'Choose one real person, not a crowd. Note where they already look for help and what they tried before you.'], ['The three numbers that matter', 'Price, cost to deliver, and how many sales cover a normal month. If one is a guess, label it as a guess and decide what would make it real.']], takeaway: 'You can explain the offer, and the month it needs to work, without opening a spreadsheet.' },
+      marketing: { kicker: 'Course · Module 2 of 4', title: 'Marketing That Gets Noticed', note: 'About 8 minutes left in this module.', modules: [['Name the moment', 'People do not buy “photography.” They buy a fix for a moment: graduation, a first client, a profile that feels outdated.'], ['Say it the way they would', 'Write the offer in their words. If a classmate would not repeat it, it is still too broad.'], ['One place, one message', 'Pick the channel they already check. Repeat the same sentence there instead of starting five accounts.']], takeaway: 'Your message names a person, a moment, and a result.' },
+      money: { kicker: 'Course · Module 1 of 5', title: 'Money In, Money Out', note: 'This module is just getting started.', modules: [['Price from the work, not from nerves', 'List the hours, materials, and tools in one delivery. A price that ignores those is a discount you did not mean to give.'], ['A simple cash picture', 'Money in, money out, and what is left. Track a week before you build a yearly forecast.'], ['Leave room to learn', 'Your first price can change. Tell the customer what is included so a later change does not feel like a surprise.']], takeaway: 'You know what one sale costs you and what it needs to bring in.' },
+      legit: { kicker: 'Course · Not started', title: 'Make It Legit', note: 'Three short modules. Start with the decision, not the paperwork.', modules: [['Pick a structure you can explain', 'Sole prop, partnership, or something more formal. The right one is the one you understand and can afford to maintain.'], ['Name, bank, and records', 'A business name, a separate place for the money, and a folder for receipts. Those three prevent most early mix-ups.'], ['What you are protecting', 'Write down the thing that would hurt to lose: photos, a process, a customer list. That list tells you what to ask about later.']], takeaway: 'You have a structure, a place for the money, and a list of what to protect.' },
+      momentum: { kicker: 'Course · Not started', title: 'Protect Your Momentum', note: 'Four modules on risk, expectations, and the systems that keep you moving.', modules: [['Say what done looks like', 'Write what the customer receives, when, and what is not included. Most friction starts as an unspoken assumption.'], ['A backup for the work', 'Copies of files, a second way to get paid, and a note on what happens if you are sick for a week.'], ['A review after the first five', 'After five customers, note what they asked, what slipped, and what you would repeat. Change one thing, not everything.']], takeaway: 'The next customer gets a clearer offer because you wrote down what the last ones taught you.' }
+    };
+    const LIBRARY = {
+      customer: { kicker: 'Guide · Marketing', title: 'How to define your first customer', note: 'A short way to get specific before you spend money on ads or a logo.', sections: [['Start with a person', '“College students” is a starting point. “Students who want graduation photos but do not know which photographer to trust” is a customer you can serve.'], ['Use the three-question test', 'What are they trying to do? What is getting in their way? What would make the next step feel easy? Write the answers in their words.'], ['Check it against a real conversation', 'If you cannot picture one person saying yes this month, narrow the moment, not the ambition.']], takeaway: 'You can describe one person, the moment they look for help, and why they would pick you.' },
+      plan: { kicker: 'Template · One page', title: 'Simple business plan', note: 'Fill the blanks. A page you can say out loud is more useful than a plan you do not open.', sections: [['What this is for', 'Use this when someone asks what you do, or when you need to choose the next task.']], blanks: [['The offer', 'What you sell, in one sentence.'], ['The customer', 'Who it is for, and the moment they need it.'], ['The price', 'What you charge, and what is included.'], ['This month', 'The one result you want in the next 30 days.']], takeaway: 'A friend could repeat your plan after hearing it once.' },
+      pricing: { kicker: 'Guide · Finance', title: 'Pricing your first offer', note: 'A practical way to price with room to learn.', sections: [['Start from the delivery', 'Write the time, materials, and tools for one order. That is the floor, not the price.'], ['Add the month you are trying to fund', 'Rent, software, and the hours you cannot sell twice. Spread that across the number of orders you can actually finish.'], ['Say what is included', 'A clear list makes it easier to raise the price later without it feeling random.']], takeaway: 'The price covers the work, the month, and a little room to be wrong.' },
+      setup: { kicker: 'Checklist · Legal and setup', title: 'Business setup checklist', note: 'What to consider before you start taking customers. This is a list to think through, not legal advice.', sections: [['Use it as a pass', 'Check what you already have. Leave the rest as questions for an expert or a campus office.']], blanks: [['Name', 'The name customers will see, and whether you need to register it.'], ['Money', 'A separate account or a clear way to keep business money apart.'], ['Records', 'Where invoices, receipts, and agreements will live.'], ['Customers', 'How you will take payment and what they receive.']], takeaway: 'You know which setup questions are done and which ones still need a person.' },
+      offer: { kicker: 'Template · One page', title: 'Offer one-pager', note: 'The page you can send when someone says “tell me more.”', sections: [['Keep it to one screen', 'If it needs a second page, you are explaining the business instead of the offer.']], blanks: [['Headline', 'The result, not the category.'], ['Who it is for', 'The person and the moment.'], ['What they get', 'The deliverable, in plain words.'], ['Price and next step', 'What it costs, and how they say yes.']], takeaway: 'Someone can decide whether to ask a question without a call first.' }
+    };
+    const DOC_CARDS = [
+      { id: 'plan', color: 'blue', emoji: '📋', tag: 'Template', title: 'Simple business plan', desc: 'A one-page plan to make your idea clear and actionable.', cta: 'Open template' },
+      { id: 'pricing', color: 'yellow', emoji: '💸', tag: 'Finance', title: 'Pricing your first offer', desc: 'A practical guide to pricing with confidence and room to grow.', cta: 'Read guide' },
+      { id: 'setup', color: 'lilac', emoji: '⚖️', tag: 'Legal', title: 'Business setup checklist', desc: 'Know what to consider before you start taking customers.', cta: 'Open checklist' },
+      { id: 'offer', color: 'mint', emoji: '📝', tag: 'Template', title: 'Offer one-pager', desc: 'Say what you sell, who it is for, and what it costs on a single page.', cta: 'Open template' }
+    ];
+    const EXPERTS = [
+      { id: 'alex', initials: 'AM', name: 'Alex Morgan', area: 'Small Business Strategy', when: 'Today · 2:00 PM', rating: '4.9', tag: 'setup' },
+      { id: 'jordan', initials: 'JP', name: 'Jordan Patel', area: 'Brand & Marketing', when: 'Tomorrow · 11:30 AM', rating: '5.0', tag: 'marketing' },
+      { id: 'riley', initials: 'RS', name: 'Riley Santos', area: 'Finance & Funding', when: 'Fri · 9:00 AM', rating: '4.9', tag: 'finance' }
+    ];
+    const PEOPLE = [
+      { id: 'samira', color: 'dark', emoji: '🌱', tag: 'Early-stage', name: 'Samira Okafor', desc: 'Supports consumer and community-focused founders across Southern California.', role: 'Angel investor', cta: 'Request intro', done: 'Intro requested' },
+      { id: 'david', color: 'blue', emoji: '🤝', tag: 'Mentor', name: 'David Chen', desc: 'Former operator who helps founders clarify their offer and find their first 100 customers.', role: 'Growth & strategy', cta: 'Request intro', done: 'Intro requested' },
+      { id: 'launchpad', color: 'yellow', emoji: '🚀', tag: 'Partner', name: 'Launchpad Collective', desc: 'A local network connecting student ventures with pilot opportunities and small grants.', role: 'Programs & grants', cta: 'Learn more', done: 'Connection saved' }
+    ];
+
+    const P = st.progress;
+    const viewForNav = st.view === 'lesson' ? 'courses' : st.view === 'doc' ? 'documents' : st.view;
+    const ICON = {
+      home: 'M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z',
+      courses: 'M6 4h12v16H6zM9 8h6M9 12h6',
+      documents: 'M7 3h8l4 4v14H7zM15 3v5h5',
+      office: 'M9 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM16 7a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4.5 18c.6-2.4 2.4-3.6 4.6-3.6s4 1.2 4.6 3.6M14 14.6c1.4-.4 2.8-.2 4 .8.8.7 1.3 1.6 1.5 2.6',
+      investors: 'M4 16l5-5 3 3 8-8M14 6h6v6',
+      about: 'M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 16c.6-1.5 1.6-2.2 3-2.2s2.4.7 3 2.2M15 9h3M15 12h3'
+    };
+    const link = (id, label, count) => { const on = viewForNav === id; return { isLink: true, isLabel: false, label, count: count || '', icon: ICON[id], cls: 'ac-link' + (on ? ' on' : ''), current: on ? 'page' : 'false', go: this.go(id) }; };
+    const lab = (label) => ({ isLabel: true, isLink: false, label });
+    const side = [link('home', 'Home'), lab('Learn'), link('courses', 'Courses', '5'), link('documents', 'Library', '5'), lab('Connect'), link('office', 'Experts'), link('investors', 'Investors'), lab('Your business'), link('about', 'Business profile')];
+    const mob = [['home', 'Home'], ['courses', 'Courses'], ['documents', 'Library'], ['office', 'Experts'], ['investors', 'Investors'], ['about', 'Profile']].map((m) => ({ label: m[1], cls: viewForNav === m[0] ? 'on' : '', go: this.go(m[0]) }));
+
+    const openLesson = (id) => (e) => { this.top(e); this.setState({ view: 'lesson', lessonId: id }); };
+    const courseFilterDefs = [['all', 'All courses'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['operations', 'Operations'], ['legal', 'Legal'], ['setup', 'Business setup']];
+    const courseFilters = courseFilterDefs.map((f) => { const on = st.courseFilter === f[0]; return { label: f[1], on, cls: 'ac-filter' + (on ? ' on' : ''), pick: () => this.setState({ courseFilter: f[0] }) }; });
+    const courses = COURSES.filter((c) => st.courseFilter === 'all' || c.topics.split(' ').indexOf(st.courseFilter) !== -1).map((c) => {
+      const pct = P[c.id];
+      return { title: c.title, desc: c.desc, color: c.color, emoji: c.emoji, length: c.length, pct, status: pct >= 100 ? 'Complete' : pct > 0 ? pct + '% complete' : 'Not started', cta: pct >= 100 ? 'Review →' : pct > 0 ? 'Continue →' : 'Start course →', open: openLesson(c.id) };
+    });
+
+    const Lsrc = LESSONS[st.lessonId] || LESSONS.basics;
+    const Lc = COURSES.find((c) => c.id === st.lessonId) || COURSES[0];
+    const lpct = P[Lc.id];
+    const lesson = { kicker: lpct >= 100 ? 'Course · Complete' : Lsrc.kicker, title: Lsrc.title, note: lpct >= 100 ? 'You have finished every module in this course.' : Lsrc.note, pct: lpct, takeaway: Lsrc.takeaway, modules: Lsrc.modules.map((m) => ({ h: m[0], p: m[1] })), markLabel: lpct >= 100 ? 'Course complete ✓' : 'Mark module complete' };
+
+    const Dsrc = LIBRARY[st.docId] || LIBRARY.customer;
+    const doc = { kicker: Dsrc.kicker, title: Dsrc.title, note: Dsrc.note, takeaway: Dsrc.takeaway, sections: (Dsrc.sections || []).map((m) => ({ h: m[0], p: m[1] })), blanks: (Dsrc.blanks || []).map((m) => ({ h: m[0], p: m[1] })), saveLabel: st.saved[st.docId] ? 'Saved to library ✓' : 'Save to library' };
+    const docs = DOC_CARDS.map((d) => ({ title: d.title, desc: d.desc, color: d.color, emoji: d.emoji, tag: d.tag, cta: d.cta, open: (e) => { this.top(e); this.setState({ view: 'doc', docId: d.id }); } }));
+
+    const expertFilterDefs = [['all', 'All experts'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['setup', 'Legal & setup']];
+    const expertFilters = expertFilterDefs.map((f) => { const on = st.expertFilter === f[0]; return { label: f[1], on, cls: 'ac-filter' + (on ? ' on' : ''), pick: () => this.setState({ expertFilter: f[0] }) }; });
+    const experts = EXPERTS.filter((x) => st.expertFilter === 'all' || x.tag === st.expertFilter).map((x) => {
+      const done = !!st.booked[x.id];
+      return { initials: x.initials, name: x.name, area: x.area, when: x.when, rating: x.rating, cls: 'ac-cta' + (done ? ' done' : ''), label: done ? 'Booked ✓' : 'Book 30 min',
+        book: () => { if (this.state.booked[x.id]) return; const b = Object.assign({}, this.state.booked); b[x.id] = true; this.setState({ booked: b }); this.flash('Session reserved with ' + x.name); } };
+    });
+    const people = PEOPLE.map((p) => {
+      const done = !!st.intros[p.id];
+      return { name: p.name, desc: p.desc, role: p.role, color: p.color, emoji: p.emoji, tag: p.tag, cls: 'ac-cta' + (done ? ' done' : ''), label: done ? p.done + ' ✓' : p.cta,
+        act: () => { if (this.state.intros[p.id]) return; const i = Object.assign({}, this.state.intros); i[p.id] = true; this.setState({ intros: i }); this.flash(p.done); } };
+    });
+
+    const bookedCount = Object.keys(st.booked).length;
+    const sessions = 1 + bookedCount;
+    const basicsPct = P.basics;
+
+    return {
+      screenH: (this.props && this.props.screenH) ?? '720px',
+      screenRadius: (this.props && this.props.screenRadius) ?? '0',
+      side, mob,
+      v: { home: st.view === 'home', courses: st.view === 'courses', lesson: st.view === 'lesson', documents: st.view === 'documents', doc: st.view === 'doc', office: st.view === 'office', investors: st.view === 'investors', about: st.view === 'about', profile: st.view === 'profile' },
+      goHome: this.go('home'), goCourses: this.go('courses'), goDocuments: this.go('documents'), goOffice: this.go('office'), goAbout: this.go('about'), goProfile: this.go('profile'),
+      openBasics: openLesson('basics'), openMarketing: openLesson('marketing'),
+      openCustomerDoc: (e) => { this.top(e); this.setState({ view: 'doc', docId: 'customer' }); },
+      searchQ: st.searchQ, onSearchQ: (e) => this.setState({ searchQ: e.target.value }),
+      onSearchSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.flash('Searching courses, documents, and people…'); },
+      noNotifs: () => this.flash('No new notifications'),
+      editProfile: () => this.flash('Profile editor opened'),
+      inProgress: COURSES.filter((c) => P[c.id] > 0 && P[c.id] < 100).length,
+      docsReady: 12 + Object.keys(st.saved).length,
+      sessions, sessionWord: sessions === 1 ? 'expert session' : 'expert sessions',
+      basicsPct, remaining: 100 - basicsPct,
+      basicsNote: basicsPct >= 100 ? 'Course complete · 6 modules · 2h 40m' : '8 min left in Module ' + Math.min(6, Math.floor(basicsPct / 16.7) + 1) + ' · 6 modules · 2h 40m',
+      readyNote: basicsPct >= 100 ? 'Foundation complete. Time to book an expert and plan your launch.' : 'Finish one more course to reach your next milestone.',
+      bookTick: bookedCount ? '✓' : '!', bookTickCls: 'ac-tick' + (bookedCount ? '' : ' pending'),
+      healthBook: bookedCount ? 'Expert hour booked' : 'Book your next expert hour',
+      bars: [[30, 'W1', 0], [43, 'W2', 0], [37, 'W3', 0], [61, 'W4', 1], [76, 'W5', 1], [Math.min(100, 90 + Object.keys(st.saved).length * 2 + bookedCount * 3), 'This week', 1]].map((b) => ({ h: b[0], label: b[1], c: b[2] ? '#2458f5' : '#b9c9ff' })),
+      courseFilters, courses, lesson,
+      markComplete: () => {
+        const id = Lc.id; const cur = this.state.progress[id];
+        if (cur >= 100) return;
+        const next = Math.min(100, cur + Lc.step);
+        const pr = Object.assign({}, this.state.progress); pr[id] = next;
+        this.setState({ progress: pr });
+        this.flash(next >= 100 ? 'Course complete — nice work!' : 'Module marked complete');
+      },
+      chat: st.chat.map((m) => ({ text: m.text, cls: 'ac-bubble ' + (m.me ? 'me' : 'ai') })),
+      chatDraft: st.chatDraft, onChatDraft: (e) => this.setState({ chatDraft: e.target.value }),
+      sendChat: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const t = (this.state.chatDraft || '').trim(); if (!t) return;
+        this.setState({ chatDraft: '', chat: this.state.chat.concat([{ me: true, text: t }, { me: false, text: 'That’s a thoughtful question. Start by writing down what you know, then use the guide’s checklist to turn it into one small next action.' }]) });
+      },
+      docs, doc,
+      saveDoc: () => { const s = Object.assign({}, this.state.saved); s[this.state.docId] = true; this.setState({ saved: s }); this.flash('Saved to your library'); },
+      expertFilters, experts, people,
+      toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

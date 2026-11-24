@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Connect — Contact</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700;800&amp;display=swap">
+<style>
+.cc-static{position:relative;overflow:hidden}
+body{margin:0;background:#FAFAF7;-webkit-font-smoothing:antialiased}
+a{color:#3157FF;text-decoration:none}a:hover{color:#2440D6}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #3157FF;outline-offset:3px}
+input::placeholder,textarea::placeholder{color:#8A8A84}
+.cc-hero{--rx:0deg;--ry:0deg;--mx:72%;--my:50%}
+.cc-spot{background:radial-gradient(700px circle at var(--mx) var(--my),rgba(49,87,255,.34),rgba(49,87,255,0) 60%)}
+.cc-gridbg{background-image:linear-gradient(rgba(250,250,247,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(250,250,247,.055) 1px,transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse at 70% 50%,#000 10%,transparent 65%);mask-image:radial-gradient(ellipse at 70% 50%,#000 10%,transparent 65%)}
+.cc-stage{position:relative;width:420px;height:420px;perspective:1100px;flex:none}
+.cc-scene{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.cc-sway{transform-style:preserve-3d;animation:ccSway 9s ease-in-out infinite alternate}
+@keyframes ccSway{from{transform:rotateY(-30deg) rotateX(10deg)}to{transform:rotateY(30deg) rotateX(-6deg)}}
+.cc-field{width:100%;box-sizing:border-box;min-height:52px;padding:14px 16px;border-radius:16px;border:1px solid #DEDED7;background:#FAFAF7;color:#151515;font:inherit;font-size:16px;transition:border-color .2s,background .2s}
+.cc-field:focus{border-color:#3157FF;background:#FFFFFF;outline:none}
+.cc-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.cc-grid2{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-stage{transform:scale(.7);margin:-63px}}
+@media (prefers-reduced-motion:reduce){.cc-sway{animation:none!important}.cc-scene{transition:none!important}}
+</style>
+</helmet>
+<div style="background: #FAFAF7; color: #151515; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
+
+<div style="position: sticky; top: 14px; z-index: 50; height: 0">
+<dc-import name="Nav" active="contact" hint-size="100%,62px"></dc-import>
+</div>
+
+<!-- HERO -->
+<header class="cc-hero" style="background: #0E0F12; color: #FAFAF7; position: relative; overflow: hidden">
+<div class="cc-spot" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+<div class="cc-gridbg" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+<div style="position: relative; max-width: 1320px; margin: 0 auto; padding: 140px clamp(20px, 5vw, 64px) 60px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px">
+<div style="flex: 1 1 560px; min-width: 0">
+<p style="margin: 0 0 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #6E8BFF">Contact</p>
+<h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(54px, 7.6vw, 120px); line-height: 0.9; letter-spacing: -0.06em">Let's build it together.</h1>
+<p style="margin: 30px 0 0; max-width: 520px; font-size: 18px; color: #C2C2BD">Universities, investors, mentors and student founders — tell us who you are and we'll be in touch ahead of our January 2027 launch.</p>
+</div>
+<div style="flex: 1 1 360px; min-width: 0; display: flex; justify-content: center">
+<div class="cc-stage" aria-hidden="true">
+<div class="cc-scene">
+<div style="position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d">
+<div class="cc-sway" style="position: absolute; left: -150px; top: -150px; width: 300px; height: 300px">
+<sc-for list="{{ logoLayers }}" as="l" hint-placeholder-count="14">
+<svg viewBox="0 0 100 100" style="position: absolute; inset: 0; width: 300px; height: 300px; color: {{ l.color }}; transform: translateZ({{ l.z }}px)"><path d="M53.45 32 A28 28 0 1 0 53.45 68 L38 50 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"></path><path d="M66 27 L93 50 L66 73 Z" fill="currentColor" stroke="currentColor" stroke-width="10" stroke-linejoin="round"></path></svg>
+</sc-for>
+<svg viewBox="0 0 100 100" style="position: absolute; inset: 0; width: 300px; height: 300px; color: #6E8BFF; transform: translateZ(16px); filter: drop-shadow(0 0 30px rgba(49,87,255,0.6))"><path d="M53.45 32 A28 28 0 1 0 53.45 68 L38 50 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"></path><path d="M66 27 L93 50 L66 73 Z" fill="currentColor" stroke="currentColor" stroke-width="10" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<!-- FORM -->
+<section style="padding: clamp(70px, 9vw, 120px) 0 60px">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px); display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+<div style="flex: 1.5 1 560px; min-width: 0; box-sizing: border-box; padding: clamp(28px, 4vw, 52px); border-radius: 40px; background: #FFFFFF; border: 1px solid #E6E6DF; box-shadow: 0 30px 70px rgba(21,21,21,0.06)">
+<sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ submit }}">
+<h2 style="margin: 0 0 8px; font-family: Manrope, sans-serif; font-weight: 800; font-size: 36px; letter-spacing: -0.04em">Get in touch</h2>
+<p style="margin: 0 0 30px; color: #55554F">We usually reply within a few days.</p>
+<p id="cc-role-label" style="margin: 0 0 10px; font-size: 13px; font-weight: 600; color: #3D3D39">I'm reaching out as</p>
+<div role="group" aria-labelledby="cc-role-label" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px">
+<sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{ r.selected }}" onClick="{{ r.pick }}" style="min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1.5px solid {{ r.border }}; background: {{ r.bg }}; color: {{ r.fg }}; font-weight: 600; font-size: 14px; transition: background .25s, color .25s">{{ r.label }}</button>
+</sc-for>
+</div>
+<div class="cc-grid2">
+<div><label for="cc-name" style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #3D3D39">Full name</label><input id="cc-name" class="cc-field" type="text" autocomplete="name" required="" placeholder="Your name"></div>
+<div><label for="cc-email" style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #3D3D39">Email</label><input id="cc-email" class="cc-field" type="email" autocomplete="email" required="" placeholder="you@university.edu"></div>
+</div>
+<div style="margin-top: 14px"><label for="cc-org" style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #3D3D39">{{ orgLabel }}</label><input id="cc-org" class="cc-field" type="text" placeholder="{{ orgPlaceholder }}"></div>
+<div style="margin-top: 14px"><label for="cc-msg" style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #3D3D39">How can we help?</label><textarea id="cc-msg" class="cc-field" rows="5" placeholder="Tell us a little about what you're looking for" style="resize: vertical"></textarea></div>
+<button type="submit" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 30px; border: 0; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-weight: 600; font-size: 15px; box-shadow: 0 14px 34px rgba(49,87,255,0.35)">Send message
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</form>
+</sc-if>
+<sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="min-height: 420px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 18px">
+<span style="display: flex; width: 64px; height: 64px; border-radius: 50%; background: #3157FF; color: #FAFAF7; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.045em">Thank you.</h2>
+<p style="margin: 0; max-width: 420px; font-size: 17px; color: #55554F">Your message is on its way. We'll be in touch within a few days.</p>
+<button type="button" onClick="{{ reset }}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1.5px solid #151515; background: transparent; color: #151515; font-weight: 600">Send another message</button>
+</div>
+</sc-if>
+</div>
+
+<div style="flex: 1 1 340px; min-width: 0; box-sizing: border-box; padding: clamp(28px, 4vw, 44px); border-radius: 40px; background: #151515; color: #FAFAF7">
+<p style="margin: 0 0 24px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #A3A3A0">What happens next</p>
+<div style="display: flex; gap: 18px; padding: 20px 0; border-top: 1px solid rgba(250,250,247,0.14)"><span style="font-family: Manrope, sans-serif; font-weight: 800; color: #67C7FF">01</span><div><p style="margin: 0 0 4px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 18px">We read every message</p><p style="margin: 0; font-size: 15px; color: #B9B9B4">A real person from our team reviews it.</p></div></div>
+<div style="display: flex; gap: 18px; padding: 20px 0; border-top: 1px solid rgba(250,250,247,0.14)"><span style="font-family: Manrope, sans-serif; font-weight: 800; color: #B28CFF">02</span><div><p style="margin: 0 0 4px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 18px">We set up a call</p><p style="margin: 0; font-size: 15px; color: #B9B9B4">A short conversation about your goals.</p></div></div>
+<div style="display: flex; gap: 18px; padding: 20px 0; border-top: 1px solid rgba(250,250,247,0.14); border-bottom: 1px solid rgba(250,250,247,0.14)"><span style="font-family: Manrope, sans-serif; font-weight: 800; color: #F6C945">03</span><div><p style="margin: 0 0 4px; font-family: Manrope, sans-serif; font-weight: 700; font-size: 18px">We build the fit</p><p style="margin: 0; font-size: 15px; color: #B9B9B4">A partnership, intro or role that works for you.</p></div></div>
+<p style="margin: 28px 0 0; font-size: 14px; color: #A3A3A0">Prefer email? <span style="color: #FAFAF7; font-weight: 600">[CONTACT EMAIL]</span></p>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section style="padding: 60px 0 clamp(90px, 11vw, 140px)">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px); display: flex; flex-wrap: wrap; gap: 40px 80px">
+<div style="flex: 1 1 320px; min-width: 0">
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">FAQ</p>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.05em">Questions, answered.</h2>
+</div>
+<div style="flex: 1.6 1 520px; min-width: 0; border-top: 1px solid #DEDED7">
+<sc-for list="{{ faqs }}" as="q" hint-placeholder-count="4">
+<div style="border-bottom: 1px solid #DEDED7">
+<h3 style="margin: 0">
+<button type="button" aria-expanded="{{ q.open }}" onClick="{{ q.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 80px; padding: 0; border: 0; background: transparent; color: #151515; text-align: left; font-family: Manrope, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.02em">{{ q.q }}
+<span style="flex: none; display: flex; width: 40px; height: 40px; border-radius: 50%; background: {{ q.iconBg }}; color: {{ q.iconFg }}; align-items: center; justify-content: center; transition: background .25s"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="transform: rotate({{ q.rot }}deg); transition: transform .3s"><path d="M12 5v14M5 12h14"></path></svg></span>
+</button>
+</h3>
+<sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0 0 26px; max-width: 640px; font-size: 17px; color: #55554F">{{ q.a }}</p>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,520px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { role: 'uni', sent: false, faq: 0 };
+  }
+  setTilt(e, maxX, maxY) {
+    const el = e.currentTarget;
+    if (!el || !el.getBoundingClientRect) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--ry', ((x - 0.5) * maxX).toFixed(2) + 'deg');
+    el.style.setProperty('--rx', ((0.5 - y) * maxY).toFixed(2) + 'deg');
+    el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+    el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+  }
+  resetTilt(e, mx, my) {
+    const el = e.currentTarget;
+    if (!el || !el.style) return;
+    el.style.setProperty('--rx', '0deg');
+    el.style.setProperty('--ry', '0deg');
+    el.style.setProperty('--mx', mx);
+    el.style.setProperty('--my', my);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const role = st.role || 'uni';
+    const roleDefs = [
+      { id: 'uni', label: 'University', org: 'University or department', ph: 'e.g. College of Business' },
+      { id: 'inv', label: 'Investor', org: 'Firm or fund', ph: 'e.g. Seed fund or angel group' },
+      { id: 'men', label: 'Mentor', org: 'Company or area of expertise', ph: 'e.g. Marketing, operations, law' },
+      { id: 'stu', label: 'Student founder', org: 'Your business', ph: 'What are you building?' }
+    ];
+    const roles = roleDefs.map((r) => {
+      const on = r.id === role;
+      return { label: r.label, selected: on, bg: on ? '#151515' : 'transparent', fg: on ? '#FAFAF7' : '#151515', border: on ? '#151515' : '#DEDED7', pick: () => this.setState({ role: r.id }) };
+    });
+    const cur = roleDefs.find((r) => r.id === role) || roleDefs[0];
+
+    const logoLayers = [];
+    for (let i = 0; i < 14; i++) {
+      const t = i / 13;
+      logoLayers.push({ z: (i * 2.2 - 14).toFixed(1), color: 'rgb(' + Math.round(14 + t * 35) + ',' + Math.round(24 + t * 63) + ',' + Math.round(90 + t * 165) + ')' });
+    }
+
+    const faqDefs = [
+      { q: 'How does a university partnership work?', a: 'We start with an intro call, set the program up for your campus — curriculum, mentors and your school services — then launch with your students.' },
+      { q: 'When does Campus Connect launch?', a: 'The marketplace launches in January 2027 at San Diego State, starting with 50 founding student sellers.' },
+      { q: 'Who can buy and sell on the marketplace?', a: 'Verified students. Universities can also list school-provided services, and local businesses can share deals for students.' },
+      { q: 'How can investors get involved?', a: 'Browse profiles of student founders and their businesses, accept one-on-one calls with the founders you want to meet, or hold office hours as a mentor.' }
+    ];
+    const openIdx = st.faq == null ? -1 : st.faq;
+    const faqs = faqDefs.map((f, i) => {
+      const on = i === openIdx;
+      return { q: f.q, a: f.a, open: on, rot: on ? 45 : 0, iconBg: on ? '#3157FF' : '#EFEFEA', iconFg: on ? '#FAFAF7' : '#151515', toggle: () => this.setState({ faq: on ? -1 : i }) };
+    });
+
+    return {
+      roles, orgLabel: cur.org, orgPlaceholder: cur.ph, logoLayers, faqs,
+      sent: !!st.sent, notSent: !st.sent,
+      submit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ sent: true }); },
+      reset: () => this.setState({ sent: false }),
+      heroMove: (e) => this.setTilt(e, 24, 14),
+      heroLeave: (e) => this.resetTilt(e, '72%', '50%')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Connect — Academy</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/assets/academy-app.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+<style>
+.cc-static{position:relative;overflow:hidden}
+body{margin:0;background:#FAFAF7;-webkit-font-smoothing:antialiased}
+a{color:#3157FF;text-decoration:none}a:hover{color:#2440D6}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3px}
+.cc-hero{--rx:0deg;--ry:0deg;--mx:70%;--my:50%}
+.cc-spot{background:radial-gradient(720px circle at var(--mx) var(--my),rgba(103,199,255,.22),rgba(49,87,255,.14) 38%,rgba(49,87,255,0) 62%)}
+.cc-gridbg{background-image:linear-gradient(rgba(250,250,247,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(250,250,247,.055) 1px,transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse at 65% 50%,#000 10%,transparent 65%);mask-image:radial-gradient(ellipse at 65% 50%,#000 10%,transparent 65%)}
+.cc-stage{position:relative;width:580px;height:560px;perspective:1500px;flex:none}
+.cc-scene{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.cc-grow{transform-style:preserve-3d;animation:ccGrow 1.6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ccGrow{from{transform:scale3d(1,1,.02)}to{transform:scale3d(1,1,1)}}
+.cc-float{animation:ccFloat 7s ease-in-out infinite;transform-style:preserve-3d}
+@keyframes ccFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
+.cc-tilt{--rx:0deg;--ry:0deg;--mx:50%;--my:50%;position:relative;overflow:hidden;transform:perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.cc-tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(460px circle at var(--mx) var(--my),rgba(255,255,255,.26),rgba(255,255,255,0) 55%);opacity:0;transition:opacity .35s}
+.cc-tilt:hover::after{opacity:1}
+.cc-tilt:hover{box-shadow:0 34px 70px rgba(21,21,21,.14)}
+.cc-grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.cc-pop{animation:ccPop .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes ccPop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ca-shell .cc-pop{animation:ccPop .45s cubic-bezier(.2,.7,.2,1)}
+@media (max-width:760px){.ca-shell{flex-direction:column}.ca-side{flex:none!important;flex-direction:row!important;overflow-x:auto;padding:10px!important;align-items:center}.ca-brand,.ca-ring{display:none!important}}
+.cc-laptop{display:block;position:relative;transform-style:preserve-3d;transform:rotateX(10deg) rotateY(-18deg) rotateZ(1deg);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.cc-laptop-btn:hover .cc-laptop{transform:rotateX(4deg) rotateY(-6deg) translateZ(40px)}
+.cc-tap{animation:ccTap 2.4s ease-in-out infinite}
+@keyframes ccTap{0%,100%{box-shadow:0 0 0 0 rgba(49,87,255,.55)}60%{box-shadow:0 0 0 14px rgba(49,87,255,0)}}
+.cc-overlay{animation:ccFade .35s ease both}
+@keyframes ccFade{from{opacity:0}to{opacity:1}}
+.cc-zoom{animation:ccZoomL 1s cubic-bezier(.16,.84,.24,1) both}
+@keyframes ccZoomL{from{opacity:.35;transform:perspective(1800px) translate3d(16vw,8vh,-560px) rotateX(10deg) rotateY(-18deg) scale(.6)}to{opacity:1;transform:perspective(1800px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale(1)}}
+.cc-hero .cc-laptop{transform:rotateX(calc(10deg + var(--rx))) rotateY(calc(-18deg + var(--ry))) rotateZ(1deg);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.cc-hero .cc-laptop-btn:hover .cc-laptop{transform:rotateX(calc(4deg + var(--rx))) rotateY(calc(-6deg + var(--ry))) translateZ(40px)}
+.cc-laptop-btn:focus-visible{outline:none}.cc-laptop-btn:focus-visible .cc-laptop > span:first-child{outline:3px solid #67C7FF;outline-offset:4px}
+@media (max-width:640px){.cc-hero .cc-laptop > span:first-child > span{height:260px!important}}
+.cc-arrow{transition:transform .3s}a:hover .cc-arrow{transform:translateX(4px)}
+@media (max-width:1100px){.cc-grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cc-grid4{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-stage{transform:scale(.6);margin:-112px -116px}}
+@media (prefers-reduced-motion:reduce){.cc-grow,.cc-float,.cc-pop,.cc-tap,.cc-overlay,.cc-zoom{animation:none!important}.cc-laptop{transition:none!important}.cc-scene,.cc-tilt{transition:none!important}}
+</style>
+</helmet>
+<div style="background: #FAFAF7; color: #151515; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
+
+<div style="position: sticky; top: 14px; z-index: 50; height: 0">
+<dc-import name="Nav" active="academy" hint-size="100%,62px"></dc-import>
+</div>
+
+<!-- HERO -->
+<header class="cc-hero" style="background: #0E0F12; color: #FAFAF7; position: relative; overflow: hidden">
+<div class="cc-spot" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+<div class="cc-gridbg" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+<div style="position: relative; max-width: 1320px; margin: 0 auto; padding: 150px clamp(20px, 5vw, 64px) 80px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px">
+<div style="flex: 1 1 520px; min-width: 0">
+<p style="margin: 0 0 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">Campus Connect Academy</p>
+<h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(54px, 7.6vw, 120px); line-height: 0.9; letter-spacing: -0.06em">Learn to scale what you started.</h1>
+<p style="margin: 34px 0 0; max-width: 520px; font-size: 18px; color: #C2C2BD">Workshops, playbooks and expert sessions that take student businesses from first sale to a company that grows beyond its founder.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px">
+<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-weight: 600; box-shadow: 0 14px 34px rgba(49,87,255,0.45)">Join the Academy
+<svg class="cc-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+
+</div>
+</div>
+
+<div style="flex: 1 1 460px; min-width: 0; display: flex; justify-content: center">
+<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Academy demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 30px 0 10px; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
+<span class="cc-laptop" style="width: 620px; max-width: 100%">
+<span style="display: block; padding: 12px; border-radius: 22px; background: #22232A; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 120px rgba(0,0,0,0.6)">
+<span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F8F8F7; color: #101116; text-align: left; font-family: 'DM Sans', sans-serif">
+<span style="flex: 0 0 112px; display: flex; flex-direction: column; gap: 7px; padding: 14px 10px; background: #FFFFFF; border-right: 1px solid #E6E7EB">
+<span style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px"><span style="display: flex; gap: 2px"><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: skewY(-8deg)"></span><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: scaleX(-1) skewY(-8deg)"></span></span><span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 9px; line-height: .9; letter-spacing: -0.5px">campus<br>connect<span style="display: block; color: #DF7F7B; font-size: 6px; margin-top: 2px">ACADEMY</span></span></span>
+<span style="padding: 5px 7px; border-radius: 7px; background: #EEF1FF; color: #2458F5; font-size: 9px; font-weight: 700">Home</span>
+<span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">LEARN</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Courses</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Library</span>
+<span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">CONNECT</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Experts</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Investors</span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 5px"><span style="width: 20px; height: 20px; border-radius: 50%; background: #DF7F7B; color: #fff; font-size: 7px; font-weight: 800; display: grid; place-items: center">KC</span><span style="font-size: 8px; font-weight: 700">Katarina C.</span></span>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px">
+<span style="display: block; height: 18px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E6E7EB"></span>
+<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #2458F5">GOOD MORNING, KATARINA</span>
+<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 17px; line-height: 1.05; letter-spacing: -0.8px">Build the business<br>you came here to start.</span>
+<span style="display: flex; gap: 8px; flex: 1; min-height: 0">
+<span style="flex: 1.4; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 14px; background: linear-gradient(145deg, #4D78FF, #2458F5 55%, #1D4FE8); color: #fff">
+<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #D7E2FF">CONTINUE LEARNING</span>
+<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; line-height: 1.1">Business Basics Bootcamp</span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 6px"><span style="flex: 1; height: 5px; border-radius: 9px; background: rgba(255,255,255,.3); overflow: hidden"><span style="display: block; width: 68%; height: 100%; background: #fff"></span></span><span style="font-size: 9px; font-weight: 700">68%</span></span>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; background: #fff; border: 1px solid #E6E7EB">
+<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: conic-gradient(#2458F5 0 68%, #EDF0F4 68% 100%)"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 11px">68%</span></span>
+<span style="font-size: 8px; font-weight: 700">Launch readiness</span>
+</span>
+</span>
+</span>
+<span class="cc-tap" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 12px 28px rgba(49,87,255,0.45)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Click to open the Academy</span>
+</span>
+</span>
+<span style="display: block; height: 18px; margin: 0 -34px; border-radius: 4px 4px 22px 22px; background: linear-gradient(180deg, #4A4B53, #26272D); box-shadow: 0 30px 50px rgba(0,0,0,0.55)"></span>
+<span style="display: block; width: 120px; height: 6px; margin: -18px auto 0; border-radius: 0 0 8px 8px; background: #1A1B20"></span>
+</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- FORMATS -->
+<section style="padding: clamp(90px, 11vw, 140px) 0 60px">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">How the Academy teaches</p>
+<h2 style="margin: 0 0 56px; max-width: 900px; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Learn it, then use it the same week.</h2>
+<div class="cc-grid4">
+<sc-for list="{{ formats }}" as="f" hint-placeholder-count="4">
+<div class="cc-static" style="box-sizing: border-box; min-height: 320px; padding: 30px; border-radius: 32px; background: {{ f.bg }}; color: {{ f.fg }}; display: flex; flex-direction: column; gap: 14px">
+<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: {{ f.chip }}; color: {{ f.chipFg }}; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ f.icon }}"></path></svg></span>
+<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; line-height: 1.05; letter-spacing: -0.03em">{{ f.title }}</h3>
+<p style="margin: 0; font-size: 15px; opacity: 0.85">{{ f.body }}</p>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- TRACK PICKER -->
+<section id="tracks" style="padding: 60px 0">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 60px; margin-bottom: 44px">
+<div style="flex: 1 1 560px; min-width: 0">
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">Three tracks</p>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Where is your business right now?</h2>
+</div>
+<div role="group" aria-label="Choose your stage" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-radius: 999px; background: #EFEFEA">
+<sc-for list="{{ stages }}" as="s" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{ s.selected }}" onClick="{{ s.pick }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 22px; border: 0; border-radius: 999px; background: {{ s.bg }}; color: {{ s.fg }}; font-weight: 600; font-size: 15px; box-shadow: {{ s.shadow }}; transition: background .25s, color .25s">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: {{ s.dot }}"></span>{{ s.label }}</button>
+</sc-for>
+</div>
+</div>
+
+<div class="cc-pop" style="display: flex; flex-wrap: wrap; gap: 20px">
+<div class="cc-static" style="flex: 1 1 420px; min-width: 0; box-sizing: border-box; min-height: 460px; padding: clamp(32px, 4vw, 52px); border-radius: 40px; background: {{ track.bg }}; color: {{ track.fg }}; display: flex; flex-direction: column; gap: 20px; transition: background .4s">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8">{{ track.label }} track</span>
+<span style="font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(34px, 3.8vw, 56px); line-height: 0.98; letter-spacing: -0.045em">{{ track.headline }}</span>
+<span style="max-width: 440px; font-size: 17px; opacity: 0.9">{{ track.desc }}</span>
+<span style="margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-radius: 22px; background: {{ track.panel }}">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75">You'll leave with</span>
+<span style="font-family: Manrope, sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em">{{ track.outcome }}</span>
+</span>
+</div>
+<div style="flex: 1.1 1 440px; min-width: 0; display: flex; flex-direction: column">
+<sc-for list="{{ track.modules }}" as="m" hint-placeholder-count="4">
+<div style="display: flex; align-items: flex-start; gap: 22px; padding: 26px 0; border-top: 1px solid #DEDED7">
+<span style="flex: none; display: flex; width: 48px; height: 48px; border-radius: 16px; background: {{ track.accent }}; color: {{ track.accentFg }}; font-family: Manrope, sans-serif; font-weight: 800; font-size: 15px; align-items: center; justify-content: center">{{ m.num }}</span>
+<div><h3 style="margin: 0 0 6px; font-family: Manrope, sans-serif; font-weight: 800; font-size: 23px; letter-spacing: -0.025em">{{ m.title }}</h3><p style="margin: 0; color: #55554F">{{ m.body }}</p></div>
+</div>
+</sc-for>
+<div style="border-top: 1px solid #DEDED7"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SCALING CHECKLIST -->
+<section style="padding: 60px clamp(12px, 2vw, 24px)">
+<div style="max-width: 1400px; margin: 0 auto; border-radius: 48px; background: #151515; color: #FAFAF7; position: relative; overflow: hidden">
+<div aria-hidden="true" style="position: absolute; right: -180px; top: -220px; width: 680px; height: 680px; border-radius: 50%; background: radial-gradient(closest-side, rgba(103,199,255,0.26), rgba(103,199,255,0))"></div>
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 48px; padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 96px)">
+<div style="flex: 1 1 380px; min-width: 0">
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">Try it</p>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.05em">Are you ready to scale?</h2>
+<p style="margin: 22px 0 0; max-width: 420px; font-size: 17px; color: #B9B9B4">Check off what's already true for your business. The Academy fills in the rest.</p>
+<div style="margin-top: 40px">
+<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(72px, 8vw, 120px); line-height: 1; letter-spacing: -0.06em; color: {{ readyColor }}">{{ readyPct }}%</p>
+<div aria-hidden="true" style="margin-top: 16px; height: 10px; border-radius: 999px; background: rgba(250,250,247,0.12); overflow: hidden"><div style="width: {{ readyPct }}%; height: 100%; border-radius: 999px; background: {{ readyColor }}; transition: width .5s cubic-bezier(.2,.7,.2,1), background .4s"></div></div>
+<p aria-live="polite" style="margin: 14px 0 0; font-size: 16px; font-weight: 600">{{ readyNote }}</p>
+</div>
+</div>
+<div role="group" aria-label="Scaling checklist" style="flex: 1.2 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{ checks }}" as="c" hint-placeholder-count="6">
+<button type="button" role="checkbox" aria-checked="{{ c.on }}" onClick="{{ c.toggle }}" style="display: flex; align-items: center; gap: 16px; min-height: 66px; padding: 0 20px; border-radius: 20px; border: 1px solid {{ c.border }}; background: {{ c.bg }}; color: #FAFAF7; text-align: left; font-size: 16px; font-weight: 500; transition: background .25s, border-color .25s">
+<span style="flex: none; display: flex; width: 28px; height: 28px; border-radius: 9px; border: 2px solid {{ c.boxBorder }}; background: {{ c.boxBg }}; color: #151515; align-items: center; justify-content: center; transition: background .2s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity: {{ c.tickOpacity }}"><path d="M5 12l5 5L20 7"></path></svg></span>
+{{ c.label }}</button>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section style="padding: clamp(60px, 8vw, 100px) clamp(12px, 2vw, 24px) clamp(40px, 5vw, 64px)">
+<div style="max-width: 1400px; margin: 0 auto; border-radius: 48px; background: #67C7FF; color: #151515; position: relative; overflow: hidden">
+<svg viewBox="0 0 600 600" aria-hidden="true" style="position: absolute; right: -120px; bottom: -200px; width: 640px; height: 640px; opacity: 0.35"><path d="M80 300 C80 150 200 60 330 90 C470 120 540 240 500 360 C460 480 330 540 230 500 C150 470 200 380 280 380 C360 380 380 300 320 260 C260 220 160 260 150 360" fill="none" stroke="#FAFAF7" stroke-width="56" stroke-linecap="round"></path></svg>
+<div style="position: relative; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 40px; padding: clamp(48px, 7vw, 100px) clamp(24px, 6vw, 96px)">
+<div style="flex: 1 1 560px; min-width: 0">
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase">Campus Connect Academy</p>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(46px, 6vw, 96px); line-height: 0.92; letter-spacing: -0.055em">Build the business. Then build it bigger.</h2>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 58px; padding: 0 30px; border-radius: 999px; background: #151515; color: #FAFAF7; font-weight: 600">Join the Academy
+<svg class="cc-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="Program.dc.html" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 28px; border-radius: 999px; border: 1.5px solid #151515; color: #151515; font-weight: 600">See the full program</a>
+</div>
+</div>
+</div>
+</section>
+
+<sc-if value="{{ demoOpen }}" hint-placeholder-val="{{ false }}">
+<div class="cc-overlay" role="dialog" aria-modal="true" aria-label="Interactive Academy demo" onClick="{{ backdrop }}" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px; box-sizing: border-box; background: rgba(8,10,22,0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: #FAFAF7; font-family: Inter, system-ui, sans-serif">
+<button type="button" onClick="{{ closeDemo }}" style="position: absolute; top: 20px; right: 20px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(250,250,247,0.25); background: rgba(250,250,247,0.08); color: #FAFAF7; font-weight: 600; font-size: 14px">
+<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Close demo</button>
+<div class="cc-zoom" style="width: 1100px; max-width: 100%; box-sizing: border-box; border-radius: 20px; overflow: hidden; background: #1A1B20; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 140px rgba(0,0,0,0.6)">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 14px; height: 42px; padding: 0 16px">
+<span style="display: flex; gap: 7px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FF6B6B"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #F6C945"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #5BD68A"></span></span>
+<span style="flex: 1; display: flex; justify-content: center"><span style="padding: 5px 16px; border-radius: 999px; background: rgba(250,250,247,0.07); font-size: 12px; color: #B9B9B4">campus connect · academy demo</span></span>
+<span style="width: 50px"></span>
+</div>
+<dc-import name="AcademyApp" screen-h="min(700px, calc(100vh - 170px))" screen-radius="0" hint-size="100%,700px"></dc-import>
+</div>
+<p style="margin: 0; font-size: 13px; color: #B9B9B4; text-align: center">Live demo with sample data · click outside the window to return</p>
+</div>
+</sc-if>
+
+<dc-import name="Footer" hint-size="100%,520px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { stage: 1, checks: { 0: true, 4: true }, demoOpen: false };
+  }
+  setTilt(e, maxX, maxY, hero) {
+    const src = e.currentTarget;
+    if (!src || !src.getBoundingClientRect) return;
+    const tgt = hero && src.closest ? (src.closest('.cc-hero') || src) : src;
+    const r = src.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    const R = tgt.getBoundingClientRect();
+    tgt.style.setProperty('--ry', ((x - 0.5) * maxX).toFixed(2) + 'deg');
+    tgt.style.setProperty('--rx', ((0.5 - y) * maxY).toFixed(2) + 'deg');
+    tgt.style.setProperty('--mx', (((e.clientX - R.left) / R.width) * 100).toFixed(1) + '%');
+    tgt.style.setProperty('--my', (((e.clientY - R.top) / R.height) * 100).toFixed(1) + '%');
+  }
+  resetTilt(e, mx, my, hero) {
+    const src = e.currentTarget;
+    if (!src || !src.style) return;
+    const tgt = hero && src.closest ? (src.closest('.cc-hero') || src) : src;
+    tgt.style.setProperty('--rx', '0deg');
+    tgt.style.setProperty('--ry', '0deg');
+    tgt.style.setProperty('--mx', mx);
+    tgt.style.setProperty('--my', my);
+  }
+  renderVals() {
+    const st = this.state || {};
+
+    const colDefs = [
+      { h: 50, top: '#FF8A8A', front: '#E05555', side: '#B83E3E' },
+      { h: 95, top: '#FFD86B', front: '#E0B23A', side: '#B88E22' },
+      { h: 150, top: '#C7A8FF', front: '#9E78EE', side: '#7C58CC' },
+      { h: 215, top: '#8ED6FF', front: '#4FB2EA', side: '#3590C4' },
+      { h: 290, top: '#6E8BFF', front: '#3157FF', side: '#1F3FD9' }
+    ];
+    const cols = colDefs.map((c, i) => Object.assign({}, c, { x: -230 + i * 96, y: -36 + (i % 2) * 10, delay: (0.15 + i * 0.14).toFixed(2) }));
+
+    const trackDefs = [
+      { id: 'launch', label: 'Launch', dot: '#FF6B6B', bg: '#FF6B6B', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#FF6B6B', accentFg: '#151515',
+        headline: 'From idea to first customers.', desc: 'For founders with an idea or a brand-new business who want to prove people will pay.', outcome: 'A live business with paying customers',
+        modules: [['Validate demand', 'Talk to real buyers and test before you build.'], ['Price your offer', 'Set prices that cover your time and costs.'], ['Open your storefront', 'Launch on the campus marketplace the right way.'], ['Land your first 10 customers', 'Simple outreach that works on a campus.']] },
+      { id: 'grow', label: 'Grow', dot: '#B28CFF', bg: '#B28CFF', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#B28CFF', accentFg: '#151515',
+        headline: 'From first customers to steady sales.', desc: 'For founders with traction who want growth that doesn’t depend on luck or late nights.', outcome: 'Predictable, growing monthly sales',
+        modules: [['Marketing on a student budget', 'Content, referrals and partnerships that compound.'], ['Turn buyers into regulars', 'Reviews, follow-ups and repeat business.'], ['Know your numbers', 'Margins, cash flow and what to track weekly.'], ['Systems that save time', 'Booking, fulfillment and templates you can reuse.']] },
+      { id: 'scale', label: 'Scale', dot: '#3157FF', bg: '#3157FF', fg: '#FAFAF7', panel: 'rgba(14,15,18,0.22)', accent: '#3157FF', accentFg: '#FAFAF7',
+        headline: 'From side project to real company.', desc: 'For founders ready to grow beyond themselves — with a team, structure and capital.', outcome: 'A business that grows beyond you',
+        modules: [['Hire your first team', 'Find, pay and lead your first helpers or hires.'], ['Operations & delegation', 'Document how things run so others can run them.'], ['Legal structure & contracts', 'Form the business properly and protect it.'], ['Raise your first capital', 'Grants, competitions and pitching investors.']] }
+    ];
+    const si = st.stage == null ? 1 : st.stage;
+    const stages = trackDefs.map((t, i) => {
+      const on = i === si;
+      return { label: t.label, dot: t.dot, selected: on, bg: on ? '#151515' : 'transparent', fg: on ? '#FAFAF7' : '#3D3D39', shadow: on ? '0 8px 20px rgba(21,21,21,0.18)' : 'none', pick: () => this.setState({ stage: i }) };
+    });
+    const T = trackDefs[si];
+    const track = Object.assign({}, T, { modules: T.modules.map((m, i) => ({ num: '0' + (i + 1), title: m[0], body: m[1] })) });
+
+    const formats = [
+      { title: 'Live workshops', body: 'Small-group sessions led by founders and operators, built around real student businesses.', icon: 'M3 5h18v11H3zM8 20h8M12 16v4', bg: '#151515', fg: '#FAFAF7', chip: '#67C7FF', chipFg: '#151515' },
+      { title: 'Self-paced lessons', body: 'Short lessons you can finish between classes, on your phone or laptop.', icon: 'M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM11 18h2', bg: '#FFFFFF', fg: '#151515', chip: '#FF6B6B', chipFg: '#151515' },
+      { title: 'Playbooks & templates', body: 'Pricing sheets, outreach scripts and planning templates you can use right away.', icon: 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5', bg: '#FFFFFF', fg: '#151515', chip: '#F6C945', chipFg: '#151515' },
+      { title: 'Expert office hours', body: 'Bring your specific problem to a mentor and leave with a next step.', icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2', bg: '#3157FF', fg: '#FAFAF7', chip: '#FAFAF7', chipFg: '#151515' }
+    ];
+
+    const checkDefs = [
+      'I know my profit on every sale',
+      'How I deliver is written down',
+      'I have a weekly sales and marketing routine',
+      'Someone else could help me run it',
+      'Business and personal money are separate',
+      'I have a six-month growth plan'
+    ];
+    const ck = st.checks || {};
+    const checks = checkDefs.map((label, i) => {
+      const on = !!ck[i];
+      return { label, on, bg: on ? 'rgba(103,199,255,0.12)' : 'rgba(250,250,247,0.04)', border: on ? 'rgba(103,199,255,0.6)' : 'rgba(250,250,247,0.14)', boxBg: on ? '#67C7FF' : 'transparent', boxBorder: on ? '#67C7FF' : 'rgba(250,250,247,0.4)', tickOpacity: on ? '1' : '0',
+        toggle: () => { const next = Object.assign({}, this.state.checks); if (next[i]) delete next[i]; else next[i] = true; this.setState({ checks: next }); } };
+    });
+    const done = checks.filter((c) => c.on).length;
+    const readyPct = Math.round((done / checkDefs.length) * 100);
+    const readyNote = done <= 2 ? 'Start with the Launch track.' : done <= 4 ? 'You’re ready for the Grow track.' : 'You’re ready for the Scale track.';
+    const readyColor = done <= 2 ? '#FF6B6B' : done <= 4 ? '#B28CFF' : '#67C7FF';
+
+    return {
+      demoOpen: !!st.demoOpen,
+      openDemo: () => this.setState({ demoOpen: true }),
+      closeDemo: () => this.setState({ demoOpen: false }),
+      backdrop: (e) => { if (e && e.target === e.currentTarget) this.setState({ demoOpen: false }); },
+      cols, stages, track, formats, checks, readyPct, readyNote, readyColor,
+      heroMove: (e) => this.setTilt(e, 18, 10, true),
+      heroLeave: (e) => this.resetTilt(e, '70%', '50%', true),
+      tilt: (e) => this.setTilt(e, 7, 6),
+      untilt: (e) => this.resetTilt(e, '50%', '50%')
+    };
+  }
+}
+</script>
+</body>
+</html>
