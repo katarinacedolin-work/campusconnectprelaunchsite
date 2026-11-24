@@ -51,6 +51,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 @media (max-width:900px){.cc-grid3{grid-template-columns:repeat(1,minmax(0,1fr))}}
 @media (max-width:640px){.cc-grid4{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-stage{transform:scale(.66);margin:-130px -88px}}
 @media (prefers-reduced-motion:reduce){.cc-float,.cc-tap,.cc-overlay,.cc-zoom,.cc-pop,.cc-toast{animation:none!important}.cc-scene,.cc-tilt{transition:none!important}}
+.cc-banner{animation:ccBanner .6s cubic-bezier(.2,.7,.2,1) .4s both}@keyframes ccBanner{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+@media (max-width:640px){.cc-banner{top:auto!important;bottom:16px;flex-wrap:wrap;justify-content:center;border-radius:24px!important;padding:12px!important;text-align:center}}
 </style>
 </helmet>
 <div style="background: #FAFAF7; color: #151515; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
@@ -58,6 +60,15 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <div style="position: sticky; top: 14px; z-index: 50; height: 0">
 <dc-import name="Nav" active="marketplace" hint-size="100%,62px"></dc-import>
 </div>
+
+<sc-if value="{{ bannerOpen }}" hint-placeholder-val="{{ true }}">
+<div class="cc-banner" role="region" aria-label="SDSU marketplace" style="position: fixed; left: 50%; top: 96px; z-index: 60; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 32px); box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 18px; border-radius: 999px; background: #FAFAF7; color: #151515; box-shadow: 0 20px 50px rgba(10,20,90,0.35)">
+<span style="font-size: 14px; font-weight: 500">Looking for the SDSU marketplace?</span>
+<a href="https://campusconnect.market" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-size: 14px; font-weight: 600; white-space: nowrap">campusconnect.market
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg></a>
+<button type="button" onClick="{{ closeBanner }}" aria-label="Dismiss" style="flex: none; display: flex; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: #55554F; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-if>
 
 <!-- HERO -->
 <header class="cc-hero" style="background: #3157FF; color: #FAFAF7; position: relative; overflow: hidden">
@@ -67,7 +78,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <div style="flex: 1 1 520px; min-width: 0">
 <p style="margin: 0 0 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #FAFAF7">The marketplace</p>
 <h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(54px, 7.6vw, 120px); line-height: 0.9; letter-spacing: -0.06em">Where student brands sell to their campus.</h1>
-<p style="margin: 32px 0 0; max-width: 500px; font-size: 18px; color: #E6EBFF">A verified marketplace for your school’s student-run companies — fashion labels, bands, videographers and food brands — selling to the customers who already know them.</p>
+<p style="margin: 32px 0 0; max-width: 500px; font-size: 18px; color: #E6EBFF">A verified marketplace for your university’s student-run companies, from consumer brands and technology startups to creative agencies, media companies, food businesses, and more, connecting them with the campus communities that already know and trust them.</p>
 <p style="margin: 40px 0 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #E6EBFF">Try it — browse by category</p>
 <div role="group" aria-label="Filter sample listings" style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
@@ -126,40 +137,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <p style="position: relative; margin: 0; padding: 0 0 28px; text-align: center; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #E6EBFF">Tap the phone to try the live marketplace · sample data</p>
 </header>
 
-<!-- BEYOND STUDENT SELLERS -->
-<section style="padding: clamp(90px, 11vw, 140px) 0 60px">
-<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
-<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 60px; margin-bottom: 48px">
-<h2 style="flex: 1 1 560px; margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(38px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.05em">Everything campus, in one place.</h2>
-<p style="flex: 0 1 380px; margin: 0; font-size: 17px; color: #55554F">Beyond student sellers, the marketplace brings together the jobs, housing, tickets and school services students already go looking for.</p>
-</div>
-<div class="cc-grid4">
-<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #FFF4F4; display: flex; flex-direction: column; gap: 12px">
-<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; color: #A6192E; border: 1.5px solid #A6192E; font-size: 12px; font-weight: 700">School-provided service</span>
-<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">School services</h3>
-<p style="margin: 0; color: #55554F">SDSU Safe Ride, the Math &amp; Science Learning Center and free headshots — listed right next to student sellers.</p>
-</div>
-<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #E1F3FF; display: flex; flex-direction: column; gap: 12px">
-<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #3157FF; color: #FAFAF7; border: 1.5px solid #3157FF; font-size: 12px; font-weight: 700">Campus work</span>
-<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Job Board</h3>
-<p style="margin: 0; color: #55554F">On-campus jobs like lifeguard, library desk assistant and research assistant, with messaging built in.</p>
-</div>
-<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #FDF1C7; display: flex; flex-direction: column; gap: 12px">
-<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #151515; color: #F6C945; border: 1.5px solid #151515; font-size: 12px; font-weight: 700">Near SDSU</span>
-<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Housing &amp; subleases</h3>
-<p style="margin: 0; color: #55554F">Student subleases, nearby apartment buildings and licensed agents — message the poster directly.</p>
-</div>
-<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #ECE2FF; display: flex; flex-direction: column; gap: 12px">
-<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1.5px solid #151515; font-size: 12px; font-weight: 700">Mobile entry</span>
-<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Tickets</h3>
-<p style="margin: 0; color: #55554F">Student shows, games and formals with a QR pass, plus a ticket chat to resell or request.</p>
-</div>
-</div>
-</div>
-</section>
-
 <!-- SELLERS / BUYERS -->
-<section style="padding: 60px 0 clamp(90px, 11vw, 140px)">
+<section style="padding: clamp(90px, 11vw, 140px) 0 60px">
 <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px); display: flex; flex-wrap: wrap; gap: 20px">
 <div class="cc-static" style="flex: 1 1 440px; min-width: 0; box-sizing: border-box; padding: clamp(32px, 4vw, 52px); border-radius: 40px; background: #151515; color: #FAFAF7">
 <p style="margin: 0 0 18px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #A3A3A0">For sellers</p>
@@ -175,9 +154,45 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.045em">Discover the brands your campus is building.</h3>
 <ul style="list-style: none; margin: 32px 0 0; padding: 0">
 <li style="display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid #DEDED7"><span style="color: #3157FF; font-family: Manrope, sans-serif; font-weight: 800">01</span>Every seller is a verified student</li>
-<li style="display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid #DEDED7"><span style="color: #3157FF; font-family: Manrope, sans-serif; font-weight: 800">02</span>Fashion labels, bands, videographers, food brands and more</li>
+<li style="display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid #DEDED7"><span style="color: #3157FF; font-family: Manrope, sans-serif; font-weight: 800">02</span>Consumer brands, creative studios, media and food businesses, and more</li>
 <li style="display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid #DEDED7; border-bottom: 1px solid #DEDED7"><span style="color: #3157FF; font-family: Manrope, sans-serif; font-weight: 800">03</span>Back student companies instead of faceless chains</li>
 </ul>
+</div>
+</div>
+</section>
+
+<!-- BEYOND STUDENT SELLERS -->
+<section style="padding: 60px 0 clamp(90px, 11vw, 140px)">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 60px; margin-bottom: 48px">
+<h2 style="flex: 1 1 560px; margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(38px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.05em">Everything campus, in one place.</h2>
+<p style="flex: 0 1 420px; margin: 0; font-size: 17px; color: #55554F">Students open an app for jobs, housing, tickets and school services every week. Putting those next to student businesses turns everyday errands into steady traffic for founders, and gives your university one trusted place to reach students.</p>
+</div>
+<div class="cc-grid4">
+<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #FFF4F4; display: flex; flex-direction: column; gap: 12px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; color: #A6192E; border: 1.5px solid #A6192E; font-size: 12px; font-weight: 700">School-provided service</span>
+<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">School services</h3>
+<p style="margin: 0; color: #55554F">SDSU Safe Ride, the Math &amp; Science Learning Center and free headshots — listed right next to student sellers.</p>
+<p style="margin: 6px 0 0; padding-top: 12px; border-top: 1px solid rgba(21,21,21,0.10); font-size: 14px; color: #3D3D39"><b style="color: #151515">Why it’s here:</b> Official resources sit beside student businesses, so students find both in one search.</p>
+</div>
+<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #E1F3FF; display: flex; flex-direction: column; gap: 12px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #3157FF; color: #FAFAF7; border: 1.5px solid #3157FF; font-size: 12px; font-weight: 700">Campus work</span>
+<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Job Board</h3>
+<p style="margin: 0; color: #55554F">On-campus jobs like lifeguard, library desk assistant and research assistant, with messaging built in.</p>
+<p style="margin: 6px 0 0; padding-top: 12px; border-top: 1px solid rgba(21,21,21,0.10); font-size: 14px; color: #3D3D39"><b style="color: #151515">Why it’s here:</b> Students who come for work discover student businesses on the way, and founders can hire classmates.</p>
+</div>
+<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #FDF1C7; display: flex; flex-direction: column; gap: 12px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #151515; color: #F6C945; border: 1.5px solid #151515; font-size: 12px; font-weight: 700">Near SDSU</span>
+<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Housing &amp; subleases</h3>
+<p style="margin: 0; color: #55554F">Student subleases, nearby apartment buildings and licensed agents — message the poster directly.</p>
+<p style="margin: 6px 0 0; padding-top: 12px; border-top: 1px solid rgba(21,21,21,0.10); font-size: 14px; color: #3D3D39"><b style="color: #151515">Why it’s here:</b> Housing is a constant need, so every search brings students back to the marketplace.</p>
+</div>
+<div class="cc-static" style="box-sizing: border-box; min-height: 260px; padding: 28px; border-radius: 32px; background: #ECE2FF; display: flex; flex-direction: column; gap: 12px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1.5px solid #151515; font-size: 12px; font-weight: 700">Mobile entry</span>
+<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">Tickets</h3>
+<p style="margin: 0; color: #55554F">Student shows, games and formals with a QR pass, plus a ticket chat to resell or request.</p>
+<p style="margin: 6px 0 0; padding-top: 12px; border-top: 1px solid rgba(21,21,21,0.10); font-size: 14px; color: #3D3D39"><b style="color: #151515">Why it’s here:</b> Events bring the whole campus in at once, and student organizers sell with the same tools.</p>
+</div>
 </div>
 </div>
 </section>
@@ -188,11 +203,15 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <div aria-hidden="true" style="position: absolute; right: -100px; top: -160px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(closest-side, rgba(49,87,255,0.55), rgba(49,87,255,0))"></div>
 <div style="position: relative; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 40px; padding: clamp(48px, 7vw, 100px) clamp(24px, 6vw, 96px)">
 <div style="flex: 1 1 560px; min-width: 0">
-<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">January 2027</p>
-<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(46px, 6vw, 96px); line-height: 0.92; letter-spacing: -0.055em">Be one of our 50 founding sellers.</h2>
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">For universities</p>
+<h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.4vw, 88px); line-height: 0.94; letter-spacing: -0.055em">Bring a trusted marketplace to your campus.</h2>
+<p style="margin: 24px 0 0; max-width: 520px; font-size: 18px; color: #B9B9B4">We set it up for your students, verify every seller and list your school’s services alongside them.</p>
 </div>
-<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 58px; padding: 0 30px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-weight: 600; box-shadow: 0 14px 34px rgba(49,87,255,0.45)">Apply to sell
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 58px; padding: 0 30px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-weight: 600; box-shadow: 0 14px 34px rgba(49,87,255,0.45)">Bring to your university
 <svg class="cc-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="https://campusconnect.market" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 28px; border-radius: 999px; border: 1px solid rgba(250,250,247,0.28); color: #FAFAF7; font-weight: 600">Visit the SDSU marketplace</a>
+</div>
 </div>
 </div>
 </section>
@@ -216,7 +235,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { cat: 'all', phoneOpen: false };
+    this.state = { cat: 'all', phoneOpen: false, bannerOpen: true };
   }
   setTilt(e, maxX, maxY, hero) {
     const src = e.currentTarget;
@@ -243,34 +262,32 @@ class Component extends DCLogic {
   renderVals() {
     const cat = (this.state && this.state.cat) || 'all';
     const listings = [
-      { name: "Noah Williams", initials: "NW", title: "Calculus II tutoring", cat: "Learn", rating: "5.0", count: "(11)", price: "$30.00", unit: "/ hour", tone: "#67C7FF", photo: "/assets/card-calculus-ii-tutoring.jpg", student: true, school: false },
-      { name: "Maya Chen", initials: "MC", title: "Grad portraits with Maya", cat: "Create", rating: "4.9", count: "(18)", price: "$65.00", unit: "/ 45 min", tone: "#FFB6B0", photo: "/assets/card-grad-portraits-with-maya.jpg", student: true, school: false },
-      { name: "Zoe Rivera", initials: "ZR", title: "Soft gel set by Zoe", cat: "Beauty", rating: "4.8", count: "(26)", price: "$45.00", unit: "/ 90 min", tone: "#B28CFF", photo: "/assets/card-soft-gel-set-by-zoe.jpg", student: true, school: false },
-      { name: "SDSU Transportation", initials: "", title: "SDSU Safe Ride", cat: "Help", rating: "", count: "", price: "Free", unit: "", tone: "#FFB6B0", photo: "/assets/card-sdsu-safe-ride.jpg", student: false, school: true },
-      { name: "Noah Williams", initials: "NW", title: "Linear algebra tutoring", cat: "Learn", rating: "4.9", count: "(7)", price: "$30.00", unit: "/ hour", tone: "#B8E9D2", photo: "/assets/card-linear-algebra-tutoring.jpg", student: true, school: false },
-      { name: "Noah Williams", initials: "NW", title: "Midterm cram session (group)", cat: "Learn", rating: "5.0", count: "(9)", price: "$15.00", unit: "/ person", tone: "#F6C945", photo: "/assets/card-midterm-cram-session-group.jpg", student: true, school: false },
-      { name: "Love Library Room 328", initials: "", title: "Math & Science Learning Center", cat: "Learn", rating: "", count: "", price: "Free", unit: "", tone: "#B8E9D2", photo: "", student: false, school: true },
-      { name: "Mia Torres", initials: "MT", title: "LinkedIn headshots", cat: "Create", rating: "4.7", count: "(13)", price: "$50.00", unit: "/ 30 min", tone: "#67C7FF", photo: "/assets/card-linkedin-headshots.jpg", student: true, school: false },
-      { name: "Riley Kim", initials: "RK", title: "Intro to the pottery wheel", cat: "Create", rating: "4.9", count: "(5)", price: "$35.00", unit: "/ 90 min", tone: "#F6C945", photo: "/assets/card-intro-to-the-pottery-wheel.jpg", student: true, school: false },
-      { name: "Sam Okafor", initials: "SO", title: "Film developing & scans", cat: "Create", rating: "5.0", count: "(8)", price: "$18.00", unit: "/ roll", tone: "#67C7FF", photo: "/assets/card-film-developing-scans.jpg", student: true, school: false },
-      { name: "Zoe Rivera", initials: "ZR", title: "Nail art add-on", cat: "Beauty", rating: "4.9", count: "(10)", price: "$15.00", unit: "/ 30 min", tone: "#FFB6B0", photo: "/assets/card-nail-art-add-on.jpg", student: true, school: false },
-      { name: "Leo Thompson", initials: "LT", title: "Move-out help", cat: "Help", rating: "4.9", count: "(7)", price: "$25.00", unit: "/ hour", tone: "#F6C945", photo: "", student: true, school: false },
-      { name: "Taylor Brooks", initials: "TB", title: "Laundry run", cat: "Help", rating: "4.8", count: "(9)", price: "$18.00", unit: "/ run", tone: "#67C7FF", photo: "", student: true, school: false }
+      { name: "Maya Chen", initials: "MC", title: "Grad portraits with Maya", cat: "photo", rating: "4.9", count: "(18)", price: "$65.00", unit: "/ 45 min", tone: "#FFB6B0", photo: "/assets/card-grad-portraits-with-maya.jpg", student: true, school: false },
+      { name: "Ari Patel", initials: "AP", title: "Short-form video edit", cat: "media", rating: "4.9", count: "(9)", price: "$40.00", unit: "/ video", tone: "#67C7FF", photo: "/assets/card-private-room-in-a-4-bedroom.jpg", student: true, school: false },
+      { name: "Chris Nguyen", initials: "CN", title: "Vintage campus hoodie", cat: "goods", rating: "4.9", count: "(12)", price: "$28.00", unit: "/ size M", tone: "#B28CFF", photo: "/assets/card-short-form-video-edit.jpg", student: true, school: false },
+      { name: "Riley Kim", initials: "RK", title: "Handmade ceramic mug", cat: "goods", rating: "4.8", count: "(4)", price: "$18.00", unit: "/ mug", tone: "#F6C945", photo: "/assets/card-handmade-ceramic-mug.jpg", student: true, school: false },
+      { name: "Maya Chen", initials: "MC", title: "Event & org photo coverage", cat: "photo", rating: "5.0", count: "(6)", price: "$120.00", unit: "/ 2 hours", tone: "#FFB6B0", photo: "/assets/card-event-org-photo-coverage.jpg", student: true, school: false },
+      { name: "Mia Torres", initials: "MT", title: "LinkedIn headshots", cat: "photo", rating: "4.7", count: "(13)", price: "$50.00", unit: "/ 30 min", tone: "#67C7FF", photo: "/assets/card-linkedin-headshots.jpg", student: true, school: false },
+      { name: "Sam Okafor", initials: "SO", title: "Film developing & scans", cat: "photo", rating: "5.0", count: "(8)", price: "$18.00", unit: "/ roll", tone: "#67C7FF", photo: "/assets/card-film-developing-scans.jpg", student: true, school: false },
+      { name: "Ari Patel", initials: "AP", title: "YouTube thumbnail design", cat: "media", rating: "4.8", count: "(6)", price: "$20.00", unit: "/ thumbnail", tone: "#B28CFF", photo: "/assets/card-vintage-desk-lamp.jpg", student: true, school: false },
+      { name: "Maya Chen", initials: "MC", title: "Lightroom preset pack", cat: "media", rating: "4.9", count: "(14)", price: "$12.00", unit: "/ digital pack", tone: "#F6C945", photo: "/assets/card-lightroom-preset-pack.jpg", student: true, school: false },
+      { name: "Sam Okafor", initials: "SO", title: "35mm film camera", cat: "goods", rating: "5.0", count: "(6)", price: "$70.00", unit: "/ camera", tone: "#67C7FF", photo: "/assets/card-youtube-thumbnail-design.jpg", student: true, school: false },
+      { name: "Riley Kim", initials: "RK", title: "Speckled planter", cat: "goods", rating: "4.9", count: "(3)", price: "$22.00", unit: "/ planter", tone: "#B8E9D2", photo: "/assets/card-calculus-ii-textbook.jpg", student: true, school: false }
     ];
     const all = cat === 'all' ? listings.slice(0, 4) : listings.filter((l) => l.cat === cat);
     const visible = all.slice(0, 4);
     const filters = [
       { id: 'all', label: 'All', short: 'All' },
-      { id: 'Learn', label: 'Learn', short: 'Learn' },
-      { id: 'Create', label: 'Create', short: 'Create' },
-      { id: 'Beauty', label: 'Beauty', short: 'Beauty' },
-      { id: 'Help', label: 'Help', short: 'Help' }
+      { id: 'photo', label: 'Photo & video', short: 'Photo' },
+      { id: 'media', label: 'Design & media', short: 'Media' },
+      { id: 'goods', label: 'Products', short: 'Products' }
     ].map((f) => {
       const on = f.id === cat;
       return { label: f.label, short: f.short, selected: on, bg: on ? '#FAFAF7' : 'transparent', fg: on ? '#2440D6' : '#FAFAF7', chipBg: on ? '#151515' : '#EFEFEA', chipFg: on ? '#FAFAF7' : '#3D3D39', pick: () => this.setState({ cat: f.id }) };
     });
     const n = all.length;
-    const resultNote = cat === 'all' ? 'Popular on campus right now.' : n + ' in ' + cat + ' · tap the phone to see them all.';
+    const catLabel = { photo: 'Photo & video', media: 'Design & media', goods: 'Products' }[cat] || '';
+    const resultNote = cat === 'all' ? 'Popular on campus right now.' : n + ' in ' + catLabel + ' · tap the phone to see more.';
     const features = [
       { title: 'Student-verified', body: 'Only verified students can buy and sell, so every transaction stays on campus.', color: '#67C7FF', icon: 'M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6zM8.5 12l2.5 2.5 4.5-5' },
       { title: 'Real student businesses', body: 'Clothing drops, show tickets, video shoots and catering companies — all run by students, with real customers.', color: '#B28CFF', icon: 'M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2' },
@@ -282,9 +299,11 @@ class Component extends DCLogic {
       openPhone: () => this.setState({ phoneOpen: true }),
       closePhone: () => this.setState({ phoneOpen: false }),
       backdrop: (e) => { if (e && e.target === e.currentTarget) this.setState({ phoneOpen: false }); },
-      appCat: cat === 'all' ? 'All' : cat,
-      appView: cat === 'all' ? 'home' : 'book',
+      appCat: ({ photo: 'Create', media: 'Tech' })[cat] || 'All',
+      appView: (cat === 'photo' || cat === 'media') ? 'book' : 'home',
       filters, visible, resultNote, features,
+      bannerOpen: !(this.state && this.state.bannerOpen === false),
+      closeBanner: () => this.setState({ bannerOpen: false }),
       heroMove: (e) => this.setTilt(e, 18, 10, true),
       heroLeave: (e) => this.resetTilt(e, '70%', '45%', true),
       tilt: (e) => this.setTilt(e, 7, 6),

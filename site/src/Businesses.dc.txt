@@ -23,6 +23,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 @media (max-width:1100px){.cc-biz-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:700px){.cc-biz-grid{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-mosaic{transform:scale(.64);transform-origin:top left;margin:0 -187px -180px 0}}
 @media (prefers-reduced-motion:reduce){.cc-pop{animation:none!important}}
+@media (max-width:700px){.cc-stat{flex:1 1 40%!important;border-left:0!important;padding:14px 12px 14px 0!important}}
 </style>
 </helmet>
 <div style="background: #0E0F12; color: #FAFAF7; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
@@ -65,7 +66,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <p style="margin: 0 0 28px; font-size: 14px; font-weight: 600; color: #DCE4FF">The marketplace so far</p>
 <div style="display: flex; flex-wrap: wrap">
 <sc-for list="{{ stats }}" as="s" hint-placeholder-count="5">
-<div style="flex: 1 1 180px; box-sizing: border-box; padding: 8px 28px 8px {{ s.padLeft }}; border-left: {{ s.divider }}">
+<div class="cc-stat" style="flex: 1 1 180px; box-sizing: border-box; padding: 8px 28px 8px {{ s.padLeft }}; border-left: {{ s.divider }}">
 <p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(52px, 5.6vw, 84px); letter-spacing: -0.05em; line-height: 0.95">{{ s.value }}</p>
 <p style="margin: 12px 0 0; font-size: 15px; font-weight: 500; color: #DCE4FF">{{ s.label }}</p>
 </div>
@@ -86,8 +87,11 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <sc-for list="{{ leaders }}" as="l" hint-placeholder-count="3">
 <li style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px 40px; padding: 24px; border-radius: 32px; background: #16171C; border: 1px solid rgba(250,250,247,0.10)">
 <img src="{{ l.photo }}" alt="{{ l.photoAlt }}" style="flex: none; width: 168px; height: 168px; border-radius: 26px; object-fit: cover">
-<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 26px">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3vw, 40px); line-height: 1.02; letter-spacing: -0.035em">{{ l.name }}</h3>
+<p style="margin: 10px 0 0; max-width: 640px; font-size: 16px; color: #A3A3A0">{{ l.description }}</p>
+</div>
 <dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 18px 24px">
 <sc-for list="{{ l.stats }}" as="s" hint-placeholder-count="5">
 <div><dt style="font-size: 14px; color: #A3A3A0">{{ s.label }}</dt><dd style="margin: 6px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -0.03em; color: {{ s.color }}">{{ s.value }}</dd></div>
@@ -97,22 +101,6 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 </li>
 </sc-for>
 </ol>
-</div>
-</section>
-
-<!-- SUPPORT -->
-<section style="padding: 0 clamp(12px, 2vw, 24px) clamp(40px, 5vw, 64px)">
-<div style="max-width: 1400px; margin: 0 auto; border-radius: 48px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 96px)">
-<h2 style="margin: 0 0 44px; max-width: 760px; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.05em">What every Campus Connect business gets.</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
-<sc-for list="{{ support }}" as="s" hint-placeholder-count="4">
-<div style="padding: 28px; border-radius: 28px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.12)">
-<span style="display: block; width: 12px; height: 12px; border-radius: 4px; background: {{ s.color }}"></span>
-<h3 style="margin: 18px 0 8px; font-family: Manrope, sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em">{{ s.title }}</h3>
-<p style="margin: 0; color: #B9B9B4">{{ s.body }}</p>
-</div>
-</sc-for>
-</div>
 </div>
 </section>
 
@@ -143,31 +131,34 @@ class Component extends DCLogic {
     const reviews = stores.reduce((n, s) => n + s.reviews, 0);
     const followers = stores.reduce((n, s) => n + s.followers, 0);
     const avg = stores.reduce((n, s) => n + parseFloat(s.rating) * s.reviews, 0) / reviews;
+    // Revenue: price x completed sales across every marketplace listing. Users: placeholder from store followers until real account counts are available.
+    const revenueTotal = 21058;
+    const users = followers;
     const statDefs = [
-      { value: String(stores.length), label: 'Student stores' },
-      { value: fmt(orders), label: 'Orders completed' },
-      { value: fmt(reviews), label: 'Customer reviews' },
-      { value: avg.toFixed(1), label: 'Average rating' },
-      { value: fmt(followers), label: 'Store followers' }
+      { value: String(stores.length), label: 'Stores' },
+      { value: fmt(orders), label: 'Orders' },
+      { value: fmt(reviews), label: 'Reviews' },
+      { value: '$' + fmt(revenueTotal), label: 'Revenue' },
+      { value: fmt(users), label: 'Users' }
     ];
     const stats = statDefs.map((s, i) => Object.assign({}, s, { divider: i === 0 ? '0' : '1px solid rgba(250,250,247,0.24)', padLeft: i === 0 ? '0' : '28px' }));
     // Revenue = price x completed sales across each store's listings in the marketplace data
     const details = {
-      'maya-makes-photo': { revenue: 5329, photo: '/assets/card-grad-portraits-with-maya.jpg', photoAlt: 'Graduation portrait by Maya Makes Photo' },
-      'noah-studies': { revenue: 1290, photo: '/assets/card-calculus-ii-tutoring.jpg', photoAlt: 'A Noah Studies tutoring session' },
-      'zoe-nail-studio': { revenue: 3155, photo: '/assets/card-nail-art-add-on.jpg', photoAlt: "Nail art by Zoe's Nail Studio" }
+      'maya-makes-photo': { description: "Maya Chen photographs SDSU's grad portraits, club formals and events, and sells prints and Lightroom presets.", revenue: 5329, photo: '/assets/card-grad-portraits-with-maya.jpg', photoAlt: 'Graduation portrait by Maya Makes Photo' },
+      'noah-studies': { description: "Noah Williams runs one-on-one and group math tutoring for lower-division courses, plus a Calc II study guide.", revenue: 1290, photo: '/assets/card-calculus-ii-tutoring.jpg', photoAlt: 'A Noah Studies tutoring session' },
+      'zoe-nail-studio': { description: "Zoe Rivera runs calm, tidy nail appointments on campus and ships custom press-on sets.", revenue: 3155, photo: '/assets/card-nail-art-add-on.jpg', photoAlt: "Nail art by Zoe's Nail Studio" }
     };
     // Leaderboard features individual student founders (College Cubbies is a company, not a single founder)
     const ranked = stores.filter((s) => s.id !== 'college-cubbies').sort((a, b) => b.orders - a.orders).slice(0, 3);
     const leaders = ranked.map((s) => {
-      const d = details[s.id] || { revenue: 0, photo: '', photoAlt: '' };
+      const d = details[s.id] || { description: '', revenue: 0, photo: '', photoAlt: '' };
       return {
         name: s.name, photo: d.photo, photoAlt: d.photoAlt,
+        description: d.description,
         stats: [
           { label: 'Revenue', value: '$' + fmt(d.revenue), color: '#F6C945' },
-          { label: 'Orders', value: fmt(s.orders), color: '#FAFAF7' },
+          { label: 'Sales', value: fmt(s.orders), color: '#FAFAF7' },
           { label: 'Rating', value: '★ ' + s.rating, color: '#FAFAF7' },
-          { label: 'Reviews', value: fmt(s.reviews), color: '#FAFAF7' },
           { label: 'Followers', value: fmt(s.followers), color: '#FAFAF7' }
         ]
       };

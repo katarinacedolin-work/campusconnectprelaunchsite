@@ -82,11 +82,20 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 @media (max-width:700px){.cc-duo{transform:scale(.54);transform-origin:top left;margin:0 -294px -248px 0}}
 @media (max-width:1180px){.cc-duo-col{margin-top:0!important}}
 @media (prefers-reduced-motion:reduce){.cc-zoomp{animation:none!important}.cc-mini-phone{transition:none!important}}
+.cc-gloss{position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -10px 18px rgba(0,0,0,.18),0 10px 24px rgba(0,0,0,.35)}
+.cc-gloss::before{content:"";position:absolute;left:-30%;top:-60%;width:160%;height:95%;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.08));pointer-events:none}
+.cc-gloss::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(125deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.35) 48%,rgba(255,255,255,0) 60%);pointer-events:none}
+.cc-gloss>svg{position:relative;z-index:1}
+.cc-gloss-coral{background:linear-gradient(150deg,#FF9B9B,#FF6B6B 50%,#E24848)!important}
+.cc-gloss-lilac{background:linear-gradient(150deg,#D3BDFF,#B28CFF 50%,#8E63E6)!important}
+.cc-gloss-butter{background:linear-gradient(150deg,#FFE48F,#F6C945 50%,#D9A92A)!important}
+.cc-gloss-sky{background:linear-gradient(150deg,#A9E1FF,#67C7FF 50%,#3AA6E6)!important}
 .cc-arrow{transition:transform .3s}a:hover .cc-arrow{transform:translateX(4px)}
 @media (max-width:1100px){.cc-stage-wrap{margin-left:0}}
 @media (max-width:960px){.cc-bento{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-bento>*{grid-column:auto!important}}
 @media (max-width:700px){.cc-stage{transform:scale(.58);margin:-134px}.cc-fan,.cc-stack{transform:scale(.85);transform-origin:left top}}
 @media (prefers-reduced-motion:reduce){.cc-float,.cc-spin,.cc-dot,.cc-marquee,.cc-ping,.cc-sway{animation:none!important}.cc-scene,.cc-tilt,.cc-fan-card,.cc-stack-card{transition:none!important}}
+@media (max-width:700px){.cc-hstat{flex:1 1 40%!important;border-left:0!important;padding:20px 12px 20px 0!important}.cc-hstat:last-child{flex-basis:100%!important}}
 </style>
 </helmet>
 <div style="background: #FAFAF7; color: #151515; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
@@ -103,7 +112,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
 <div style="flex: 1 1 560px; min-width: 0; position: relative; z-index: 2">
 <h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(60px, 9.2vw, 146px); line-height: 0.88; letter-spacing: -0.06em">Your campus<br>is full of<br><span style="color: #6E8BFF">talent.</span></h1>
-<p style="margin: 38px 0 0; max-width: 500px; font-size: 18px; line-height: 1.6; color: #C2C2BD">The university program that helps student-run companies — fashion labels, bands, video studios, food brands — grow into real businesses, with a founder curriculum, expert office hours, investor introductions and a campus marketplace.</p>
+<p style="margin: 38px 0 0; max-width: 500px; font-size: 18px; line-height: 1.6; color: #C2C2BD">Campus Connect helps universities turn student ideas into real-world ventures, from consumer brands and technology startups to creative agencies, media companies, and food businesses. Through founder education, expert guidance, investor connections, and a campus marketplace, students gain the support and visibility they need to build businesses that can continue beyond graduation.</p>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 42px">
 <a href="Universities.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-weight: 600; font-size: 15px; box-shadow: 0 14px 34px rgba(49,87,255,0.45), inset 0 1px 0 rgba(255,255,255,0.25)">Bring it to your campus
 <svg class="cc-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
@@ -170,27 +179,27 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </div>
 </div>
 <div class="cc-duo-extras" style="display: flex; flex-wrap: wrap; gap: 14px; width: 640px; max-width: 100%">
-<a href="Program.dc.html" style="flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; border-radius: 20px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.14); color: #FAFAF7; text-decoration: none"><span style="flex: none; display: flex; width: 40px; height: 40px; border-radius: 12px; background: #B28CFF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600; font-size: 15px">Expert office hours</span><span style="font-size: 13px; color: #A3A3A0">Marketing, operations and industry mentors</span></span><svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: #A3A3A0"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-<a href="Program.dc.html" style="flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; border-radius: 20px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.14); color: #FAFAF7; text-decoration: none"><span style="flex: none; display: flex; width: 40px; height: 40px; border-radius: 12px; background: #F6C945; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600; font-size: 15px">Investor connections</span><span style="font-size: 13px; color: #A3A3A0">Founder profiles and one-on-one calls</span></span><svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: #A3A3A0"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="Program.dc.html" style="flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; border-radius: 20px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.14); color: #FAFAF7; text-decoration: none"><span class="cc-gloss cc-gloss-lilac" style="flex: none; display: flex; width: 40px; height: 40px; border-radius: 12px; background: #B28CFF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="3"></rect><path d="M16 2.5v4M8 2.5v4M3 10h18"></path><path d="M8 14.5h3"></path></svg></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600; font-size: 15px">Expert office hours</span><span style="font-size: 13px; color: #A3A3A0">Marketing, operations and industry mentors</span></span></a>
+<a href="Program.dc.html" style="flex: 1 1 260px; min-width: 0; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; border-radius: 20px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.14); color: #FAFAF7; text-decoration: none"><span class="cc-gloss cc-gloss-butter" style="flex: none; display: flex; width: 40px; height: 40px; border-radius: 12px; background: #F6C945; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="13.5" rx="2.5"></rect><path d="M16 7V5.5A2.5 2.5 0 0 0 13.5 3h-3A2.5 2.5 0 0 0 8 5.5V7"></path><path d="M2.5 13h19"></path></svg></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600; font-size: 15px">Investor connections</span><span style="font-size: 13px; color: #A3A3A0">Founder profiles and one-on-one calls</span></span></a>
 </div>
 </div>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; margin-top: 30px; border-top: 1px solid rgba(250,250,247,0.14)">
-<div style="flex: 1 1 220px; padding: 28px 28px 34px 0">
+<div class="cc-hstat" style="flex: 1 1 220px; padding: 28px 28px 34px 0">
 <p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.04em; line-height: 1">Jan ’27</p>
 <p style="margin: 10px 0 0; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Marketplace launch</p>
 </div>
-<div style="flex: 1 1 220px; padding: 28px 28px 34px; border-left: 1px solid rgba(250,250,247,0.14)">
+<div class="cc-hstat" style="flex: 1 1 220px; padding: 28px 28px 34px; border-left: 1px solid rgba(250,250,247,0.14)">
 <p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.04em; line-height: 1">50</p>
 <p style="margin: 10px 0 0; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Founding student sellers</p>
 </div>
-<div style="flex: 1 1 220px; padding: 28px 28px 34px; border-left: 1px solid rgba(250,250,247,0.14)">
+<div class="cc-hstat" style="flex: 1 1 220px; padding: 28px 28px 34px; border-left: 1px solid rgba(250,250,247,0.14)">
 <p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.04em; line-height: 1">4</p>
 <p style="margin: 10px 0 0; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Program pillars</p>
 </div>
-<div style="flex: 1 1 220px; padding: 28px 0 34px 28px; border-left: 1px solid rgba(250,250,247,0.14); display: flex; align-items: flex-end">
-<p style="margin: 0; font-size: 14px; color: #A3A3A0">Built for founders who are still in class.</p>
+<div class="cc-hstat" style="flex: 1 1 220px; padding: 28px 0 34px 28px; border-left: 1px solid rgba(250,250,247,0.14); display: flex; align-items: center">
+<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(24px, 2.3vw, 32px); line-height: 1.08; letter-spacing: -0.03em; color: #FAFAF7">Built for founders who are still in class.</p>
 </div>
 </div>
 </div>
@@ -204,18 +213,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #6E8BFF">What we do</p>
 <h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Four ways we help student companies grow.</h2>
 </div>
-<p style="flex: 0 1 380px; margin: 0; font-size: 17px; color: #A3A3A0">Everything a startup accelerator offers — scaled for a campus, built around the semester, and connected to customers who live down the hall.</p>
+<p style="flex: 0 1 380px; margin: 0; font-size: 17px; color: #A3A3A0">A startup accelerator experience, built for the university ecosystem: practical support throughout the semester, direct access to experts and investors, and a campus community ready to become a company’s first customers.</p>
 </div>
 
 <div class="cc-bento">
 <article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
 <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #FF6B6B; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"></path></svg></span>
+<span class="cc-gloss cc-gloss-coral" style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #FF6B6B; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H3z"></path><path d="M21 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"></path></svg></span>
 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Curriculum</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3vw, 42px); line-height: 1.02; letter-spacing: -0.04em">Learn the business while you build it.</h3>
-<p style="margin: 0; color: #A3A3A0; max-width: 420px">Practical modules on pricing, marketing, legal basics and money — applied to the business you're actually running.</p>
+<p style="margin: 0; color: #A3A3A0; max-width: 420px">A hands-on founder curriculum covering pricing, marketing, legal foundations, finance, and growth—applied directly to the business each student is building.</p>
 <a href="Academy.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #FAFAF7; font-weight: 600">Explore the Academy <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
 <div class="cc-fan" aria-hidden="true">
@@ -227,11 +236,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 
 <article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 460px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #B28CFF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+<span class="cc-gloss cc-gloss-lilac" style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #B28CFF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Office hours</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 30px; line-height: 1.05; letter-spacing: -0.035em">Time with people who've done it.</h3>
-<p style="margin: 0; color: #B9B9B4; font-size: 15px">Mentors, operators and faculty — booked in a tap.</p>
+<p style="margin: 0; color: #B9B9B4; font-size: 15px">Mentors, operators and faculty, booked in a tap.</p>
 <div role="group" aria-label="Pick an office-hours slot" style="margin-top: auto; display: flex; flex-direction: column; gap: 8px">
 <sc-for list="{{ slots }}" as="s" hint-placeholder-count="3">
 <button type="button" aria-pressed="{{ s.selected }}" onClick="{{ s.pick }}" style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 16px; border-radius: 14px; border: 1px solid {{ s.border }}; background: {{ s.bg }}; color: #FAFAF7; font-size: 14px; font-weight: 500; transition: background .25s">{{ s.label }}<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em">{{ s.tag }}</span></button>
@@ -241,7 +250,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 
 <article class="cc-static" style="grid-column: span 2; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3vw, 38px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #F6C945; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
+<span class="cc-gloss cc-gloss-butter" style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #F6C945; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Investors</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 30px; line-height: 1.05; letter-spacing: -0.035em">Investors meet you one-on-one.</h3>
@@ -252,11 +261,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <article class="cc-static" style="grid-column: span 4; box-sizing: border-box; min-height: 440px; padding: clamp(28px, 3.4vw, 44px); border-radius: 36px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
 <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; align-items: center; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #67C7FF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
+<span class="cc-gloss cc-gloss-sky" style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: #67C7FF; color: #151515; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A3A3A0">Marketplace</span>
 </div>
 <h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3vw, 42px); line-height: 1.02; letter-spacing: -0.04em">Sell to your campus from day one.</h3>
-<p style="margin: 0; color: #A3A3A0; max-width: 400px">A verified campus marketplace where student brands — fashion labels, bands, videographers, food companies — sell to the people around them.</p>
+<p style="margin: 0; color: #A3A3A0; max-width: 400px">A verified campus marketplace that helps student-founded brands connect with customers, generate sales, and build real traction on campus.</p>
 <a href="Demo.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #FAFAF7; color: #151515; font-weight: 600; font-size: 14px">Try the live demo
 <svg class="cc-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
@@ -278,7 +287,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <div style="flex: 1 1 520px; min-width: 0">
 <p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase">Trust &amp; community</p>
 <h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(46px, 6vw, 96px); line-height: 0.92; letter-spacing: -0.055em">Bring Campus Connect to your campus.</h2>
-<p style="margin: 26px 0 0; max-width: 500px; font-size: 18px; color: #E6EBFF">We're partnering with universities, investors and mentors ahead of our January 2027 launch.</p>
+<p style="margin: 26px 0 0; max-width: 500px; font-size: 18px; color: #E6EBFF">Give student founders the tools, guidance, and customer access to build what comes next.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px">
 <a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: #FAFAF7; color: #151515; font-weight: 600">Get in touch
 <svg class="cc-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>

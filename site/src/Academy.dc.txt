@@ -114,17 +114,16 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 </div>
 </header>
 
-<!-- FORMATS -->
-<section style="padding: clamp(90px, 11vw, 140px) 0 60px">
-<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
-<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">How the Academy teaches</p>
-<h2 style="margin: 0 0 56px; max-width: 900px; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Learn it, then use it the same week.</h2>
-<div class="cc-grid4">
-<sc-for list="{{ formats }}" as="f" hint-placeholder-count="4">
-<div class="cc-static" style="box-sizing: border-box; min-height: 320px; padding: 30px; border-radius: 32px; background: {{ f.bg }}; color: {{ f.fg }}; display: flex; flex-direction: column; gap: 14px">
-<span style="display: flex; width: 52px; height: 52px; border-radius: 17px; background: {{ f.chip }}; color: {{ f.chipFg }}; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ f.icon }}"></path></svg></span>
-<h3 style="margin: auto 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; line-height: 1.05; letter-spacing: -0.03em">{{ f.title }}</h3>
-<p style="margin: 0; font-size: 15px; opacity: 0.85">{{ f.body }}</p>
+<!-- WHAT EVERY BUSINESS GETS -->
+<section style="padding: clamp(80px, 10vw, 120px) clamp(12px, 2vw, 24px) 0">
+<div style="max-width: 1400px; margin: 0 auto; border-radius: 48px; background: #16171C; border: 1px solid rgba(250,250,247,0.10); color: #FAFAF7; padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 96px)">
+<h2 style="margin: 0 0 44px; max-width: 760px; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.05em">What every Campus Connect business gets.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
+<sc-for list="{{ support }}" as="s" hint-placeholder-count="4">
+<div style="padding: 28px; border-radius: 28px; background: rgba(250,250,247,0.05); border: 1px solid rgba(250,250,247,0.12)">
+<span style="display: block; width: 12px; height: 12px; border-radius: 4px; background: {{ s.color }}"></span>
+<h3 style="margin: 18px 0 8px; font-family: Manrope, sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em">{{ s.title }}</h3>
+<p style="margin: 0; color: #B9B9B4">{{ s.body }}</p>
 </div>
 </sc-for>
 </div>
@@ -132,7 +131,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 </section>
 
 <!-- TRACK PICKER -->
-<section id="tracks" style="padding: 60px 0">
+<section id="tracks" style="padding: clamp(80px, 10vw, 120px) 0 60px">
 <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
 <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 60px; margin-bottom: 44px">
 <div style="flex: 1 1 560px; min-width: 0">
@@ -258,7 +257,7 @@ class Component extends DCLogic {
     const trackDefs = [
       { id: 'launch', label: 'Launch', dot: '#FF6B6B', bg: '#FF6B6B', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#FF6B6B', accentFg: '#151515',
         headline: 'From idea to first customers.', desc: 'For founders with an idea or a brand-new business who want to prove people will pay.', outcome: 'A live business with paying customers',
-        modules: [['Validate demand', 'Talk to real buyers and test before you build.'], ['Price your offer', 'Set prices that cover your time and costs.'], ['Open your storefront', 'Launch on the campus marketplace the right way.'], ['Land your first 10 customers', 'Simple outreach that works on a campus.']] },
+        modules: [['Open your storefront', 'Launch on the campus marketplace from day one, before everything is figured out.'], ['Validate demand', 'Use real buyers and real orders to learn what people want.'], ['Price your offer', 'Set prices that cover your time and costs.'], ['Land your first 10 customers', 'Simple outreach that works on a campus.']] },
       { id: 'grow', label: 'Grow', dot: '#B28CFF', bg: '#B28CFF', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#B28CFF', accentFg: '#151515',
         headline: 'From first customers to steady sales.', desc: 'For founders with traction who want growth that doesn’t depend on luck or late nights.', outcome: 'Predictable, growing monthly sales',
         modules: [['Marketing on a student budget', 'Content, referrals and partnerships that compound.'], ['Turn buyers into regulars', 'Reviews, follow-ups and repeat business.'], ['Know your numbers', 'Margins, cash flow and what to track weekly.'], ['Systems that save time', 'Booking, fulfillment and templates you can reuse.']] },
@@ -300,7 +299,14 @@ class Component extends DCLogic {
     const readyNote = done <= 2 ? 'Start with the Launch track.' : done <= 4 ? 'You’re ready for the Grow track.' : 'You’re ready for the Scale track.';
     const readyColor = done <= 2 ? '#FF6B6B' : done <= 4 ? '#B28CFF' : '#67C7FF';
 
+    const support = [
+      { color: '#3157FF', title: 'A campus storefront', body: 'A verified store on the marketplace, with bookings, orders, tickets and reviews built in.' },
+      { color: '#B28CFF', title: 'Founder curriculum', body: 'Academy courses on pricing, marketing, legal basics and money, applied to the real business.' },
+      { color: '#67C7FF', title: 'Expert office hours', body: 'One-on-one time with marketing experts, startup operators and industry mentors.' },
+      { color: '#F6C945', title: 'Investor access', body: 'A founder and business profile investors can browse, and one-on-one calls when they want to meet.' }
+    ];
     return {
+      support,
       demoOpen: !!st.demoOpen,
       openDemo: () => this.setState({ demoOpen: true }),
       closeDemo: () => this.setState({ demoOpen: false }),
