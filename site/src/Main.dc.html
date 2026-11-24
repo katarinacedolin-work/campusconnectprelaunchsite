@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Campus Connect — Home</title>
 <script src="./support.js"></script>
+<link rel="stylesheet" href="/assets/market-app.css">
 <link rel="stylesheet" href="/assets/academy-app.css">
 </head>
 <body>
@@ -71,8 +72,14 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 .cc-hero .cc-laptop{transform:rotateX(calc(10deg + var(--rx))) rotateY(calc(-18deg + var(--ry))) rotateZ(1deg);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .cc-hero .cc-laptop-btn:hover .cc-laptop{transform:rotateX(calc(4deg + var(--rx))) rotateY(calc(-6deg + var(--ry))) translateZ(40px)}
 .cc-laptop-btn:focus-visible{outline:none}.cc-laptop-btn:focus-visible .cc-laptop > span:first-child{outline:3px solid #67C7FF;outline-offset:4px}
-@media (max-width:640px){.cc-hero .cc-laptop > span:first-child > span{height:260px!important}}
 @media (prefers-reduced-motion:reduce){.cc-pop,.cc-tap,.cc-overlay,.cc-zoom{animation:none!important}.cc-laptop{transition:none!important}}
+.cc-zoomp{animation:ccZoomP 1s cubic-bezier(.16,.84,.24,1) both}
+@keyframes ccZoomP{from{opacity:.35;transform:perspective(1700px) translate3d(22vw,4vh,-520px) rotateY(-24deg) rotateX(9deg) rotateZ(2deg) scale(.72)}to{opacity:1;transform:perspective(1700px) translate3d(0,0,0) rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1)}}
+.cc-mini-phone{transform:rotateY(-16deg) rotateX(6deg) rotateZ(1deg);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.cc-mini-phone-btn:hover .cc-mini-phone{transform:rotateY(-6deg) rotateX(2deg) translateY(-8px)}
+.cc-mini-phone-btn:focus-visible{outline:none}.cc-mini-phone-btn:focus-visible .cc-mini-phone{outline:3px solid #67C7FF;outline-offset:4px}
+@media (max-width:700px){.cc-duo{transform:scale(.54);transform-origin:top left;margin:0 -294px -248px 0}}
+@media (prefers-reduced-motion:reduce){.cc-zoomp{animation:none!important}.cc-mini-phone{transition:none!important}}
 .cc-arrow{transition:transform .3s}a:hover .cc-arrow{transform:translateX(4px)}
 @media (max-width:1100px){.cc-stage-wrap{margin-left:0}}
 @media (max-width:960px){.cc-bento{grid-template-columns:repeat(1,minmax(0,1fr))}.cc-bento>*{grid-column:auto!important}}
@@ -105,8 +112,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </div>
 
 <div style="flex: 1 1 480px; min-width: 0; display: flex; justify-content: center; position: relative; z-index: 1">
-<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Academy demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 30px 0 10px; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
-<span class="cc-laptop" style="width: 620px; max-width: 100%">
+<div class="cc-duo" style="position: relative; width: 640px; height: 540px; flex: none">
+<div style="position: absolute; left: 0; top: 24px; width: 560px">
+<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Academy demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 0; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
+<span class="cc-laptop" style="width: 560px; max-width: 100%">
 <span style="display: block; padding: 12px; border-radius: 22px; background: #22232A; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 120px rgba(0,0,0,0.6)">
 <span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F8F8F7; color: #101116; text-align: left; font-family: 'DM Sans', sans-serif">
 <span style="flex: 0 0 112px; display: flex; flex-direction: column; gap: 7px; padding: 14px 10px; background: #FFFFFF; border-right: 1px solid #E6E7EB">
@@ -136,13 +145,30 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </span>
 </span>
 </span>
-<span class="cc-tap" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 12px 28px rgba(49,87,255,0.45)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Click to open the Academy</span>
+<span class="cc-tap" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 12px 28px rgba(49,87,255,0.45)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Open the Academy</span>
 </span>
 </span>
 <span style="display: block; height: 18px; margin: 0 -34px; border-radius: 4px 4px 22px 22px; background: linear-gradient(180deg, #4A4B53, #26272D); box-shadow: 0 30px 50px rgba(0,0,0,0.55)"></span>
 <span style="display: block; width: 120px; height: 6px; margin: -18px auto 0; border-radius: 0 0 8px 8px; background: #1A1B20"></span>
 </span>
 </button>
+</div>
+<div style="position: absolute; right: 0; bottom: 0; z-index: 2">
+<button type="button" class="cc-mini-phone-btn" onClick="{{ openPhone }}" aria-label="Open the interactive marketplace demo" style="display: block; padding: 0; border: 0; background: transparent; font: inherit; color: inherit; cursor: pointer; perspective: 1200px">
+<span class="cc-mini-phone" style="position: relative; display: block; width: 214px; height: 436px; box-sizing: border-box; border: 9px solid #151515; border-radius: 40px; background: #FAFAF7; overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(250,250,247,0.08)">
+<span aria-hidden="true" style="position: absolute; left: 50%; top: 7px; width: 64px; height: 18px; transform: translateX(-50%); border-radius: 999px; background: #0B0B0D"></span>
+<span style="display: flex; flex-direction: column; gap: 9px; padding: 32px 10px 10px">
+<span style="display: flex; align-items: center; justify-content: space-between"><span style="display: flex; align-items: center; gap: 4px"><img src="/assets/campus-connect-logo.png" alt="Campus Connect" style="display: block; height: 14px; width: auto"><span style="color: #B8B8BC; font-weight: 900; font-size: 10px">·</span><img src="/assets/sdsu-logo.png" alt="SDSU" style="display: block; height: 14px; width: auto"></span><span style="display: flex; width: 22px; height: 22px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 8px; font-weight: 700; align-items: center; justify-content: center">KC</span></span>
+<span style="display: block; padding: 11px; border-radius: 13px; background: #3157FF; color: #FAFAF7; text-align: left"><span style="display: block; margin-bottom: 4px; font-size: 7px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F6C945">The student marketplace</span><span style="display: block; font-family: Manrope, sans-serif; font-weight: 800; font-size: 15px; line-height: 1.05; letter-spacing: -0.03em">Someone on campus does that.</span></span>
+<span style="display: flex; align-items: center; gap: 6px; padding: 7px 9px; border-radius: 11px; background: #FFFFFF; border: 1px solid #E6E6DF; color: #6B6B66; font-size: 10px"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>What do you need?</span>
+<span style="display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E6DF"><img src="/assets/card-grad-portraits-with-maya.jpg" alt="" style="flex: none; width: 38px; height: 38px; border-radius: 9px; object-fit: cover"><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; text-align: left"><span style="font-family: Manrope, sans-serif; font-weight: 700; font-size: 11px; color: #151515">Maya Chen</span><span style="font-size: 9.5px; color: #55554F; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Grad portraits with Maya</span><span style="font-size: 10px; color: #151515"><b>$65.00</b> <span style="color: #6B6B66">/ 45 min</span></span></span></span>
+<span style="display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E6DF"><img src="/assets/card-film-developing-scans.jpg" alt="" style="flex: none; width: 38px; height: 38px; border-radius: 9px; object-fit: cover"><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; text-align: left"><span style="font-family: Manrope, sans-serif; font-weight: 700; font-size: 11px; color: #151515">Sam Okafor</span><span style="font-size: 9.5px; color: #55554F; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Film developing &amp; scans</span><span style="font-size: 10px; color: #151515"><b>$18.00</b> <span style="color: #6B6B66">/ roll</span></span></span></span>
+</span>
+<span class="cc-tap" aria-hidden="true" style="position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; border-radius: 999px; background: #3157FF; color: #FAFAF7; font-size: 11px; font-weight: 600; white-space: nowrap; box-shadow: 0 10px 24px rgba(49,87,255,0.45)"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Open the marketplace</span>
+</span>
+</button>
+</div>
+</div>
 </div>
 </div>
 
@@ -284,6 +310,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 </div>
 </sc-if>
 
+<sc-if value="{{ phoneOpen }}" hint-placeholder-val="{{ false }}">
+<div class="cc-overlay" role="dialog" aria-modal="true" aria-label="Interactive marketplace demo" onClick="{{ backdropPhone }}" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px; box-sizing: border-box; background: rgba(8,10,22,0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: #FAFAF7; font-family: Inter, system-ui, sans-serif">
+<button type="button" onClick="{{ closePhone }}" style="position: absolute; top: 20px; right: 20px; display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(250,250,247,0.25); background: rgba(250,250,247,0.08); color: #FAFAF7; font-weight: 600; font-size: 14px">
+<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Close demo</button>
+<div class="cc-zoomp" style="position: relative; width: 390px; max-width: 100%; box-sizing: border-box; border: 11px solid #151515; border-radius: 56px; background: #151515; box-shadow: 0 60px 140px rgba(0,0,0,0.6), 0 0 0 1px rgba(250,250,247,0.06)">
+<div aria-hidden="true" style="position: absolute; left: 50%; top: 10px; z-index: 20; width: 110px; height: 30px; transform: translateX(-50%); border-radius: 999px; background: #0B0B0D"></div>
+<dc-import name="MarketApp" device="phone" screen-h="min(768px, calc(100vh - 150px))" screen-radius="45px" initial-cat="All" initial-view="home" hint-size="100%,768px"></dc-import>
+</div>
+<p style="margin: 0; font-size: 13px; color: #B9B9B4; text-align: center">Live demo with sample data · tap outside the phone to return</p>
+</div>
+</sc-if>
+
 <dc-import name="Footer" hint-size="100%,520px"></dc-import>
 </div>
 </x-dc>
@@ -291,7 +329,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { slot: 1, demoOpen: false };
+    this.state = { slot: 1, demoOpen: false, phoneOpen: false };
   }
   setTilt(e, maxX, maxY) {
     const el = e.currentTarget;
@@ -334,6 +372,10 @@ class Component extends DCLogic {
     return {
       iconLayers, logoLayers, marquee, slots,
       demoOpen: !!st.demoOpen,
+      phoneOpen: !!st.phoneOpen,
+      openPhone: () => this.setState({ phoneOpen: true }),
+      closePhone: () => this.setState({ phoneOpen: false }),
+      backdropPhone: (e) => { if (e && e.target === e.currentTarget) this.setState({ phoneOpen: false }); },
       openDemo: () => this.setState({ demoOpen: true }),
       closeDemo: () => this.setState({ demoOpen: false }),
       backdrop: (e) => { if (e && e.target === e.currentTarget) this.setState({ demoOpen: false }); },
