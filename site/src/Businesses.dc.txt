@@ -40,20 +40,6 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <p style="margin: 0 0 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #6E8BFF">Student businesses</p>
 <h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(46px, 5.8vw, 88px); line-height: 0.92; letter-spacing: -0.055em">Built by students. Bought by their campus.</h1>
 <p style="margin: 34px 0 0; max-width: 520px; font-size: 18px; color: #C2C2BD">Meet the founding businesses on the Campus Connect marketplace at San Diego State, and the student founders behind them.</p>
-<div style="display: flex; flex-wrap: wrap; margin-top: 44px; border-top: 1px solid rgba(250,250,247,0.14)">
-<div style="flex: 1 1 150px; padding: 24px 24px 0 0">
-<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.04em; line-height: 1">{{ storeCount }}</p>
-<p style="margin: 8px 0 0; font-size: 13px; color: #A3A3A0">Featured businesses</p>
-</div>
-<div style="flex: 1 1 150px; padding: 24px 24px 0; border-left: 1px solid rgba(250,250,247,0.14)">
-<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.04em; line-height: 1">{{ orderTotal }}</p>
-<p style="margin: 8px 0 0; font-size: 13px; color: #A3A3A0">Orders completed</p>
-</div>
-<div style="flex: 1 1 150px; padding: 24px 0 0 24px; border-left: 1px solid rgba(250,250,247,0.14)">
-<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.04em; line-height: 1">{{ reviewTotal }}</p>
-<p style="margin: 8px 0 0; font-size: 13px; color: #A3A3A0">Customer reviews</p>
-</div>
-</div>
 </div>
 
 <div style="flex: 1 1 420px; min-width: 0; display: flex; justify-content: center">
@@ -92,40 +78,47 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 </div>
 </section>
 
-<!-- DIRECTORY -->
-<section style="padding: 60px 0 clamp(90px, 11vw, 140px)">
+<!-- PLATFORM STATS -->
+<section style="padding: 60px 0 0">
 <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
-<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 60px; margin-bottom: 40px">
-<h2 style="flex: 1 1 520px; margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.05em">The founders on our marketplace.</h2>
-<div role="group" aria-label="Filter businesses" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(250,250,247,0.06); border: 1px solid rgba(250,250,247,0.12)">
-<sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
-<button type="button" aria-pressed="{{ f.selected }}" onClick="{{ f.pick }}" style="min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: {{ f.bg }}; color: {{ f.fg }}; font-weight: 600; font-size: 15px; transition: background .25s, color .25s">{{ f.label }}</button>
+<div style="display: flex; flex-wrap: wrap; border-top: 1px solid rgba(250,250,247,0.14); border-bottom: 1px solid rgba(250,250,247,0.14)">
+<sc-for list="{{ stats }}" as="s" hint-placeholder-count="5">
+<div style="flex: 1 1 200px; box-sizing: border-box; padding: 36px 28px; border-left: {{ s.divider }}">
+<p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 4.4vw, 60px); letter-spacing: -0.045em; line-height: 1">{{ s.value }}</p>
+<p style="margin: 12px 0 0; font-size: 14px; color: #A3A3A0">{{ s.label }}</p>
+</div>
 </sc-for>
 </div>
 </div>
+</section>
 
-<div class="cc-biz-grid cc-pop">
-<sc-for list="{{ shown }}" as="b" hint-placeholder-count="6">
-<article style="display: flex; flex-direction: column; border-radius: 28px; overflow: hidden; background: #16171C; border: 1px solid rgba(250,250,247,0.10)">
-<img src="{{ b.photo }}" alt="{{ b.photoAlt }}" style="display: block; width: 100%; aspect-ratio: 16 / 11; object-fit: cover">
-<div style="flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 24px 24px 22px">
-<span style="align-self: flex-start; padding: 4px 11px; border-radius: 999px; background: {{ b.tagBg }}; color: #151515; font-size: 12px; font-weight: 600">{{ b.category }}</span>
-<h3 style="margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; line-height: 1.05; letter-spacing: -0.03em">{{ b.name }}</h3>
-<div style="display: flex; align-items: center; gap: 10px">
-<sc-if value="{{ b.avatar }}" hint-placeholder-val="{{ true }}"><img src="{{ b.avatar }}" alt="" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover"></sc-if>
-<sc-if value="{{ b.noAvatar }}" hint-placeholder-val="{{ false }}"><span style="display: flex; width: 30px; height: 30px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 11px; font-weight: 700; align-items: center; justify-content: center">{{ b.initials }}</span></sc-if>
-<span style="font-size: 14px; color: #A3A3A0"><b style="color: #FAFAF7">{{ b.founder }}</b> · {{ b.role }}</span>
+<!-- LEADERBOARD -->
+<section style="padding: clamp(80px, 10vw, 120px) 0 clamp(90px, 11vw, 140px)">
+<div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 60px; margin-bottom: 40px">
+<h2 style="flex: 1 1 520px; margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.05em">Top stores on the platform.</h2>
+<p style="margin: 0; font-size: 15px; color: #A3A3A0">Ranked by orders completed</p>
 </div>
-<p style="margin: 2px 0 0; color: #C2C2BD">{{ b.about }}</p>
-<div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(250,250,247,0.10); display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: #A3A3A0">
-<span><b style="color: #FAFAF7">★ {{ b.rating }}</b> rating</span>
-<span><b style="color: #FAFAF7">{{ b.reviews }}</b> reviews</span>
-<span><b style="color: #FAFAF7">{{ b.orders }}</b> orders</span>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{ leaders }}" as="l" hint-placeholder-count="3">
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px 32px; padding: 24px 28px; border-radius: 28px; background: {{ l.bg }}; border: 1px solid {{ l.border }}">
+<span style="flex: none; width: 64px; font-family: Manrope, sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.04em; line-height: 1; color: {{ l.rankColor }}">{{ l.rank }}</span>
+<sc-if value="{{ l.photo }}" hint-placeholder-val="{{ true }}"><img src="{{ l.photo }}" alt="{{ l.photoAlt }}" style="flex: none; width: 96px; height: 96px; border-radius: 20px; object-fit: cover"></sc-if>
+<sc-if value="{{ l.noPhoto }}" hint-placeholder-val="{{ false }}"><span style="flex: none; display: flex; width: 96px; height: 96px; border-radius: 20px; background: #F6C945; color: #151515; font-family: Manrope, sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.03em; align-items: center; justify-content: center">{{ l.initials }}</span></sc-if>
+<div style="flex: 1 1 260px; min-width: 0">
+<h3 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 28px; line-height: 1.05; letter-spacing: -0.03em">{{ l.name }}</h3>
+<p style="margin: 6px 0 0; font-size: 15px; color: #A3A3A0">{{ l.byline }}</p>
+<div aria-hidden="true" style="margin-top: 14px; max-width: 360px; height: 6px; border-radius: 99px; background: rgba(250,250,247,0.08); overflow: hidden"><div style="width: {{ l.bar }}; height: 100%; border-radius: 99px; background: {{ l.barColor }}"></div></div>
 </div>
-</div>
-</article>
+<dl style="flex: 1 1 420px; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<div><dt style="font-size: 13px; color: #A3A3A0">Orders</dt><dd style="margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">{{ l.orders }}</dd></div>
+<div><dt style="font-size: 13px; color: #A3A3A0">Rating</dt><dd style="margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">★ {{ l.rating }}</dd></div>
+<div><dt style="font-size: 13px; color: #A3A3A0">Reviews</dt><dd style="margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">{{ l.reviews }}</dd></div>
+<div><dt style="font-size: 13px; color: #A3A3A0">Followers</dt><dd style="margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em">{{ l.followers }}</dd></div>
+</dl>
+</li>
 </sc-for>
-</div>
+</ol>
 </div>
 </section>
 
@@ -150,49 +143,60 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3600}}'>
 class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    this.state = { filter: 'all' };
-  }
   renderVals() {
-    const filter = (this.state && this.state.filter) || 'all';
-    const businesses = [
-      { id: 'maya', group: 'media', category: 'Photo & video', tagBg: '#FFB6B0', name: 'Maya Makes Photo', founder: 'Maya Chen', role: 'Photographer', initials: 'MC', avatar: '', photo: '/assets/card-grad-portraits-with-maya.jpg', photoAlt: 'Graduation portrait by Maya Makes Photo', about: 'Portraits, events and prints from around campus, from grad photos to club formals.', rating: '4.9', reviews: 52, orders: 92 },
-      { id: 'ari', group: 'media', category: 'Photo & video', tagBg: '#FFB6B0', name: 'Ari Edits', founder: 'Ari Patel', role: 'Video editor', initials: 'AP', avatar: '/assets/profile-ari-patel.jpg', photo: '/assets/card-private-room-in-a-4-bedroom.jpg', photoAlt: 'Student editing a video on a laptop', about: 'Short-form video edits and thumbnail design for student creators, clubs and campus businesses.', rating: '4.9', reviews: 15, orders: 23 },
-      { id: 'aztec', group: 'goods', category: 'Apparel', tagBg: '#B28CFF', name: 'Aztec Thrift', founder: 'Chris Nguyen', role: 'Vintage reseller', initials: 'CN', avatar: '/assets/profile-chris-nguyen.jpg', photo: '/assets/card-short-form-video-edit.jpg', photoAlt: 'Vintage campus hoodie from Aztec Thrift', about: 'Hand-picked vintage SDSU and Aztecs gear, washed and ready to wear.', rating: '4.9', reviews: 17, orders: 21 },
-      { id: 'film', group: 'media', category: 'Photo & video', tagBg: '#FFB6B0', name: 'Film & Frames', founder: 'Sam Okafor', role: 'Photo lab', initials: 'SO', avatar: '/assets/profile-sam-okafor.jpg', photo: '/assets/card-color-film-roll-36-exp.jpg', photoAlt: 'Film camera and a roll of color film from Film & Frames', about: 'Tested film cameras, fresh film and a student-run developing and scanning lab.', rating: '5.0', reviews: 19, orders: 35 },
-      { id: 'riley', group: 'goods', category: 'Handmade goods', tagBg: '#B28CFF', name: 'Riley Clay', founder: 'Riley Kim', role: 'Ceramicist', initials: 'RK', avatar: '/assets/profile-riley-kim.jpg', photo: '/assets/card-intro-to-the-pottery-wheel.jpg', photoAlt: 'Riley Clay throwing a pot on the wheel', about: 'Small-batch mugs and planters from a ceramics major, plus intro classes on the wheel.', rating: '4.9', reviews: 12, orders: 18 },
-      { id: 'mia', group: 'media', category: 'Photo & video', tagBg: '#FFB6B0', name: 'Mia Torres Studio', founder: 'Mia Torres', role: 'Photographer', initials: 'MT', avatar: '', photo: '/assets/card-linkedin-headshots.jpg', photoAlt: 'Professional headshot by Mia Torres Studio', about: 'Clean, confident headshots for internships and student orgs, delivered within three days.', rating: '4.7', reviews: 13, orders: 21 }
+    // Every store on the marketplace: orders completed, reviews, rating, followers
+    const stores = [
+      { id: 'college-cubbies', name: 'College Cubbies', orders: 500, reviews: 48, rating: '4.9', followers: 70 },
+      { id: 'maya-makes-photo', name: 'Maya Makes Photo', orders: 92, reviews: 52, rating: '4.9', followers: 400 },
+      { id: 'noah-studies', name: 'Noah Studies', orders: 71, reviews: 28, rating: '5.0', followers: 164 },
+      { id: 'zoe-nail-studio', name: "Zoe's Nail Studio", orders: 57, reviews: 43, rating: '4.8', followers: 241 },
+      { id: 'film-and-frames', name: 'Film & Frames', orders: 35, reviews: 19, rating: '5.0', followers: 176 },
+      { id: 'ari-edits', name: 'Ari Edits', orders: 23, reviews: 15, rating: '4.9', followers: 92 },
+      { id: 'mia-torres-studio', name: 'Mia Torres Studio', orders: 21, reviews: 13, rating: '4.7', followers: 64 },
+      { id: 'aztec-thrift', name: 'Aztec Thrift', orders: 21, reviews: 17, rating: '4.9', followers: 205 },
+      { id: 'riley-clay', name: 'Riley Clay', orders: 18, reviews: 12, rating: '4.9', followers: 133 },
+      { id: 'leo-lifts', name: 'Leo Lifts', orders: 12, reviews: 7, rating: '4.9', followers: 38 },
+      { id: 'dorm-reset', name: 'Dorm Reset', orders: 10, reviews: 8, rating: '4.9', followers: 47 },
+      { id: 'emily-book-swap', name: "Emily's Book Swap", orders: 7, reviews: 5, rating: '4.8', followers: 21 },
+      { id: 'dorm-drop', name: "Taylor's Dorm Drop", orders: 4, reviews: 3, rating: '4.7', followers: 12 }
     ];
-    const filterDefs = [
-      { id: 'all', label: 'All' },
-      { id: 'media', label: 'Photo & video' },
-      { id: 'goods', label: 'Apparel & goods' }
+    const fmt = (n) => n.toLocaleString('en-US');
+    const orders = stores.reduce((n, s) => n + s.orders, 0);
+    const reviews = stores.reduce((n, s) => n + s.reviews, 0);
+    const followers = stores.reduce((n, s) => n + s.followers, 0);
+    const avg = stores.reduce((n, s) => n + parseFloat(s.rating) * s.reviews, 0) / reviews;
+    const statDefs = [
+      { value: String(stores.length), label: 'Student stores' },
+      { value: fmt(orders), label: 'Orders completed' },
+      { value: fmt(reviews), label: 'Customer reviews' },
+      { value: avg.toFixed(1), label: 'Average rating' },
+      { value: fmt(followers), label: 'Store followers' }
     ];
-    const filters = filterDefs.map((f) => {
-      const on = f.id === filter;
-      return { label: f.label, selected: on, bg: on ? '#FAFAF7' : 'transparent', fg: on ? '#151515' : '#C2C2BD', pick: () => this.setState({ filter: f.id }) };
+    const stats = statDefs.map((s, i) => Object.assign({}, s, { divider: i === 0 ? '0' : '1px solid rgba(250,250,247,0.14)' }));
+    const details = {
+      'college-cubbies': { byline: 'Student-run summer storage · Valet pickup at your door', photo: '', photoAlt: '', initials: 'CC' },
+      'maya-makes-photo': { byline: 'Maya Chen · Portraits, events and prints from around campus', photo: '/assets/card-grad-portraits-with-maya.jpg', photoAlt: 'Graduation portrait by Maya Makes Photo', initials: 'MC' },
+      'noah-studies': { byline: 'Noah Williams · Math tutoring that makes it click', photo: '/assets/card-calculus-ii-tutoring.jpg', photoAlt: 'A Noah Studies tutoring session', initials: 'NW' }
+    };
+    const ranked = stores.slice().sort((a, b) => b.orders - a.orders).slice(0, 3);
+    const top = ranked[0].orders;
+    const accents = ['#F6C945', '#B28CFF', '#67C7FF'];
+    const leaders = ranked.map((s, i) => {
+      const d = details[s.id] || { byline: '', photo: '', photoAlt: '', initials: s.name.slice(0, 2).toUpperCase() };
+      return {
+        rank: '0' + (i + 1), name: s.name, byline: d.byline, photo: d.photo, noPhoto: !d.photo, photoAlt: d.photoAlt, initials: d.initials,
+        orders: fmt(s.orders), rating: s.rating, reviews: fmt(s.reviews), followers: fmt(s.followers),
+        bar: Math.max(4, Math.round((s.orders / top) * 100)) + '%', barColor: accents[i], rankColor: accents[i],
+        bg: i === 0 ? 'rgba(246,201,69,0.08)' : '#16171C', border: i === 0 ? 'rgba(246,201,69,0.35)' : 'rgba(250,250,247,0.10)'
+      };
     });
-    const shown = businesses
-      .filter((b) => filter === 'all' || b.group === filter)
-      .map((b) => Object.assign({}, b, { noAvatar: !b.avatar }));
-    const all = businesses.concat([{ reviews: 48, orders: 500, rating: '4.9' }]);
-    const orderTotal = all.reduce((n, b) => n + b.orders, 0);
-    const reviewTotal = all.reduce((n, b) => n + b.reviews, 0);
-    const weighted = all.reduce((n, b) => n + parseFloat(b.rating) * b.reviews, 0) / reviewTotal;
     const support = [
       { color: '#3157FF', title: 'A campus storefront', body: 'A verified store on the marketplace, with bookings, orders, tickets and reviews built in.' },
       { color: '#B28CFF', title: 'Founder curriculum', body: 'Academy courses on pricing, marketing, legal basics and money, applied to the real business.' },
       { color: '#67C7FF', title: 'Expert office hours', body: 'One-on-one time with marketing experts, startup operators and industry mentors.' },
       { color: '#F6C945', title: 'Investor access', body: 'A founder and business profile investors can browse, and one-on-one calls when they want to meet.' }
     ];
-    return {
-      filters, shown, support,
-      storeCount: String(all.length),
-      orderTotal: orderTotal.toLocaleString('en-US'),
-      reviewTotal: String(reviewTotal),
-      avgRating: weighted.toFixed(1)
-    };
+    return { stats, leaders, support, avgRating: avg.toFixed(1) };
   }
 }
 </script>
