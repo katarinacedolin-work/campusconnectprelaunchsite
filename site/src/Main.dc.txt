@@ -123,38 +123,38 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <div class="cc-duo-col" style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 22px; position: relative; z-index: 1; margin-top: -60px">
 <div class="cc-duo" style="position: relative; width: 640px; height: 540px; flex: none">
 <div style="position: absolute; left: 0; top: 24px; width: 560px">
-<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Academy demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 0; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
+<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Business Hub demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 0; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
 <span class="cc-laptop" style="width: 560px; max-width: 100%">
 <span style="display: block; padding: 12px; border-radius: 22px; background: #22232A; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 120px rgba(0,0,0,0.6)">
-<span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F8F8F7; color: #101116; text-align: left; font-family: 'DM Sans', sans-serif">
+<span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F3F4F6; color: #1c2128; text-align: left; font-family: Inter, sans-serif">
 <span style="flex: 0 0 112px; display: flex; flex-direction: column; gap: 7px; padding: 14px 10px; background: #FFFFFF; border-right: 1px solid #E6E7EB">
-<span style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px"><span style="display: flex; gap: 2px"><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: skewY(-8deg)"></span><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: scaleX(-1) skewY(-8deg)"></span></span><span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 9px; line-height: .9; letter-spacing: -0.5px">campus<br>connect<span style="display: block; color: #DF7F7B; font-size: 6px; margin-top: 2px">ACADEMY</span></span></span>
-<span style="padding: 5px 7px; border-radius: 7px; background: #EEF1FF; color: #2458F5; font-size: 9px; font-weight: 700">Home</span>
+<span style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px"><span style="width: 16px; height: 16px; border-radius: 4px; background: #15253d; color: #fff; font-size: 7px; font-weight: 600; display: grid; place-items: center; font-family: Georgia, serif">CC</span><span style="font-weight: 600; font-size: 8px; line-height: 1.15">Campus Connect<span style="display: block; color: #8b939e; font-size: 6px; font-weight: 600; letter-spacing: .1em; margin-top: 2px">BUSINESS HUB</span></span></span>
+<span style="padding: 4px 7px; border-radius: 6px; background: #f3f6fa; color: #15253d; box-shadow: inset 0 0 0 1px #1a4480; font-size: 9px; font-weight: 600">Home</span>
 <span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">LEARN</span>
-<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Courses</span>
-<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Library</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A414C; font-weight: 500">Courses <span style="float: right; color: #5f6874">8</span></span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A414C; font-weight: 500">Library <span style="float: right; color: #5f6874">99</span></span>
 <span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">CONNECT</span>
 <span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Experts</span>
 <span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Investors</span>
-<span style="margin-top: auto; display: flex; align-items: center; gap: 5px"><span style="width: 20px; height: 20px; border-radius: 50%; background: #DF7F7B; color: #fff; font-size: 7px; font-weight: 800; display: grid; place-items: center">KC</span><span style="font-size: 8px; font-weight: 700">Katarina C.</span></span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 5px"><span style="width: 20px; height: 20px; border-radius: 50%; background: #15253d; color: #fff; font-size: 7px; font-weight: 600; display: grid; place-items: center">JS</span><span style="font-size: 8px; font-weight: 700">John Smith</span></span>
 </span>
 <span style="flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px">
-<span style="display: block; height: 18px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E6E7EB"></span>
-<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #2458F5">GOOD MORNING, KATARINA</span>
-<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 17px; line-height: 1.05; letter-spacing: -0.8px">Build the business<br>you came here to start.</span>
+<span style="font-size: 7px; font-weight: 600; letter-spacing: .12em; color: #6a7380">GOOD MORNING, JOHN</span>
+<span style="font-family: Georgia, serif; font-weight: 600; font-size: 16px; line-height: 1.15">Build the business<br>you came here to start.</span>
 <span style="display: flex; gap: 8px; flex: 1; min-height: 0">
-<span style="flex: 1.4; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 14px; background: linear-gradient(145deg, #4D78FF, #2458F5 55%, #1D4FE8); color: #fff">
-<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #D7E2FF">CONTINUE LEARNING</span>
-<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; line-height: 1.1">Business Basics Bootcamp</span>
-<span style="margin-top: auto; display: flex; align-items: center; gap: 6px"><span style="flex: 1; height: 5px; border-radius: 9px; background: rgba(255,255,255,.3); overflow: hidden"><span style="display: block; width: 68%; height: 100%; background: #fff"></span></span><span style="font-size: 9px; font-weight: 700">68%</span></span>
+<span style="flex: 1.4; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 12px; background: #15253d; color: #f4f6fa">
+<span style="font-size: 7px; font-weight: 600; letter-spacing: .12em; color: #8ea0bf">START HERE</span>
+<span style="font-family: Georgia, serif; font-weight: 600; font-size: 13px; line-height: 1.15">Business Crash Course</span>
+<span style="font-size: 8px; color: #b7c2d4">SF 101 · 8 modules · 3.5 hours</span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 6px"><span style="flex: 1; height: 3px; border-radius: 9px; background: rgba(255,255,255,.12)"></span><span style="font-size: 9px; font-weight: 600">0%</span></span>
 </span>
 <span style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; background: #fff; border: 1px solid #E6E7EB">
-<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: conic-gradient(#2458F5 0 68%, #EDF0F4 68% 100%)"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 11px">68%</span></span>
-<span style="font-size: 8px; font-weight: 700">Launch readiness</span>
+<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #e7eaef"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; font-family: Georgia, serif; font-weight: 600; font-size: 11px">0%</span></span>
+<span style="font-size: 8px; font-weight: 600">Course progress</span>
 </span>
 </span>
 </span>
-<span class="cc-tap cc-tap-ink" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1px solid rgba(250,250,247,0.16); font-size: 13px; font-weight: 700; white-space: nowrap"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Open the Academy</span>
+<span class="cc-tap cc-tap-ink" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1px solid rgba(250,250,247,0.16); font-size: 13px; font-weight: 700; white-space: nowrap"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Open the Business Hub</span>
 </span>
 </span>
 <span style="display: block; height: 18px; margin: 0 -34px; border-radius: 4px 4px 22px 22px; background: linear-gradient(180deg, #4A4B53, #26272D); box-shadow: 0 30px 50px rgba(0,0,0,0.55)"></span>
@@ -167,7 +167,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <span class="cc-mini-phone" style="position: relative; display: block; width: 214px; height: 436px; box-sizing: border-box; border: 9px solid #151515; border-radius: 40px; background: #FAFAF7; overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(250,250,247,0.08)">
 <span aria-hidden="true" style="position: absolute; left: 50%; top: 7px; width: 64px; height: 18px; transform: translateX(-50%); border-radius: 999px; background: #0B0B0D"></span>
 <span style="display: flex; flex-direction: column; gap: 9px; padding: 32px 10px 10px">
-<span style="display: flex; align-items: center; justify-content: space-between"><span style="display: flex; align-items: center; gap: 4px"><img src="/assets/campus-connect-logo.png" alt="Campus Connect" style="display: block; height: 14px; width: auto"><span style="color: #B8B8BC; font-weight: 900; font-size: 10px">·</span><img src="/assets/sdsu-logo.png" alt="SDSU" style="display: block; height: 14px; width: auto"></span><span style="display: flex; width: 22px; height: 22px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 8px; font-weight: 700; align-items: center; justify-content: center">KC</span></span>
+<span style="display: flex; align-items: center; justify-content: space-between"><span style="display: flex; align-items: center; gap: 4px"><img src="/assets/campus-connect-logo.png" alt="Campus Connect" style="display: block; height: 14px; width: auto"><span style="color: #B8B8BC; font-weight: 900; font-size: 10px">·</span><img src="/assets/sdsu-logo.png" alt="SDSU" style="display: block; height: 14px; width: auto"></span><span style="display: flex; width: 22px; height: 22px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 8px; font-weight: 700; align-items: center; justify-content: center">JS</span></span>
 <span style="display: block; padding: 11px; border-radius: 13px; background: #3157FF; color: #FAFAF7; text-align: left"><span style="display: block; margin-bottom: 4px; font-size: 7px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F6C945">The student marketplace</span><span style="display: block; font-family: Manrope, sans-serif; font-weight: 800; font-size: 15px; line-height: 1.05; letter-spacing: -0.03em">Someone on campus does that.</span></span>
 <span style="display: flex; align-items: center; gap: 6px; padding: 7px 9px; border-radius: 11px; background: #FFFFFF; border: 1px solid #E6E6DF; color: #6B6B66; font-size: 10px"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>What do you need?</span>
 <span style="display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E6DF"><img src="/assets/card-grad-portraits-with-maya.jpg" alt="" style="flex: none; width: 38px; height: 38px; border-radius: 9px; object-fit: cover"><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; text-align: left"><span style="font-family: Manrope, sans-serif; font-weight: 700; font-size: 11px; color: #151515">Maya Chen</span><span style="font-size: 9.5px; color: #55554F; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Grad portraits with Maya</span><span style="font-size: 10px; color: #151515"><b>$65.00</b> <span style="color: #6B6B66">/ 45 min</span></span></span></span>
@@ -313,7 +313,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #67C7
 <div class="cc-zoom" style="width: 1100px; max-width: 100%; box-sizing: border-box; border-radius: 20px; overflow: hidden; background: #1A1B20; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 140px rgba(0,0,0,0.6)">
 <div aria-hidden="true" style="display: flex; align-items: center; gap: 14px; height: 42px; padding: 0 16px">
 <span style="display: flex; gap: 7px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FF6B6B"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #F6C945"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #5BD68A"></span></span>
-<span style="flex: 1; display: flex; justify-content: center"><span style="padding: 5px 16px; border-radius: 999px; background: rgba(250,250,247,0.07); font-size: 12px; color: #B9B9B4">campus connect · academy demo</span></span>
+<span style="flex: 1; display: flex; justify-content: center"><span style="padding: 5px 16px; border-radius: 999px; background: rgba(250,250,247,0.07); font-size: 12px; color: #B9B9B4">campus connect · business hub</span></span>
 <span style="width: 50px"></span>
 </div>
 <dc-import name="AcademyApp" screen-h="min(700px, calc(100vh - 170px))" screen-radius="0" hint-size="100%,700px"></dc-import>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Campus Connect — Academy app (demo)</title>
+<title>Campus Connect — Business Hub (demo)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="/assets/academy-app.css">
 </head>
@@ -10,185 +10,237 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
-<style>
-body{margin:0}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap">
 </helmet>
-<div data-app="1" class="ac" style="height: {{ screenH }}; border-radius: {{ screenRadius }}; font-family: 'DM Sans', Arial, sans-serif; color: #101116">
+<div data-app="1" class="ac" style="height: {{ screenH }}; border-radius: {{ screenRadius }}">
 
-<aside class="ac-side" aria-label="Academy navigation">
-<button type="button" class="ac-brand" onClick="{{ goHome }}" aria-label="Campus Connect Academy home"><span class="ac-mark" aria-hidden="true"><span></span><span></span></span><span class="ac-brandtext">campus<br>connect<small>ACADEMY</small></span></button>
-<nav style="display: flex; flex-direction: column; gap: 2px; margin-top: 10px">
-<sc-for list="{{ side }}" as="s" hint-placeholder-count="7">
+<aside class="ac-side" aria-label="Business Hub navigation">
+<button type="button" class="ac-brand" onClick="{{ goHome }}" aria-label="Campus Connect Business Hub home"><span class="ac-mark" aria-hidden="true">CC</span><span class="ac-brandtext">Campus Connect<small>Business Hub</small></span></button>
+<nav>
+<sc-for list="{{ side }}" as="s" hint-placeholder-count="8">
 <sc-if value="{{ s.isLabel }}" hint-placeholder-val="{{ false }}"><div class="ac-label">{{ s.label }}</div></sc-if>
-<sc-if value="{{ s.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" class="{{ s.cls }}" aria-current="{{ s.current }}" onClick="{{ s.go }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ s.icon }}"></path></svg>{{ s.label }}<sc-if value="{{ s.count }}"><i class="ac-count">{{ s.count }}</i></sc-if></button></sc-if>
+<sc-if value="{{ s.isLink }}" hint-placeholder-val="{{ true }}"><button type="button" class="{{ s.cls }}" aria-current="{{ s.current }}" onClick="{{ s.go }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><sc-for list="{{ s.paths }}" as="p" hint-placeholder-count="1"><path d="{{ p.d }}"></path></sc-for></svg>{{ s.label }}<sc-if value="{{ s.hasCount }}" hint-placeholder-val="{{ false }}"><i class="ac-count">{{ s.count }}</i></sc-if></button></sc-if>
+<sc-if value="{{ s.isSub }}" hint-placeholder-val="{{ false }}"><button type="button" class="{{ s.cls }}" onClick="{{ s.go }}">{{ s.label }}</button></sc-if>
 </sc-for>
 </nav>
-<button type="button" class="ac-me" onClick="{{ goProfile }}"><span class="ac-avatar">KC</span><span><strong>Katarina Cedolin</strong><small>Founder · View profile</small></span></button>
+<button type="button" class="ac-me" onClick="{{ goProfile }}"><span class="ac-avatar">JS</span><span><strong>John Smith</strong><small>Founder · View profile</small></span></button>
 </aside>
 
 <div class="ac-work">
 <header class="ac-bar">
-<form onSubmit="{{ onSearchSubmit }}" style="flex: 1; min-width: 0; display: flex"><input class="ac-search" type="search" aria-label="Search courses, documents, people" placeholder="Search courses, documents, people..." value="{{ searchQ }}" onChange="{{ onSearchQ }}"></form>
-<button type="button" class="ac-ask" onClick="{{ goDocuments }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg><span>Ask AI guide</span></button>
-<button type="button" class="ac-round" aria-label="Notifications" onClick="{{ noNotifs }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
+<button type="button" class="ac-round ac-locked" tabindex="-1" aria-disabled="true" aria-label="Notifications" onClick="{{ locked }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
 </header>
-<nav class="ac-mobnav" aria-label="Academy sections"><sc-for list="{{ mob }}" as="m" hint-placeholder-count="6"><button type="button" class="{{ m.cls }}" onClick="{{ m.go }}">{{ m.label }}</button></sc-for></nav>
 
 <div data-scroller="1" class="ac-scroll">
 <div class="ac-page">
 
-<!-- HOME -->
 <sc-if value="{{ v.home }}" hint-placeholder-val="{{ true }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Good morning, Katarina</div><h1 class="ac-title">Build the business<br>you came here to start.</h1></div></div>
-<div class="ac-pills"><span class="ac-pill"><b>{{ inProgress }}</b> courses in progress</span><span class="ac-pill"><b>{{ docsReady }}</b> documents ready</span><span class="ac-pill"><b>{{ sessions }}</b> {{ sessionWord }} booked</span></div>
+<div class="ac-hero"><div><div class="ac-eyebrow">Good morning, John</div><h1 class="ac-title">Build the business<br>you came here to start.</h1></div></div>
+<div class="ac-pills"><span class="ac-pill"><b>{{ inProgress }}</b> courses in progress</span><span class="ac-pill"><b>{{ docsReady }}</b> documents ready</span><span class="ac-pill"><b>{{ sessions }}</b> expert session booked</span></div>
 <section class="ac-grid2">
 <article class="ac-continue">
-<svg class="ac-compass" width="74" height="74" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f6d27a" stroke="#e2b34a" stroke-width="3"></circle><circle cx="32" cy="32" r="21" fill="#fff8e8"></circle><path d="M32 12l4 18 16 2-16 2-4 18-4-18-16-2 16-2z" fill="#2f3138"></path><path d="M32 18l2.2 12.2L46 32l-11.8 1.8L32 46l-2.2-12.2L18 32l11.8-1.8z" fill="#e25b52"></path><circle cx="32" cy="32" r="3" fill="#2f3138"></circle></svg>
-<div class="k">Continue learning</div>
-<h2>Business Basics Bootcamp</h2>
-<p>{{ basicsNote }}</p>
-<div class="ac-foot"><div class="ac-prog"><span style="width: {{ basicsPct }}%"></span></div><b>{{ basicsPct }}%</b><button type="button" class="ac-resume" onClick="{{ openBasics }}">Resume →</button></div>
+<div class="ac-headrow"><div><div class="k">{{ resume.kicker }}</div><h2>{{ resume.title }}</h2><p class="meta"><span>{{ resume.code }}</span><span>{{ resume.where }}</span><span>{{ resume.hours }}</span></p></div><span class="ac-stage lg {{ resume.stage }}" aria-label="{{ resume.stageLabel }}"><span class="ac-stagebars" aria-hidden="true"><i class="{{ resume.on1 }}"></i><i class="{{ resume.on2 }}"></i><i class="{{ resume.on3 }}"></i><i class="{{ resume.on4 }}"></i></span></span><div class="ac-codebadge" aria-hidden="true">{{ resume.badge }}</div></div>
+<div class="ac-foot"><div class="ac-track"><div class="ac-statusline"><span>{{ resume.status }}</span><b>{{ resume.pct }}%</b></div><div class="ac-prog"><span style="width: {{ resume.pct }}%"></span></div></div><button type="button" class="ac-resume ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ resume.action }}</button></div>
 </article>
 <article class="ac-panel">
-<h3>Launch readiness</h3><p class="ac-panel-sub">How much of your foundation is in place</p>
-<div class="ac-ring-row"><div class="ac-ring" style="background: conic-gradient(#2458f5 0 {{ basicsPct }}%, #edf0f4 {{ basicsPct }}% 100%)"><b>{{ basicsPct }}%</b></div>
-<div style="display: flex; flex-direction: column; gap: 12px"><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot"></span><strong>Learning complete</strong></span><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot gray"></span>{{ remaining }}% remaining</span><small style="color: #6d717b; line-height: 1.35">{{ readyNote }}</small></div></div>
+<h3>Course progress</h3><p class="ac-panel-sub">How far you are through the courses</p>
+<div class="ac-ring-row"><div class="ac-ring" style="background: conic-gradient(#1a4480 0 {{ overall }}%, #e7eaef {{ overall }}% 100%)"><b>{{ overall }}%</b></div>
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot"></span><strong>Learning complete</strong></span><span style="display: flex; gap: 9px; align-items: center; font-size: 13px"><span class="ac-dot gray"></span>{{ remaining }}% remaining</span><small style="color: #5f6874; line-height: 1.35">{{ readyNote }}</small></div></div>
 </article>
 </section>
 <section class="ac-grid2b">
 <article class="ac-panel"><h3>Your next steps</h3><p class="ac-panel-sub">The fastest way to move forward this week.</p>
 <div class="ac-steps">
-<button type="button" class="ac-step" onClick="{{ openMarketing }}"><span class="ac-tick">✓</span><span><strong>Finish your Marketing Basics module</strong><br><small>8 minutes left · Pick up where you left off</small></span></button>
-<button type="button" class="ac-step" onClick="{{ goAbout }}"><span class="ac-tick">✓</span><span><strong>Complete your business profile</strong><br><small>Help experts and investors understand what you do</small></span></button>
-<button type="button" class="ac-step" onClick="{{ goOffice }}"><span class="{{ bookTickCls }}">{{ bookTick }}</span><span><strong>Book a 1:1 expert session</strong><br><small>Get feedback on your next move</small></span></button>
+<button type="button" class="ac-step ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}"><span class="ac-num">1</span><span><strong>Start the Marketing course</strong><br><small>SF 110 · five modules, with a value proposition and a funnel</small></span><span class="ac-stage launch" aria-label="Launch"><span class="ac-stagebars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></span></span></button>
+<button type="button" class="ac-step ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}"><span class="ac-num">2</span><span><strong>Complete your business profile</strong><br><small>Help experts and investors understand what you do</small></span><span class="ac-stage growing" aria-label="Growing"><span class="ac-stagebars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></span></button>
+<button type="button" class="ac-step ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}"><span class="ac-num">3</span><span><strong>Book a 1:1 expert session</strong><br><small>Get feedback on your next move</small></span></button>
 </div></article>
-<article class="ac-panel"><h3>Weekly activity</h3><p class="ac-panel-sub">Lessons, documents, and sessions over 6 weeks.</p>
-<div class="ac-bars"><sc-for list="{{ bars }}" as="b" hint-placeholder-count="6"><div class="ac-barcol"><i style="height: {{ b.h }}%; background: {{ b.c }}"></i><small>{{ b.label }}</small></div></sc-for></div>
+<article class="ac-chartpanel"><h3>Weekly activity</h3><p class="ac-panel-sub">Lessons, documents, and sessions over 6 weeks.</p>
+<div class="ac-bars"><div class="ac-barcol"><i class="soft" style="height: 30%"></i><small>W1</small></div><div class="ac-barcol"><i class="soft" style="height: 43%"></i><small>W2</small></div><div class="ac-barcol"><i class="soft" style="height: 37%"></i><small>W3</small></div><div class="ac-barcol"><i style="height: 61%"></i><small>W4</small></div><div class="ac-barcol"><i style="height: 76%"></i><small>W5</small></div><div class="ac-barcol"><i style="height: 90%"></i><small>This week</small></div></div>
 </article>
 </section>
 </div>
 </sc-if>
 
-<!-- COURSES -->
 <sc-if value="{{ v.courses }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Learn · Courses</div><h1 class="ac-title">Interactive courses for<br>the business behind the idea.</h1><p class="ac-sub">Short, applied lessons that help you understand the essentials before you use the supporting documents.</p></div></div>
+<div class="ac-hero"><div><h1 class="ac-title">Startup Foundations</h1><p class="ac-lead">Courses for the business behind the idea.</p></div><input class="ac-search" type="search" placeholder="Search courses" aria-label="Search courses" value="{{ searchQ }}" onInput="{{ onSearch }}"></div>
 <div class="ac-filters" role="group" aria-label="Filter courses"><sc-for list="{{ courseFilters }}" as="f" hint-placeholder-count="6"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
-<div class="ac-cards"><sc-for list="{{ courses }}" as="c" hint-placeholder-count="5">
-<article class="ac-card"><div class="ac-visual {{ c.color }}"><div class="ac-illus" aria-hidden="true">{{ c.emoji }}</div><span class="ac-tagpill">{{ c.length }}</span></div>
-<div class="ac-cardbody"><h3>{{ c.title }}</h3><p class="ac-desc">{{ c.desc }}</p><div class="ac-prog"><span style="width: {{ c.pct }}%"></span></div>
-<div class="ac-meta"><span>{{ c.status }}</span><button type="button" class="ac-linkbtn" onClick="{{ c.open }}">{{ c.cta }}</button></div></div></article>
+<div class="ac-cards"><sc-for list="{{ courses }}" as="c" hint-placeholder-count="8">
+<article class="ac-card {{ c.state }}"><div class="ac-cardbody"><div class="ac-code"><span>{{ c.code }}</span><sc-if value="{{ c.startHere }}" hint-placeholder-val="{{ false }}"><span class="ac-flag">Start here</span></sc-if><span class="ac-stage {{ c.stage }}" aria-label="{{ c.stageLabel }}" style="margin-left: auto"><span class="ac-stagebars" aria-hidden="true"><i class="{{ c.on1 }}"></i><i class="{{ c.on2 }}"></i><i class="{{ c.on3 }}"></i><i class="{{ c.on4 }}"></i></span></span></div><h3>{{ c.title }}</h3><p class="ac-desc">{{ c.desc }}</p></div>
+<div class="ac-prog"><span style="width: {{ c.pct }}%"></span></div>
+<div class="ac-footrow"><span class="ac-cardstatus">{{ c.status }}</span><button type="button" class="ac-cta ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ c.cta }}</button></div></article>
 </sc-for></div>
+<sc-if value="{{ coursesEmpty }}" hint-placeholder-val="{{ false }}"><p class="ac-empty">No courses match that search.</p></sc-if>
 </div>
 </sc-if>
 
-<!-- LESSON -->
-<sc-if value="{{ v.lesson }}" hint-placeholder-val="{{ false }}">
-<div class="ac-fade ac-reader">
+<sc-if value="{{ v.course }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
 <button type="button" class="ac-back" onClick="{{ goCourses }}">← All courses</button>
+<div class="ac-hero"><div><div class="ac-eyebrow">{{ course.kicker }}</div><h1 class="ac-title">{{ course.title }}</h1><p class="ac-lead">{{ course.desc }}</p></div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><button type="button" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ course.action }}</button><button type="button" class="ac-secondary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ course.certLabel }}</button></div></div>
+<div class="ac-stats"><div class="ac-stat"><b>{{ course.modulesN }}</b><span>modules</span></div><div class="ac-stat"><b>{{ course.hours }}</b><span>hours, self-paced</span></div><div class="ac-stat"><b>{{ course.pct }}%</b><span>complete · {{ course.doneN }} of {{ course.modulesN }} modules</span></div></div>
+<div class="ac-section-head"><h2>Syllabus</h2></div>
+<div class="ac-syl"><sc-for list="{{ course.mods }}" as="m" hint-placeholder-count="4">
+<button type="button" class="ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}"><span class="{{ m.numCls }}">{{ m.num }}</span><span><b>Module {{ m.n }}: {{ m.title }}</b><small>{{ m.meta }}</small></span></button>
+</sc-for>
+<button type="button" class="ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}"><span class="{{ course.capCls }}">{{ course.capMark }}</span><span><b>Capstone: {{ course.cap }}</b><small>{{ course.capNote }}</small></span></button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.lesson }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<button type="button" class="ac-back" onClick="{{ course.back }}">← {{ course.title }}</button>
 <article class="ac-sheet">
 <div class="ac-eyebrow">{{ lesson.kicker }}</div>
 <h1>{{ lesson.title }}</h1>
-<p class="ac-note">{{ lesson.note }}</p>
-<div class="ac-prog" style="margin: 4px 0 16px"><span style="width: {{ lesson.pct }}%"></span></div>
-<sc-for list="{{ lesson.modules }}" as="m" hint-placeholder-count="3"><section class="ac-module"><h2>{{ m.h }}</h2><p>{{ m.p }}</p></section></sc-for>
-<div class="ac-takeaway"><strong>When you are done</strong>{{ lesson.takeaway }}</div>
-<div class="ac-actions"><button type="button" class="ac-primary" onClick="{{ markComplete }}">{{ lesson.markLabel }}</button><button type="button" class="ac-secondary" onClick="{{ goCourses }}">Back to courses</button></div>
+<p class="ac-note">{{ lesson.hook }}</p>
+<div style="margin-top: 18px"><sc-for list="{{ lesson.topics }}" as="t" hint-placeholder-count="4"><div class="ac-topic"><b>{{ t.t }}</b></div></sc-for></div>
+<div class="ac-takeaway"><strong>In this module</strong>{{ lesson.note }}</div>
+<div class="ac-actions"><button type="button" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ lesson.markLabel }}</button><button type="button" class="ac-secondary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ lesson.nextLabel }}</button></div>
 </article>
 </div>
 </sc-if>
 
-<!-- LIBRARY -->
+<sc-if value="{{ v.cert }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<button type="button" class="ac-back" onClick="{{ course.back }}">← {{ course.title }}</button>
+<article class="ac-sheet">
+<sc-if value="{{ cert.ok }}" hint-placeholder-val="{{ false }}">
+<div class="ac-cert"><div class="ac-seal">CC</div><div class="ac-eyebrow">Campus Connect Academy</div><h2>Certificate of completion</h2><p class="ac-note">This certifies that</p><div class="nm">John Smith</div><p>has completed</p><h3 style="font-size: 22px; margin: 8px 0">{{ cert.line }}</h3><p class="ac-note">{{ cert.meta }}</p></div>
+<p class="ac-note" style="margin-top: 14px">A completion record for your portfolio, not an accredited credential.</p>
+</sc-if>
+<sc-if value="{{ cert.locked }}" hint-placeholder-val="{{ true }}">
+<div class="ac-eyebrow">Certificate</div>
+<h1>Certificate of completion</h1>
+<p class="ac-note">Finish the remaining requirements to unlock your certificate for {{ cert.line }}.</p>
+<div class="ac-takeaway"><strong>Still to do</strong>{{ cert.left }}</div>
+</sc-if>
+</article>
+</div>
+</sc-if>
+
 <sc-if value="{{ v.documents }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Your business library</div><h1 class="ac-title">Get answers from<br>the documents that matter.</h1><p class="ac-sub">Read practical guides, save templates, and ask the AI guide questions in plain English.</p></div></div>
-<div class="ac-chatbox">
-<div class="ac-docarea"><div class="ac-eyebrow">Featured guide · Marketing</div><h2>How to define your first customer</h2>
-<p class="ac-doccopy">Before you spend money on ads or design a perfect logo, get specific about who you are helping. A clear first customer gives every decision a direction.</p>
-<div class="ac-doccopy"><h4>Start with a real person, not a broad audience</h4><p>“College students” is a starting point. “Students who want graduation photos but do not know which photographer to trust” is a customer you can understand and serve.</p><h4>Use the three-question test</h4><p>What are they trying to do? What is getting in their way? What would make the next step feel easy? Write down the answers in their words.</p></div>
-<button type="button" class="ac-primary" style="margin-top: 18px" onClick="{{ openCustomerDoc }}">Read guide</button></div>
-<aside class="ac-chat" aria-label="AI guide"><div class="ac-chathead">✦ Ask the AI guide</div>
-<div class="ac-msgs" aria-live="polite"><sc-for list="{{ chat }}" as="m" hint-placeholder-count="3"><div class="{{ m.cls }}">{{ m.text }}</div></sc-for></div>
-<form class="ac-chatin" onSubmit="{{ sendChat }}"><input aria-label="Ask a follow-up" placeholder="Ask a follow-up…" value="{{ chatDraft }}" onChange="{{ onChatDraft }}"><button type="submit" aria-label="Send">↑</button></form>
-</aside>
-</div>
-<div class="ac-section-head"><h2>Browse your library</h2></div>
-<div class="ac-cards"><sc-for list="{{ docs }}" as="d" hint-placeholder-count="4">
-<article class="ac-card"><div class="ac-visual {{ d.color }}"><div class="ac-illus" aria-hidden="true">{{ d.emoji }}</div><span class="ac-tagpill">{{ d.tag }}</span></div>
-<div class="ac-cardbody"><h3>{{ d.title }}</h3><p class="ac-desc">{{ d.desc }}</p><button type="button" class="ac-primary" onClick="{{ d.open }}">{{ d.cta }}</button></div></article>
+<div class="ac-hero"><div><h1 class="ac-title">Guides and checklists for your business.</h1><p class="ac-lead">Read the practical pieces before you spend money or make a setup decision.</p></div><input class="ac-search" type="search" placeholder="Search the library" aria-label="Search the library" value="{{ searchQ }}" onInput="{{ onSearch }}"></div>
+<div class="ac-filters" role="group" aria-label="Filter documents"><sc-for list="{{ docFilters }}" as="f" hint-placeholder-count="6"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-cards"><sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
+<article class="ac-card"><div class="ac-cardbody"><div class="ac-code"><span>{{ d.topic }}</span><span class="ac-stage {{ d.stage }}" aria-label="{{ d.stageLabel }}" style="margin-left: auto"><span class="ac-stagebars" aria-hidden="true"><i class="{{ d.on1 }}"></i><i class="{{ d.on2 }}"></i><i class="{{ d.on3 }}"></i><i class="{{ d.on4 }}"></i></span></span></div><h3>{{ d.title }}</h3><p class="ac-desc">{{ d.desc }}</p></div>
+<div class="ac-footrow"><span class="ac-cardstatus plain">{{ d.meta }}</span><button type="button" class="ac-cta ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ d.cta }}</button></div></article>
 </sc-for></div>
+<sc-if value="{{ docsEmpty }}" hint-placeholder-val="{{ false }}"><p class="ac-empty">No documents in this topic yet.</p></sc-if>
 </div>
 </sc-if>
 
-<!-- DOCUMENT -->
+<sc-if value="{{ v.shelf }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><h1 class="ac-title">The Founders Shelf.</h1><p class="ac-lead">Twelve volumes on how founders think about the work.</p></div><input class="ac-search" type="search" placeholder="Search the library" aria-label="Search the library" value="{{ searchQ }}" onInput="{{ onSearch }}"></div>
+<div class="ac-filters" role="group" aria-label="Filter volumes"><sc-for list="{{ shelfFilters }}" as="f" hint-placeholder-count="6"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-cards shelf"><sc-for list="{{ shelf }}" as="d" hint-placeholder-count="4">
+<article class="ac-card"><div class="ac-cardbody"><div class="ac-code"><span>{{ d.vol }}</span><sc-if value="{{ d.exclusive }}" hint-placeholder-val="{{ false }}"><span class="ac-badge">Campus Connect Exclusive</span></sc-if></div><h3>{{ d.title }}</h3><p class="ac-desc">{{ d.desc }}</p><div class="ac-personline" style="margin-top: 16px"><sc-if value="{{ d.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ d.photo }}" alt=""></sc-if><sc-if value="{{ d.noPhoto }}" hint-placeholder-val="{{ true }}"><span class="ac-ph">{{ d.initials }}</span></sc-if><span><strong>{{ d.author }}</strong><small>{{ d.role }}</small></span></div></div>
+<div class="ac-footrow"><span class="ac-cardstatus plain">{{ d.stat }}</span><button type="button" class="ac-cta ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Read volume</button></div></article>
+</sc-for></div>
+<sc-if value="{{ shelfEmpty }}" hint-placeholder-val="{{ false }}"><p class="ac-empty">No volumes in this topic yet.</p></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.templates }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade">
+<div class="ac-hero"><div><h1 class="ac-title">Templates you can fill in.</h1><p class="ac-lead">84 Word and Excel templates for planning, money, customers, and the rest of the business.</p></div><input class="ac-search" type="search" placeholder="Search the library" aria-label="Search the library" value="{{ searchQ }}" onInput="{{ onSearch }}"></div>
+<div class="ac-filters" role="group" aria-label="Filter by stage"><sc-for list="{{ stageFilters }}" as="f" hint-placeholder-count="5"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-filters tabs" role="tablist" aria-label="Template categories"><sc-for list="{{ tplFilters }}" as="f" hint-placeholder-count="7"><button type="button" class="{{ f.cls }}" role="tab" aria-selected="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<sc-for list="{{ tplGroups }}" as="g" hint-placeholder-count="2">
+<div class="ac-section-head"><h2>{{ g.name }}</h2></div>
+<div class="ac-cards"><sc-for list="{{ g.items }}" as="d" hint-placeholder-count="4">
+<article class="ac-card"><div class="ac-cardbody"><div class="ac-code"><span>{{ d.code }}</span><span class="ac-stage {{ d.stage }}" aria-label="{{ d.stageLabel }}" style="margin-left: auto"><span class="ac-stagebars" aria-hidden="true"><i class="{{ d.on1 }}"></i><i class="{{ d.on2 }}"></i><i class="{{ d.on3 }}"></i><i class="{{ d.on4 }}"></i></span></span></div><h3>{{ d.title }}</h3><p class="ac-desc">{{ d.desc }}</p></div>
+<div class="ac-footrow"><span class="ac-cardstatus plain">{{ d.kind }}</span><button type="button" class="ac-cta ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Open template</button></div></article>
+</sc-for></div>
+</sc-for>
+<sc-if value="{{ tplEmpty }}" hint-placeholder-val="{{ false }}"><p class="ac-empty">No templates match this filter yet.</p></sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ v.doc }}" hint-placeholder-val="{{ false }}">
-<div class="ac-fade ac-reader">
-<button type="button" class="ac-back" onClick="{{ goDocuments }}">← Library</button>
+<div class="ac-fade">
+<button type="button" class="ac-back" onClick="{{ doc.back }}">← {{ doc.backName }}</button>
 <article class="ac-sheet">
-<div class="ac-eyebrow">{{ doc.kicker }}</div>
+<div style="display: flex; justify-content: space-between; gap: 16px; align-items: flex-start"><div class="ac-eyebrow">{{ doc.kicker }}</div><sc-if value="{{ doc.stageLabel }}" hint-placeholder-val="{{ false }}"><span class="ac-stage {{ doc.stage }}" aria-label="{{ doc.stageLabel }}"><span class="ac-stagebars" aria-hidden="true"><i class="{{ doc.on1 }}"></i><i class="{{ doc.on2 }}"></i><i class="{{ doc.on3 }}"></i><i class="{{ doc.on4 }}"></i></span><span>{{ doc.stageLabel }}</span></span></sc-if></div>
 <h1>{{ doc.title }}</h1>
 <p class="ac-note">{{ doc.note }}</p>
+<sc-if value="{{ doc.legal }}" hint-placeholder-val="{{ false }}"><p class="ac-note" style="margin-top: 12px">Use this as a starting point. It is not legal advice, and anything you sign should be reviewed by someone qualified.</p></sc-if>
+<sc-if value="{{ doc.hasAuthor }}" hint-placeholder-val="{{ false }}"><div class="ac-personline" style="margin: 18px 0"><sc-if value="{{ doc.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ doc.photo }}" alt=""></sc-if><sc-if value="{{ doc.noPhoto }}" hint-placeholder-val="{{ true }}"><span class="ac-ph">{{ doc.initials }}</span></sc-if><span><strong>{{ doc.author }}</strong><small>{{ doc.role }}</small></span></div></sc-if>
 <sc-for list="{{ doc.sections }}" as="m" hint-placeholder-count="2"><section class="ac-module"><h2>{{ m.h }}</h2><p>{{ m.p }}</p></section></sc-for>
 <sc-for list="{{ doc.blanks }}" as="b" hint-placeholder-count="0"><div class="ac-blank"><b>{{ b.h }}</b><span>{{ b.p }}</span></div></sc-for>
-<div class="ac-takeaway"><strong>When you are done</strong>{{ doc.takeaway }}</div>
-<div class="ac-actions"><button type="button" class="ac-primary" onClick="{{ saveDoc }}">{{ doc.saveLabel }}</button><button type="button" class="ac-secondary" onClick="{{ goDocuments }}">Back to library</button></div>
+<sc-if value="{{ doc.hasTakeaway }}" hint-placeholder-val="{{ false }}"><div class="ac-takeaway"><strong>When you are done</strong>{{ doc.takeaway }}</div></sc-if>
+<div class="ac-actions"><button type="button" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ doc.saveLabel }}</button><button type="button" class="ac-secondary" onClick="{{ doc.back }}">Back to {{ doc.backName }}</button></div>
 </article>
 </div>
 </sc-if>
 
-<!-- EXPERTS -->
 <sc-if value="{{ v.office }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Real people, real feedback</div><h1 class="ac-title">Bring your questions.<br>Leave with a next step.</h1><p class="ac-sub">Book a focused 30-minute session with someone who has been where you are.</p></div></div>
-<div class="ac-filters" role="group" aria-label="Filter experts"><sc-for list="{{ expertFilters }}" as="f" hint-placeholder-count="4"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
-<div class="ac-list"><sc-for list="{{ experts }}" as="e" hint-placeholder-count="3">
-<div class="ac-row"><div class="ac-person"><div class="ac-mini">{{ e.initials }}</div><span><strong>{{ e.name }}</strong><small>{{ e.area }} · ★ {{ e.rating }}</small></span></div>
-<span style="text-align: right"><small style="display: block; color: #6d717b">{{ e.when }}</small><button type="button" class="{{ e.cls }}" style="margin-top: 6px" onClick="{{ e.book }}">{{ e.label }}</button></span></div>
-</sc-for></div>
+<div class="ac-hero"><div><h1 class="ac-title">Bring your questions.<br>Leave with a next step.</h1><p class="ac-lead">Book a focused 30-minute session with someone who has been where you are.</p></div><button type="button" class="ac-secondary" onClick="{{ showBookings }}">My bookings</button></div>
 <div class="ac-section-head"><h2>How to make the most of Experts</h2></div>
 <div class="ac-stats"><div class="ac-stat"><b>01</b><span>One decision you’re trying to make</span></div><div class="ac-stat"><b>02</b><span>A link, draft, or question to review</span></div><div class="ac-stat"><b>03</b><span>What a useful next step looks like</span></div></div>
 <section class="ac-materials"><h3>Recommended supporting materials</h3><p>Bring these materials so your expert can give more specific, useful feedback.</p>
-<div class="ac-mat-grid"><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">?</div><strong>One clear question</strong><small>The decision or challenge you want to work through.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">⌁</div><strong>A draft or link</strong><small>Bring your offer, profile, plan, or marketing copy.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▥</div><strong>Relevant numbers</strong><small>Pricing, sales, costs, or customer feedback.</small></div></div>
-<button type="button" class="ac-linkbtn" style="margin-top: 14px" onClick="{{ goDocuments }}">Find templates in Learn →</button></section>
+<div class="ac-mat-grid"><div class="ac-mat"><strong>One clear question</strong><small>The decision or challenge you want to work through.</small></div><div class="ac-mat"><strong>A draft or link</strong><small>Bring your offer, profile, plan, or marketing copy.</small></div><div class="ac-mat"><strong>Relevant numbers</strong><small>Pricing, sales, costs, or customer feedback.</small></div></div>
+<button type="button" class="ac-linkbtn ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Find templates in the library</button></section>
+<div class="ac-filters" role="group" aria-label="Filter experts"><sc-for list="{{ expertFilters }}" as="f" hint-placeholder-count="4"><button type="button" class="{{ f.cls }}" aria-pressed="{{ f.on }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></div>
+<div class="ac-list"><sc-for list="{{ experts }}" as="e" hint-placeholder-count="3">
+<div class="ac-row"><div class="ac-person"><div class="ac-mini">{{ e.initials }}</div><span><strong>{{ e.name }}</strong><small>{{ e.area }}</small></span></div><span class="ac-stage {{ e.stage }}" aria-label="{{ e.stageLabel }}"><span class="ac-stagebars" aria-hidden="true"><i class="{{ e.on1 }}"></i><i class="{{ e.on2 }}"></i><i class="{{ e.on3 }}"></i><i class="{{ e.on4 }}"></i></span></span><span class="ac-when"><small>{{ e.when }}</small><button type="button" class="{{ e.cls }}" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ e.label }}</button></span></div>
+</sc-for></div>
+<sc-if value="{{ expertsEmpty }}" hint-placeholder-val="{{ false }}"><p class="ac-empty">No experts in this topic yet.</p></sc-if>
 </div>
 </sc-if>
 
-<!-- INVESTORS -->
 <sc-if value="{{ v.investors }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Make the right introduction</div><h1 class="ac-title">Meet people who<br>can help you grow.</h1><p class="ac-sub">A curated space for student founders to share what they are building and find aligned mentors, partners, and early funders.</p></div></div>
-<div class="ac-panel" style="background: linear-gradient(120deg, #eef1ff, #fff); margin-bottom: 26px">
-<div style="display: flex; justify-content: space-between; gap: 20px; align-items: center"><div><div class="ac-eyebrow">Your founder profile</div><h3 style="margin: 0 0 6px">Make it easy for the right person to say “tell me more.”</h3><p class="ac-desc" style="margin: 0">Add your traction, what you need, and the kind of connection you want.</p></div><div style="font-size: 40px; font-weight: 800; color: #2458f5">72%</div></div>
-<div class="ac-prog"><span style="width: 72%"></span></div></div>
+<div class="ac-hero"><div><h1 class="ac-title">Meet people who<br>can help you grow.</h1><p class="ac-lead">A curated space for student founders to share what they are building and find aligned mentors, partners, and early funders.</p></div></div>
+<div class="ac-panel ac-founder"><div class="ac-founder-row"><div><div class="ac-eyebrow">Your founder profile</div><h3>{{ founderHeadline }}</h3></div><div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px"><div class="ac-pct">{{ founderPct }}%</div><button type="button" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Edit founder profile</button></div></div><div class="ac-prog"><span style="width: {{ founderPct }}%"></span></div></div>
 <div class="ac-section-head"><h2>People worth meeting</h2></div>
 <div class="ac-cards"><sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
-<article class="ac-card"><div class="ac-visual {{ p.color }}"><div class="ac-illus" aria-hidden="true">{{ p.emoji }}</div><span class="ac-tagpill">{{ p.tag }}</span></div>
-<div class="ac-cardbody"><h3>{{ p.name }}</h3><p class="ac-desc">{{ p.desc }}</p><div class="ac-meta"><span>{{ p.role }}</span><button type="button" class="{{ p.cls }}" onClick="{{ p.act }}">{{ p.label }}</button></div></div></article>
+<article class="ac-card"><div class="ac-photo" style="{{ p.photoBg }}"><sc-if value="{{ p.hasPhoto }}" hint-placeholder-val="{{ true }}"><img class="{{ p.imgCls }}" src="{{ p.photo }}" alt=""></sc-if><sc-if value="{{ p.noPhoto }}" hint-placeholder-val="{{ false }}"><span class="ac-mono">{{ p.initials }}</span></sc-if><span class="pill">{{ p.tag }}</span></div>
+<div class="ac-cardbody"><div class="ac-code"><span class="ac-stage {{ p.stage }}" aria-label="{{ p.stageLabel }}" style="margin-left: auto"><span class="ac-stagebars" aria-hidden="true"><i class="{{ p.on1 }}"></i><i class="{{ p.on2 }}"></i><i class="{{ p.on3 }}"></i><i class="{{ p.on4 }}"></i></span></span></div><h3>{{ p.name }}</h3><p class="ac-desc">{{ p.desc }}</p></div>
+<div class="ac-footrow"><span class="ac-cardstatus plain">{{ p.role }}</span><button type="button" class="{{ p.cls }}" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">{{ p.label }}</button></div></article>
 </sc-for></div>
 <section class="ac-materials"><h3>Recommended supporting materials</h3><p>Prepare these before requesting an investor or funding connection.</p>
-<div class="ac-mat-grid"><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▤</div><strong>Business snapshot</strong><small>What you do, who you serve, and why now.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">▥</div><strong>Traction &amp; metrics</strong><small>Sales, customers, reviews, or progress so far.</small></div><div class="ac-mat"><div class="ac-mat-ic" aria-hidden="true">$</div><strong>Funding plan</strong><small>How much you need and what it will unlock.</small></div></div>
-<button type="button" class="ac-linkbtn" style="margin-top: 14px" onClick="{{ goDocuments }}">Find templates in Learn →</button></section>
+<div class="ac-mat-grid"><div class="ac-mat"><strong>Business snapshot</strong><small>What you do, who you serve, and why now.</small></div><div class="ac-mat"><strong>Traction and metrics</strong><small>Sales, customers, reviews, or progress so far.</small></div><div class="ac-mat"><strong>Funding plan</strong><small>How much you need and what it will unlock.</small></div></div>
+<button type="button" class="ac-linkbtn ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Find templates in the library</button></section>
 </div>
 </sc-if>
 
-<!-- BUSINESS PROFILE -->
+<sc-if value="{{ v.founder }}" hint-placeholder-val="{{ false }}">
+<div class="ac-fade" style="max-width: 760px">
+<button type="button" class="ac-back" onClick="{{ goInvestors }}">← Investors</button>
+<div class="ac-hero"><div><div class="ac-eyebrow">Investors</div><h1 class="ac-title">Edit your founder profile</h1><p class="ac-lead">This is what a mentor or investor reads before they decide to say yes.</p></div></div>
+<div class="ac-live"><span class="ac-panel-sub" style="margin: 0">{{ founderFilled }} of 7 sections filled</span><b class="ac-pct">{{ founderPct }}%</b></div>
+<div class="ac-prog" style="margin-bottom: 18px"><span style="width: {{ founderPct }}%"></span></div>
+<form class="ac-panel ac-form" onSubmit="{{ saveFounder }}">
+<sc-for list="{{ founderFields }}" as="f" hint-placeholder-count="7">
+<label>{{ f.label }}<small>{{ f.help }}</small><sc-if value="{{ f.area }}" hint-placeholder-val="{{ true }}"><textarea value="{{ f.value }}" onInput="{{ f.edit }}"></textarea></sc-if><sc-if value="{{ f.line }}" hint-placeholder-val="{{ false }}"><input value="{{ f.value }}" onInput="{{ f.edit }}"></sc-if></label>
+</sc-for>
+<div class="ac-actions"><button type="submit" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Save profile</button><button type="button" class="ac-secondary" onClick="{{ goInvestors }}">Cancel</button></div>
+</form>
+</div>
+</sc-if>
+
 <sc-if value="{{ v.about }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Your business profile</div><h1 class="ac-title">About you</h1><p class="ac-sub">A simple snapshot of your business, what is working, and where you have the clearest opportunities to grow.</p></div></div>
-<div class="ac-profile"><span class="ac-avatar">MC</span><span><strong>Maya Makes Photo</strong><small>Photography · San Diego, CA · Student business</small></span><p>Natural, colorful portraits for students and campus milestones.</p></div>
+<div class="ac-hero"><div><h1 class="ac-title">About you</h1><p class="ac-lead">A simple snapshot of your business, what is working, and where you have the clearest opportunities to grow.</p></div></div>
+<div class="ac-profile"><span class="ac-avatar">MC</span><span class="who"><strong>Maya Makes Photo</strong><small>Photography · San Diego, CA · Student business</small></span><p class="bio">Natural, colorful portraits for students and campus milestones.</p><span class="ac-stage growing" aria-label="Growing"><span class="ac-stagebars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span>Growing</span></span></div>
 <div class="ac-section-head"><h2>Analytics overview</h2><span class="ac-tag">Last 30 days</span></div>
 <div class="ac-analytics">
-<div class="ac-stat"><b>$2,336</b><span>Earnings <span class="ac-up">↗ +2%</span></span></div>
-<div class="ac-stat"><b>60</b><span>Orders <span class="ac-up">↗ +3%</span></span></div>
-<div class="ac-stat"><b>1,247</b><span>Listing views <span class="ac-up">↗ +6%</span></span></div>
+<div class="ac-stat"><b>$2,336</b><span>Earnings <em class="ac-up">↗ +2%</em></span></div>
+<div class="ac-stat"><b>60</b><span>Orders <em class="ac-up">↗ +3%</em></span></div>
 <div class="ac-chart"><h3>Store performance</h3><p>Daily activity over the last 7 days</p>
-<svg viewBox="0 0 520 112" role="img" aria-label="Store performance trend over the last seven days" style="width: 100%; height: 100px; display: block; overflow: visible"><line x1="24" y1="18" x2="500" y2="18" stroke="#e8e9ed"></line><line x1="24" y1="48" x2="500" y2="48" stroke="#e8e9ed"></line><line x1="24" y1="78" x2="500" y2="78" stroke="#e8e9ed"></line><line x1="24" y1="98" x2="500" y2="98" stroke="#e8e9ed"></line><polyline points="24,68 104,78 184,54 264,64 344,34 424,48 500,22" fill="none" stroke="#2458f5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="500" cy="22" r="5" fill="#2458f5"></circle><text x="460" y="12" fill="#2458f5" font-size="10" font-weight="800">Today</text><text x="20" y="110" fill="#858994" font-size="9">Mon</text><text x="174" y="110" fill="#858994" font-size="9">Wed</text><text x="330" y="110" fill="#858994" font-size="9">Fri</text><text x="480" y="110" fill="#858994" font-size="9">Sun</text></svg></div>
-<div class="ac-stat"><b>4.8%</b><span>Conversion <span class="ac-down">↘ -3%</span></span></div>
+<svg viewBox="0 0 520 112" role="img" aria-label="Store performance trend over the last seven days" style="width: 100%; height: 100px; display: block"><line x1="24" y1="18" x2="500" y2="18" stroke="#e8e9ed"></line><line x1="24" y1="48" x2="500" y2="48" stroke="#e8e9ed"></line><line x1="24" y1="78" x2="500" y2="78" stroke="#e8e9ed"></line><line x1="24" y1="98" x2="500" y2="98" stroke="#e8e9ed"></line><polyline points="24,68 104,78 184,54 264,64 344,34 424,48 500,22" fill="none" stroke="#1a4480" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="500" cy="22" r="5" fill="#1a4480"></circle></svg></div>
+<div class="ac-stat"><b>1,247</b><span>Listing views <em class="ac-up">↗ +6%</em></span></div>
+<div class="ac-stat"><b>4.8%</b><span>Conversion <em class="ac-down">↘ -3%</em></span></div>
 </div>
-<section class="ac-grid2b" style="grid-template-columns: 1fr 1fr">
+<section class="ac-grid2b" style="margin-top: 0">
 <div class="ac-panel"><h3 style="margin-bottom: 14px">Strengths</h3><div class="ac-steps">
 <div class="ac-check"><span class="ac-tick">✓</span><span><strong>Strong customer interest</strong><br><small>Your listing views are up 6% this period.</small></span></div>
 <div class="ac-check"><span class="ac-tick">✓</span><span><strong>Consistent order activity</strong><br><small>60 orders show steady demand for your offer.</small></span></div>
@@ -201,15 +253,14 @@ body{margin:0}
 </div>
 </sc-if>
 
-<!-- PROFILE -->
 <sc-if value="{{ v.profile }}" hint-placeholder-val="{{ false }}">
 <div class="ac-fade">
-<div class="ac-hero"><div><div class="ac-eyebrow">Your workspace</div><h1 class="ac-title">Katarina’s business<br>command center.</h1><p class="ac-sub">Keep your idea, progress, and next steps in one place.</p></div><button type="button" class="ac-primary" onClick="{{ editProfile }}">Edit profile</button></div>
+<div class="ac-hero"><div><div class="ac-eyebrow">Your workspace</div><h1 class="ac-title">John’s business<br>command center.</h1><p class="ac-lead">Keep your idea, progress, and next steps in one place.</p></div><button type="button" class="ac-primary ac-locked" tabindex="-1" aria-disabled="true" onClick="{{ locked }}">Edit profile</button></div>
 <div class="ac-grid2b" style="margin-top: 0">
 <div class="ac-panel"><h3 style="margin-bottom: 16px">About your business</h3>
-<div class="ac-person" style="margin-bottom: 20px"><span class="ac-avatar">KC</span><span><strong>Katarina Cedolin</strong><small>Founder · San Diego, CA</small></span></div>
-<div class="ac-row"><span><small style="color: #6d717b">Business name</small><br><strong>Campus Connect</strong></span><span class="ac-tag">Draft</span></div>
-<div class="ac-row" style="margin-top: 10px"><span><small style="color: #6d717b">What I’m building</small><br><strong>A better way for student businesses to grow</strong></span></div></div>
+<div class="ac-person" style="margin-bottom: 20px"><span class="ac-avatar">JS</span><span><strong>John Smith</strong><small>Founder · San Diego, CA</small></span></div>
+<div class="ac-row"><span><small style="color: #5f6874">Business name</small><br><strong>Campus Connect</strong></span><span style="display: flex; align-items: center; gap: 10px"><span class="ac-tag">Draft</span><span class="ac-stage idea" aria-label="Idea"><span class="ac-stagebars" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span></span></span></div>
+<div class="ac-row" style="margin-top: 10px"><span><small style="color: #5f6874">What I’m building</small><br><strong>A better way for student businesses to grow</strong></span></div></div>
 <div class="ac-panel"><h3 style="margin-bottom: 16px">Workspace health</h3><div class="ac-steps">
 <div class="ac-check"><span class="ac-tick">✓</span><strong>Profile started</strong></div>
 <div class="ac-check"><span class="ac-tick">✓</span><strong>Learning plan created</strong></div>
@@ -230,15 +281,20 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'home', lessonId: 'basics', docId: 'customer', courseFilter: 'all', expertFilter: 'all',
-      progress: { basics: 68, marketing: 34, money: 12, legit: 0, momentum: 0 },
-      booked: {}, intros: {}, saved: {}, searchQ: '', chatDraft: '',
-      chat: [
-        { me: false, text: 'Hi! I can explain this guide, help you apply it to your business, or point you to a template.' },
-        { me: true, text: 'How do I know if my customer is specific enough?' },
-        { me: false, text: 'Try to describe one real person and the moment they decide to look for help. If your answer includes a situation, a need, and a reason to choose you, you’re on the right track.' }
-      ],
-      toast: ''
+      view: 'home', courseId: 'crash', mod: 0, docKind: 'guide', docId: 'customer',
+      courseFilter: 'all', docFilter: 'all', shelfFilter: 'all', expertFilter: 'all',
+      tplGroup: 'all', tplStage: 'all', searchQ: '', bookingsOnly: false,
+      done: {}, cap: {}, booked: {}, intros: {}, saved: {},
+      founderSaved: false,
+      founder: {
+        name: 'Campus Connect',
+        offer: 'A workspace for student founders to learn the business and find the right people.',
+        customer: 'Student founders turning a campus idea into a real business.',
+        why: '', traction: '',
+        need: 'Mentors and early funders who understand student ventures.',
+        connection: 'Mentor or early funder'
+      },
+      lastId: 'crash', toast: ''
     };
   }
   componentWillUnmount() { clearTimeout(this._t); }
@@ -251,137 +307,250 @@ class Component extends DCLogic {
     } catch (err) {}
   }
   flash(msg) { clearTimeout(this._t); this.setState({ toast: msg }); this._t = setTimeout(() => this.setState({ toast: '' }), 2200); }
-  go(view, extra) { return (e) => { this.top(e); this.setState(Object.assign({ view }, extra || {})); }; }
+  go(view, extra) { return (e) => { this.top(e); this.setState(Object.assign({ view: view, searchQ: '', bookingsOnly: false }, extra || {})); }; }
 
   renderVals() {
     const st = this.state;
-    const COURSES = [
-      { id: 'basics', color: 'blue', emoji: '🧭', title: 'Business Basics Bootcamp', desc: 'Build a strong foundation across marketing, finance, operations, and legal.', length: '6 modules · 2h 40m', step: 16, topics: 'marketing finance operations legal setup' },
-      { id: 'marketing', color: 'lilac', emoji: '📣', title: 'Marketing That Gets Noticed', desc: 'Turn your idea into a clear offer, brand, and launch plan.', length: '4 modules · 1h 25m', step: 22, topics: 'marketing' },
-      { id: 'money', color: 'yellow', emoji: '📊', title: 'Money In, Money Out', desc: 'Pricing, bookkeeping, cash flow, and the numbers you need to know.', length: '5 modules · 1h 55m', step: 20, topics: 'finance' },
-      { id: 'legit', color: 'mint', emoji: '🧰', title: 'Make It Legit', desc: 'Choose a structure, register your business, and protect what you are building.', length: '3 modules · 55m', step: 34, topics: 'legal setup' },
-      { id: 'momentum', color: 'coral', emoji: '🛡️', title: 'Protect Your Momentum', desc: 'Understand risk, customer expectations, and the systems that keep you moving.', length: '4 modules · 1h', step: 25, topics: 'operations' }
-    ];
-    const LESSONS = {
-      basics: { kicker: 'Course · Module 5 of 6', title: 'Business Basics Bootcamp', note: 'About 8 minutes left in this module.', modules: [['What you are actually selling', 'A business is a promise: who you help, what changes for them, and what they pay. Write that in one sentence before you pick a name or a logo.'], ['A customer you could text', 'Choose one real person, not a crowd. Note where they already look for help and what they tried before you.'], ['The three numbers that matter', 'Price, cost to deliver, and how many sales cover a normal month. If one is a guess, label it as a guess and decide what would make it real.']], takeaway: 'You can explain the offer, and the month it needs to work, without opening a spreadsheet.' },
-      marketing: { kicker: 'Course · Module 2 of 4', title: 'Marketing That Gets Noticed', note: 'About 8 minutes left in this module.', modules: [['Name the moment', 'People do not buy “photography.” They buy a fix for a moment: graduation, a first client, a profile that feels outdated.'], ['Say it the way they would', 'Write the offer in their words. If a classmate would not repeat it, it is still too broad.'], ['One place, one message', 'Pick the channel they already check. Repeat the same sentence there instead of starting five accounts.']], takeaway: 'Your message names a person, a moment, and a result.' },
-      money: { kicker: 'Course · Module 1 of 5', title: 'Money In, Money Out', note: 'This module is just getting started.', modules: [['Price from the work, not from nerves', 'List the hours, materials, and tools in one delivery. A price that ignores those is a discount you did not mean to give.'], ['A simple cash picture', 'Money in, money out, and what is left. Track a week before you build a yearly forecast.'], ['Leave room to learn', 'Your first price can change. Tell the customer what is included so a later change does not feel like a surprise.']], takeaway: 'You know what one sale costs you and what it needs to bring in.' },
-      legit: { kicker: 'Course · Not started', title: 'Make It Legit', note: 'Three short modules. Start with the decision, not the paperwork.', modules: [['Pick a structure you can explain', 'Sole prop, partnership, or something more formal. The right one is the one you understand and can afford to maintain.'], ['Name, bank, and records', 'A business name, a separate place for the money, and a folder for receipts. Those three prevent most early mix-ups.'], ['What you are protecting', 'Write down the thing that would hurt to lose: photos, a process, a customer list. That list tells you what to ask about later.']], takeaway: 'You have a structure, a place for the money, and a list of what to protect.' },
-      momentum: { kicker: 'Course · Not started', title: 'Protect Your Momentum', note: 'Four modules on risk, expectations, and the systems that keep you moving.', modules: [['Say what done looks like', 'Write what the customer receives, when, and what is not included. Most friction starts as an unspoken assumption.'], ['A backup for the work', 'Copies of files, a second way to get paid, and a note on what happens if you are sick for a week.'], ['A review after the first five', 'After five customers, note what they asked, what slipped, and what you would repeat. Change one thing, not everything.']], takeaway: 'The next customer gets a clearer offer because you wrote down what the last ones taught you.' }
+    const COURSE_DATA = [{"id":"crash","name":"Business Crash Course","blurb":"The whole startup journey in eight modules: idea, marketing, money, operations, sales, setup, risk and funding.","cap":"Your Business Launch Plan","mods":[{"t":"Business Foundations","h":"Every business starts as a guess. This module is about turning that guess into something people will actually pay for.","cards":["What makes a business viable","Problem first, solution second","Customers and competitors","Business models and revenue streams","Goals you can measure"]},{"t":"Marketing Basics","h":"Marketing is how the right people find out you exist and decide you are worth trying.","cards":["Pick a target customer","Write a value proposition","Build a simple brand","Choose channels","Create content and measure"]},{"t":"Finance Basics","h":"You do not need to love math. You need to know whether you are making money and when you will run out of it.","cards":["Revenue, expenses, profit, cash flow","Startup costs","Setting prices","A basic budget","Tracking performance"]},{"t":"Business Operations","h":"Operations is the behind-the-scenes engine: everything that has to happen so the customer gets what they paid for.","cards":["The daily work","Efficient processes","Products, inventory and suppliers","Tasks and records","Quality and satisfaction"]},{"t":"Business Development and Sales","h":"Sales is not about being pushy. It is about helping the right person say yes to something that genuinely helps them.","cards":["Finding customers and opportunities","Professional relationships","An outreach message","The sales process","Partnerships and referrals"]},{"t":"Business Setup and Legal Basics","h":"Making it official protects you, your money and your customers. Here is the overview; SF 160 covers the details.","cards":["When to formalize","Choosing a structure","Names, EINs, licenses and permits","Separate your money","Contracts, insurance and records"]},{"t":"Risk Management","h":"Risk is anything that could knock you off track. Spot it early and it becomes a plan, not a crisis.","cards":["Five kinds of risk","Likelihood and impact","Backup plans","Protecting data","Responding to problems"]},{"t":"Investors and Funding","h":"Money from others can speed you up, but every dollar comes with strings. Learn which strings before you sign.","cards":["Your funding options","Debt versus equity","How much do you need?","Pitch and projections","Ownership, dilution and red flags"]}]},{"id":"mkt","name":"Marketing","blurb":"Find your people, build a brand they recognize and create content that turns scrolls into sales.","cap":"Your Marketing Plan","mods":[{"t":"Understanding Marketing","h":"Marketing is everything you do to get the right people to notice, trust and choose you.","cards":["What marketing is and why it matters","Your target customer","Needs and problems","A simple value proposition"]},{"t":"Building Your Brand","h":"Your brand is the feeling people get when they think of you. You get to design it on purpose.","cards":["Name, colors and style","A clear brand message","A consistent customer experience","Strong student-business brands"]},{"t":"Marketing Channels","h":"A channel is the road your message travels on. Pick the roads your customers already drive.","cards":["Social media","Word of mouth and referrals","Email and text","Flyers, events and campus","Choosing the best channels"]},{"t":"Creating Content","h":"Content is how you show up in someone's feed. Make it useful, fun or irresistible.","cards":["Educational, promotional, entertaining","Captions and calls to action","Better product photos and videos","A basic weekly content plan"]},{"t":"Measuring Results","h":"Likes feel nice. Sales pay rent. Learn which numbers actually matter.","cards":["Views, engagement, leads, sales","What performs best","Testing approaches","Customer feedback"]}]},{"id":"fin","name":"Finance","blurb":"Know your numbers: profit, cash flow, budgets, funding and the metrics that tell you if it is working.","cap":"Your Financial Plan","mods":[{"t":"Understanding Business Finance","h":"Finance is the scoreboard of your business. You cannot win a game you are not keeping score of.","cards":["What business finance is","Revenue vs profit vs cash flow","Startup vs corporate finance","Common money mistakes"]},{"t":"Setting Up Financial Systems","h":"A little setup now saves hours of panic at tax time.","cards":["Separate personal and business money","Open a business bank account","Accurate records","Basic accounting tools","Invoices and payment tracking"]},{"t":"Budgeting and Forecasting","h":"A budget is a plan. A forecast is a best guess about the future. Together they keep you from flying blind.","cards":["A startup budget","Estimating sales and expenses","A simple forecast","Plan for the unexpected","Short- and long-term goals"]},{"t":"Managing Cash Flow","h":"Profit is an opinion; cash is a fact. This is where businesses live or die.","cards":["Inflows and outflows","Expense and payment timing","A cash reserve","Spotting problems early","Profitable but out of cash"]},{"t":"Funding and Investment","h":"Sometimes you need fuel. Know the kinds of fuel and what each one costs you.","cards":["Bootstrapping and reinvesting","Loans, grants and crowdfunding","Angels and venture capital","Ownership and equity","Information investors need"]},{"t":"Measuring Financial Performance","h":"Four numbers tell you most of what you need to know. Let's make them friends, not monsters.","cards":["Profit margin, burn, runway, CAC","Income statement and balance sheet","Actual vs projected","Data-driven decisions"]}]},{"id":"ops","name":"Operations","blurb":"Design the engine room: processes, products, tools, people and the systems that let you grow without chaos.","cap":"Your Operations Plan","mods":[{"t":"Understanding Operations","h":"If marketing makes the promise, operations keeps it.","cards":["What operations are","Growth and profitability","Daily activities","Common challenges"]},{"t":"Creating Business Processes","h":"A process is a recipe. Write it once, follow it forever, improve it as you go.","cards":["Map key tasks","Step-by-step procedures","Roles and responsibilities","Checklists and templates","Efficiency and consistency"]},{"t":"Managing Products and Services","h":"From the first order to the last return, this is where customers experience your business.","cards":["Planning delivery","Inventory, supplies and equipment","Quality standards","Orders and fulfillment","Cancellations, returns and complaints"]},{"t":"Technology and Organization","h":"The right tools make a team of one feel like a team of five.","cards":["Choosing tools","Documents and records","Calendars and project tools","Protecting data","Automating repetitive tasks"]},{"t":"People and Partnerships","h":"You can't do it all. The people around you multiply what you can build.","cards":["Employees, contractors, freelancers","Training and communication","Suppliers and outside partners","Expectations and performance","A reliable support network"]},{"t":"Improving Operations","h":"Good operations are never finished. Small improvements compound.","cards":["Track time, cost, quality and satisfaction","Bottlenecks and inefficiencies","Customer and team feedback","Preparing for growth","Backup plans for common risks"]}]},{"id":"bd","name":"Business Development","blurb":"Find opportunities, build relationships, close deals and turn partnerships into a repeatable growth engine.","cap":"Your Business Development Plan","mods":[{"t":"Understanding Business Development","h":"Business development is about creating long-term value: new customers, new markets, new relationships.","cards":["What it means","Biz dev vs sales vs marketing","Opportunities for growth","Realistic growth goals"]},{"t":"Finding Customers and Opportunities","h":"Opportunities rarely knock. You go find them, then you keep track of them.","cards":["Ideal customers","Markets and competitors","Clients, partners and organizations","Networking and referrals","An opportunity tracker"]},{"t":"Building Relationships","h":"People do business with people they know, like and trust. Here is how to earn all three.","cards":["Professional outreach messages","Starting conversations","Trust and credibility","Following up effectively","Long-term relationships"]},{"t":"Sales and Negotiation","h":"Great sales feels like helping. Great negotiation leaves both sides glad they said yes.","cards":["The customer's needs","Presenting value clearly","Offers and proposals","Handling objections","Negotiating pricing and agreements"]},{"t":"Partnerships and Growth","h":"The right partner can reach in a week what would take you a year alone.","cards":["Strategic partners","Mutually beneficial collaborations","Campus orgs and local businesses","New customer groups and markets","Measuring partnership success"]},{"t":"Creating a Growth Strategy","h":"Now turn everything into a repeatable machine you can review, tune and scale.","cards":["Biz dev priorities","Leads, conversions and revenue","What is working","A repeatable sales process","Short- and long-term growth"]}]},{"id":"risk","name":"Business Risk Basics","blurb":"Spot what could go wrong, size it up and build plans so surprises become speed bumps instead of crashes.","cap":"Your Risk-Management Plan","mods":[{"t":"Understanding Business Risks","h":"Risk is not the enemy. Ignoring risk is.","cards":["What business risk means","Common startup risks","Preventable vs unavoidable","Why early matters"]},{"t":"Types of Business Risk","h":"Six families of risk. Learn to recognize each one in the wild.","cards":["Financial and cash-flow","Legal and regulatory","Operational and supply chain","Customer, market and reputation","Technology and cybersecurity","Personal and team"]},{"t":"Identifying and Assessing Risks","h":"Not all risks are equal. Score them so you know where to spend your energy.","cards":["A risk checklist","Likelihood and impact","Prioritizing","Warning signs","Reviewing as you grow"]},{"t":"Preventing and Managing Risks","h":"You have your list. Now build your shields.","cards":["Policies and procedures","Contracts and written agreements","Protecting business information","Emergency funds and backups","Training team members","Contingency plans"]},{"t":"Legal and Insurance Protection","h":"Legal basics and insurance are the guardrails on the road. Here is what to know (and when to ask a pro).","cards":["Permits and legal requirements","Separating personal and business liability","When to consider insurance","Protecting intellectual property","Records and documentation"]},{"t":"Responding to Problems","h":"Things will go wrong. How you respond is what customers remember.","cards":["An emergency response plan","Communicating with customers and partners","Complaints and reputation","Learning from mistakes","Updating the risk plan"]}]},{"id":"setup","name":"Setting Up Your Business","blurb":"Go from side hustle to official: structure, registration, licenses, taxes, protection and staying compliant.","cap":"Your Business Setup Checklist","mods":[{"t":"When to Formalize a Business","h":"Idea, side hustle or real business? Knowing where you are tells you what paperwork you need.","cards":["Idea vs side hustle vs formal business","When registration may make sense","Benefits and costs","Liability, taxes, credibility, funding","Risks of staying informal too long"]},{"t":"Choosing a Business Structure","h":"Your structure decides who is liable, how you are taxed and how easy it is to bring in investors.","cards":["Sole proprietorship","Partnership","Limited liability company (LLC)","Corporations: C corp and S corp","Comparing cost, liability, taxes, ownership, complexity","When to consult a professional"]},{"t":"Registering the Business","h":"Time to make it official with the state.","cards":["Choosing and checking a name","Registering an LLC or corporation","\"Doing Business As\" (DBA)","Operating or partnership agreement","Ownership and decision rights"]},{"t":"Licenses, Permits and Registrations","h":"Different businesses need different permission slips. Here is how to find yours.","cards":["Is a license required?","City, county, state and federal","Industry permits and professional licenses","Sales tax and seller's permits","Home-based business and zoning","Food, beauty, events, transport and online"]},{"t":"Tax and Employer Requirements","h":"Taxes are not optional, but they are learnable. Here is the lay of the land.","cards":["Employer Identification Number (EIN)","Federal, state and local taxes","Sales tax and income tax","Self-employment and payroll taxes","Employees vs independent contractors","Payroll and worker classification basics"]},{"t":"Protecting the Business","h":"You built something. Now put locks on the doors.","cards":["A separate business bank account","Keeping finances separate","Contracts and written agreements","Business insurance","Trademarks, copyrights and IP","Records and compliance documents"]},{"t":"Ongoing Compliance","h":"Registration is not a one-time event. Stay in good standing with a simple calendar.","cards":["Annual reports and renewal fees","Keeping licenses and permits current","Updating ownership or business info","Financial and tax records","Compliance changes as you grow","When to get professional advice"]}]},{"id":"inv","name":"Investors and Funding","blurb":"Raise money the smart way: pick the right source, understand the terms, vet investors and spot predatory deals.","cap":"Your Funding-Readiness and Investor-Safety Plan","mods":[{"t":"Understanding Business Funding","h":"Before asking how to raise money, ask whether you should.","cards":["Why businesses raise capital","Startup costs vs growth capital","Debt, equity, grants, crowdfunding, bootstrapping","A loan vs an investment","Ownership, control and repayment","Do you need outside money?"]},{"t":"Choosing the Right Funding Source","h":"Different money fits different stages. Match the fuel to the vehicle.","cards":["Savings and reinvested revenue","Friends and family","Grants and competitions","Bank and SBA-backed loans","Angel investors","Venture capital","Crowdfunding","Revenue-based financing","Compare by cost, risk, speed and control"]},{"t":"Preparing to Raise Money","h":"Investors fund preparation. Here is your prep kit.","cards":["How much you need","Use-of-funds plan","Financial projections","Business plan and executive summary","Investor pitch deck","Secure data room","Formation and ownership documents","Milestones"]},{"t":"Finding and Approaching Investors","h":"The right investor is a partner for years. Find fit, not just money.","cards":["Investor preferences","Finding angels, funds, accelerators","Warm introductions","Investor outreach emails","Preparing for meetings","Problem, solution, market, traction, team","Professional follow-up","Tracking conversations"]},{"t":"Understanding Investment Terms","h":"Terms decide who gets what. Learn the vocabulary before you sit at the table.","cards":["Pre-money and post-money valuation","Equity percentage and dilution","Common vs preferred stock","Convertible notes","SAFEs","Interest rates and maturity dates","Valuation caps and discounts","Liquidation preferences","Pro-rata rights","Voting and board rights","Founder vesting","Anti-dilution provisions","Personal guarantees","Exit and buyback provisions"]},{"t":"Evaluating the Investor","h":"They are checking you out. Check them out too.","cards":["Background and reputation","Previous investments","Talk to founders they funded","Early-stage experience","Expected involvement","Connections and expertise","Conflicts of interest","Verify independently"]},{"t":"Avoiding Predatory Investments","h":"Some \"investors\" are really predators or scammers. Learn the signs so you can walk away fast.","cards":["Warning signs, part 1","Warning signs, part 2","Warning signs, part 3","Warning signs, part 4","What regulators flag","How to protect yourself","More protection habits"]},{"t":"Negotiating and Closing the Deal","h":"You have interest. Now get to a fair yes and close it properly.","cards":["The term sheet","What is negotiable","Valuation vs control","Reasonable investor protections","Due diligence","Final legal documents","Recording ownership accurately","Reporting expectations","A post-investment relationship plan"]},{"t":"Managing Funding After the Deal","h":"The money is in. Now prove the investors were right.","cards":["Use capital as agreed","Track spending and milestones","Investor updates","Accurate financial records","Preparing for future rounds","Additional dilution","Managing expectations","When to decline more money"]}]}];
+    const TEMPLATE_DATA = [{"id":"01.01","code":"01.01","title":"Idea validation canvas","about":"Testing whether the problem is real before you spend money","format":"Word","group":"planning","stage":"idea","essential":["idea"]},{"id":"01.02","code":"01.02","title":"One-page business plan","about":"What you sell, to whom, and how you make money","format":"Word","group":"planning","stage":"idea","essential":["idea"]},{"id":"01.03","code":"01.03","title":"Customer interview script","about":"Questions that get honest answers from potential customers","format":"Word","group":"planning","stage":"idea","essential":["idea"]},{"id":"01.04","code":"01.04","title":"Competitor analysis grid","about":"Price, offer and positioning side by side, scored","format":"Excel","group":"planning","stage":"idea","essential":["idea"]},{"id":"01.05","code":"01.05","title":"Business setup checklist","about":"Name, DBA or LLC, EIN, seller's permit, bank account","format":"Word","group":"planning","stage":"launch","essential":["launch"]},{"id":"01.06","code":"01.06","title":"Business structure comparison","about":"Sole proprietorship vs. LLC vs. partnership, explained simply","format":"Word","group":"planning","stage":"launch","essential":["launch"]},{"id":"01.07","code":"01.07","title":"Quarterly goals planner","about":"3 goals, the metrics behind them, and weekly actions","format":"Excel","group":"planning","stage":"growing","essential":["growing","scaling"]},{"id":"01.08","code":"01.08","title":"Annual business plan","about":"Targets, budget and priorities for the year","format":"Word","group":"planning","stage":"scaling","essential":["scaling"]},{"id":"01.09","code":"01.09","title":"Weekly founder schedule","about":"Balancing classes, the business and life, with hour totals","format":"Excel","group":"planning","stage":"idea","essential":["idea","launch","growing"]},{"id":"02.01","code":"02.01","title":"Brand basics sheet","about":"Name, mission, voice, colors and fonts on one page","format":"Word","group":"marketing","stage":"launch","essential":["launch"]},{"id":"02.02","code":"02.02","title":"Bio and elevator pitch builder","about":"1-line, 30-second and 2-minute versions of your story","format":"Word","group":"marketing","stage":"idea","essential":["idea","launch"]},{"id":"02.03","code":"02.03","title":"Brand style guide","about":"Rules so anyone can make on-brand work","format":"Word","group":"marketing","stage":"growing","essential":["growing","scaling"]},{"id":"02.04","code":"02.04","title":"Content shoot shot list","about":"Planning photo and video shoots so nothing gets missed","format":"Excel","group":"marketing","stage":"launch","essential":[]},{"id":"02.05","code":"02.05","title":"Press and media kit","about":"Story, facts, photos and contact for press and partners","format":"Word","group":"marketing","stage":"scaling","essential":["scaling"]},{"id":"03.01","code":"03.01","title":"Customer persona","about":"Who buys, why they buy and where to reach them","format":"Word","group":"marketing","stage":"idea","essential":["idea","launch"]},{"id":"03.02","code":"03.02","title":"Launch checklist","about":"Countdown to opening day, with due dates that update","format":"Excel","group":"marketing","stage":"launch","essential":["launch"]},{"id":"03.03","code":"03.03","title":"30-day content calendar","about":"What to post, where and when, with results tracking","format":"Excel","group":"marketing","stage":"launch","essential":["launch","growing"]},{"id":"03.04","code":"03.04","title":"Influencer and UGC outreach scripts","about":"DMs and emails to creators, plus a simple deal summary","format":"Word","group":"marketing","stage":"growing","essential":["growing"]},{"id":"03.05","code":"03.05","title":"Email newsletter template","about":"A monthly update customers actually open","format":"Word","group":"marketing","stage":"growing","essential":["growing","scaling"]},{"id":"03.06","code":"03.06","title":"Campaign brief","about":"Goal, audience, message, budget and results for one campaign","format":"Word","group":"marketing","stage":"growing","essential":["growing","scaling"]},{"id":"03.07","code":"03.07","title":"Social media audit","about":"What's working on each platform and what to drop","format":"Excel","group":"marketing","stage":"growing","essential":["growing"]},{"id":"03.08","code":"03.08","title":"Referral program plan","about":"Rewards for customers who bring friends","format":"Word","group":"marketing","stage":"growing","essential":["growing"]},{"id":"03.09","code":"03.09","title":"Marketing budget and ROI tracker","about":"Spend vs. leads, customers and revenue by channel","format":"Excel","group":"marketing","stage":"growing","essential":["growing","scaling"]},{"id":"04.01","code":"04.01","title":"Pricing calculator","about":"Materials + time + fees, then price and margin","format":"Excel","group":"sales","stage":"launch","essential":["launch","growing"]},{"id":"04.02","code":"04.02","title":"Packages and rate card","about":"Tiered service or bundle pricing customers can compare","format":"Word","group":"sales","stage":"launch","essential":["launch","growing"]},{"id":"04.03","code":"04.03","title":"Quote and estimate template","about":"Itemized quotes for custom jobs, with deposit","format":"Excel","group":"sales","stage":"launch","essential":["launch","growing"]},{"id":"04.04","code":"04.04","title":"Outreach and DM scripts","about":"First contact and follow-ups with potential customers","format":"Word","group":"sales","stage":"launch","essential":["launch"]},{"id":"04.05","code":"04.05","title":"Promo and discount planner","about":"Plan sales without wrecking your margins","format":"Excel","group":"sales","stage":"launch","essential":[]},{"id":"04.06","code":"04.06","title":"Sales pipeline tracker","about":"Leads to conversations to closed deals, with forecast","format":"Excel","group":"sales","stage":"growing","essential":["growing","scaling"]},{"id":"04.07","code":"04.07","title":"Sales proposal","about":"Winning bigger clients and corporate gigs","format":"Word","group":"sales","stage":"growing","essential":["growing","scaling"]},{"id":"04.08","code":"04.08","title":"Wholesale line sheet","about":"Pitching products to stores, with an order form","format":"Excel","group":"sales","stage":"growing","essential":["growing","scaling"]},{"id":"05.01","code":"05.01","title":"Startup cost estimator","about":"What it takes to open, and how you'll cover it","format":"Excel","group":"finance","stage":"idea","essential":["idea"]},{"id":"05.02","code":"05.02","title":"Break-even calculator","about":"How many sales until you're profitable","format":"Excel","group":"finance","stage":"idea","essential":["idea"]},{"id":"05.03","code":"05.03","title":"Income and expense tracker","about":"Simple bookkeeping before you need software","format":"Excel","group":"finance","stage":"launch","essential":["launch"]},{"id":"05.04","code":"05.04","title":"Monthly budget","about":"Planned vs. actual spending","format":"Excel","group":"finance","stage":"launch","essential":["launch","growing"]},{"id":"05.05","code":"05.05","title":"Invoice template","about":"Getting paid professionally and on time","format":"Excel","group":"finance","stage":"launch","essential":["launch","growing"]},{"id":"05.06","code":"05.06","title":"Tax set-aside worksheet","about":"How much to save from each month's profit","format":"Excel","group":"finance","stage":"launch","essential":["launch","growing"]},{"id":"05.07","code":"05.07","title":"Receipt and mileage log","about":"Deductions you'd otherwise lose","format":"Excel","group":"finance","stage":"launch","essential":[]},{"id":"05.08","code":"05.08","title":"Cash flow tracker and forecast","about":"Money in vs. money out, 12 months ahead","format":"Excel","group":"finance","stage":"growing","essential":["growing","scaling"]},{"id":"05.09","code":"05.09","title":"Profit and loss statement","about":"Monthly picture of profitability","format":"Excel","group":"finance","stage":"growing","essential":["growing","scaling"]},{"id":"05.10","code":"05.10","title":"12-month financial projection","about":"Revenue, costs and hiring forecast from a few assumptions","format":"Excel","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"05.11","code":"05.11","title":"Unit economics calculator","about":"Customer acquisition cost, lifetime value and payback","format":"Excel","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"06.01","code":"06.01","title":"Supplier and vendor comparison","about":"Weighted scores on price, quality and lead time","format":"Excel","group":"operations","stage":"idea","essential":[]},{"id":"06.02","code":"06.02","title":"Client intake and booking form","about":"For service businesses: videographers, bands, catering","format":"Word","group":"operations","stage":"launch","essential":["launch","growing"]},{"id":"06.03","code":"06.03","title":"Order tracker","about":"Order status from paid to delivered, with late flags","format":"Excel","group":"operations","stage":"launch","essential":["launch","growing"]},{"id":"06.04","code":"06.04","title":"Inventory and reorder sheet","about":"Stock levels, days left and when to restock","format":"Excel","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"06.05","code":"06.05","title":"Project and production timeline","about":"Drops, shoots and events on a week-by-week chart","format":"Excel","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"06.06","code":"06.06","title":"Event and pop-up planner","about":"Budget, sales goal and checklist for markets, shows and gigs","format":"Excel","group":"operations","stage":"launch","essential":[]},{"id":"06.07","code":"06.07","title":"Weekly metrics dashboard","about":"The handful of numbers to check every week","format":"Excel","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"06.08","code":"06.08","title":"Standard operating procedure (SOP)","about":"Step-by-step 'how we do X' so anyone can do it","format":"Word","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"07.01","code":"07.01","title":"Co-founder agreement checklist","about":"Equity, roles and what happens if someone leaves","format":"Word","group":"legal","stage":"idea","essential":["idea"]},{"id":"07.02","code":"07.02","title":"Permits and insurance checklist","about":"Seller's permit, food handling, liability insurance","format":"Word","group":"legal","stage":"launch","essential":["launch"]},{"id":"07.03","code":"07.03","title":"Client service agreement","about":"Scope, deposit, cancellation and revisions","format":"Word","group":"legal","stage":"launch","essential":["launch","growing","scaling"]},{"id":"07.04","code":"07.04","title":"Photo, media and usage rights release","about":"Who can use the content and how","format":"Word","group":"legal","stage":"launch","essential":[]},{"id":"07.05","code":"07.05","title":"Collab and brand-deal agreement","about":"Deliverables, payment and exclusivity","format":"Word","group":"legal","stage":"growing","essential":["growing"]},{"id":"07.06","code":"07.06","title":"Trademark search checklist","about":"Protecting your name and logo","format":"Word","group":"legal","stage":"growing","essential":["growing"]},{"id":"07.07","code":"07.07","title":"Website terms and privacy checklist","about":"Required pages for an online store","format":"Word","group":"legal","stage":"scaling","essential":["scaling"]},{"id":"07.08","code":"07.08","title":"NDA","about":"Sharing ideas with partners and suppliers","format":"Word","group":"legal","stage":"scaling","essential":["scaling"]},{"id":"07.09","code":"07.09","title":"Independent contractor agreement","about":"Paying freelancers properly","format":"Word","group":"legal","stage":"growing","essential":["growing","scaling"]},{"id":"08.01","code":"08.01","title":"Customer feedback survey","about":"Post-purchase or post-event questions","format":"Word","group":"sales","stage":"launch","essential":["launch","growing"]},{"id":"08.02","code":"08.02","title":"Testimonial request messages","about":"Collecting reviews and quotes you can use","format":"Word","group":"sales","stage":"launch","essential":["launch"]},{"id":"08.03","code":"08.03","title":"Policies page","about":"Returns, cancellations, shipping and FAQ","format":"Word","group":"sales","stage":"launch","essential":["launch"]},{"id":"08.04","code":"08.04","title":"Customer list and mini-CRM","about":"Contacts, purchase history and who's at risk","format":"Excel","group":"sales","stage":"growing","essential":["growing"]},{"id":"08.05","code":"08.05","title":"Customer service reply scripts","about":"Complaints, delays, refunds and reviews","format":"Word","group":"sales","stage":"growing","essential":["growing","scaling"]},{"id":"09.01","code":"09.01","title":"Meeting agenda and notes","about":"Keeping co-founder and team meetings useful","format":"Word","group":"operations","stage":"scaling","essential":["scaling"]},{"id":"09.02","code":"09.02","title":"Roles and responsibilities chart","about":"Who owns what, so nothing falls through","format":"Excel","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"09.03","code":"09.03","title":"Job and gig posting","about":"Hiring helpers, models, crew and interns","format":"Word","group":"operations","stage":"growing","essential":["growing","scaling"]},{"id":"09.04","code":"09.04","title":"Freelancer payment tracker","about":"Who's owed what, plus 1099 and W-9 tracking","format":"Excel","group":"operations","stage":"scaling","essential":["scaling"]},{"id":"09.05","code":"09.05","title":"Interview guide and scorecard","about":"Fair, consistent hiring","format":"Word","group":"operations","stage":"scaling","essential":["scaling"]},{"id":"09.06","code":"09.06","title":"Onboarding checklist","about":"A new person's first week","format":"Word","group":"operations","stage":"scaling","essential":["scaling"]},{"id":"09.07","code":"09.07","title":"Delegation handoff sheet","about":"Passing off a task without it breaking","format":"Word","group":"operations","stage":"scaling","essential":["scaling"]},{"id":"10.01","code":"10.01","title":"Grant and competition tracker","about":"Deadlines, requirements, status and winnings","format":"Excel","group":"finance","stage":"launch","essential":["launch"]},{"id":"10.02","code":"10.02","title":"Business snapshot one-pager","about":"What investors and partners see first","format":"Word","group":"finance","stage":"growing","essential":["growing","scaling"]},{"id":"10.03","code":"10.03","title":"Traction tracker","about":"Revenue, customers and growth over time","format":"Excel","group":"finance","stage":"growing","essential":["growing","scaling"]},{"id":"10.04","code":"10.04","title":"Pitch deck outline","about":"A 10-slide structure with what goes on each","format":"Word","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"10.05","code":"10.05","title":"Funding plan and use of funds","about":"How much, what for, and which milestones it unlocks","format":"Excel","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"10.06","code":"10.06","title":"Investor call prep and follow-up","about":"Questions to expect and the follow-up email","format":"Word","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"10.07","code":"10.07","title":"Investor update email","about":"Monthly progress for backers and mentors","format":"Word","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"10.08","code":"10.08","title":"Cap table basics","about":"Who owns what percentage, before and after investment","format":"Excel","group":"finance","stage":"scaling","essential":["scaling"]},{"id":"11.01","code":"11.01","title":"SWOT analysis","about":"Strengths, weaknesses, opportunities, threats","format":"Word","group":"planning","stage":"idea","essential":[]},{"id":"11.02","code":"11.02","title":"Monthly business review","about":"What worked, what didn't, next month's focus","format":"Word","group":"planning","stage":"growing","essential":["growing","scaling"]},{"id":"11.03","code":"11.03","title":"Partnership proposal","about":"Pitching another business or campus organization","format":"Word","group":"planning","stage":"scaling","essential":["scaling"]},{"id":"11.04","code":"11.04","title":"Expansion readiness checklist","about":"New product, channel or location","format":"Word","group":"planning","stage":"scaling","essential":["scaling"]},{"id":"11.05","code":"11.05","title":"Graduation plan","about":"What happens to the business after school","format":"Word","group":"planning","stage":"scaling","essential":["scaling"]}];
+    const META = {
+      crash: ['SF 101', '3.5 hours', 'foundations', 'idea'],
+      mkt: ['SF 110', '2 hours', 'marketing', 'launch'],
+      fin: ['SF 120', '2.5 hours', 'finance', 'launch'],
+      ops: ['SF 130', '2.5 hours', 'operations', 'growing'],
+      bd: ['SF 140', '3 hours', 'marketing', 'growing'],
+      risk: ['SF 150', '2.5 hours', 'operations', 'launch'],
+      setup: ['SF 160', '3 hours', 'setup', 'idea'],
+      inv: ['SF 170', '5.5 hours', 'finance', 'scaling']
     };
-    const LIBRARY = {
-      customer: { kicker: 'Guide · Marketing', title: 'How to define your first customer', note: 'A short way to get specific before you spend money on ads or a logo.', sections: [['Start with a person', '“College students” is a starting point. “Students who want graduation photos but do not know which photographer to trust” is a customer you can serve.'], ['Use the three-question test', 'What are they trying to do? What is getting in their way? What would make the next step feel easy? Write the answers in their words.'], ['Check it against a real conversation', 'If you cannot picture one person saying yes this month, narrow the moment, not the ambition.']], takeaway: 'You can describe one person, the moment they look for help, and why they would pick you.' },
-      plan: { kicker: 'Template · One page', title: 'Simple business plan', note: 'Fill the blanks. A page you can say out loud is more useful than a plan you do not open.', sections: [['What this is for', 'Use this when someone asks what you do, or when you need to choose the next task.']], blanks: [['The offer', 'What you sell, in one sentence.'], ['The customer', 'Who it is for, and the moment they need it.'], ['The price', 'What you charge, and what is included.'], ['This month', 'The one result you want in the next 30 days.']], takeaway: 'A friend could repeat your plan after hearing it once.' },
-      pricing: { kicker: 'Guide · Finance', title: 'Pricing your first offer', note: 'A practical way to price with room to learn.', sections: [['Start from the delivery', 'Write the time, materials, and tools for one order. That is the floor, not the price.'], ['Add the month you are trying to fund', 'Rent, software, and the hours you cannot sell twice. Spread that across the number of orders you can actually finish.'], ['Say what is included', 'A clear list makes it easier to raise the price later without it feeling random.']], takeaway: 'The price covers the work, the month, and a little room to be wrong.' },
-      setup: { kicker: 'Checklist · Legal and setup', title: 'Business setup checklist', note: 'What to consider before you start taking customers. This is a list to think through, not legal advice.', sections: [['Use it as a pass', 'Check what you already have. Leave the rest as questions for an expert or a campus office.']], blanks: [['Name', 'The name customers will see, and whether you need to register it.'], ['Money', 'A separate account or a clear way to keep business money apart.'], ['Records', 'Where invoices, receipts, and agreements will live.'], ['Customers', 'How you will take payment and what they receive.']], takeaway: 'You know which setup questions are done and which ones still need a person.' },
-      offer: { kicker: 'Template · One page', title: 'Offer one-pager', note: 'The page you can send when someone says “tell me more.”', sections: [['Keep it to one screen', 'If it needs a second page, you are explaining the business instead of the offer.']], blanks: [['Headline', 'The result, not the category.'], ['Who it is for', 'The person and the moment.'], ['What they get', 'The deliverable, in plain words.'], ['Price and next step', 'What it costs, and how they say yes.']], takeaway: 'Someone can decide whether to ask a question without a call first.' }
+    const STAGE_N = { idea: 1, launch: 2, growing: 3, scaling: 4 };
+    const STAGE_L = { idea: 'Idea', launch: 'Launch', growing: 'Growing', scaling: 'Scaling' };
+    const bits = (stage) => {
+      const n = STAGE_N[stage] || 0;
+      return { stage: stage || '', stageLabel: STAGE_L[stage] || '', on1: n >= 1 ? 'on' : '', on2: n >= 2 ? 'on' : '', on3: n >= 3 ? 'on' : '', on4: n >= 4 ? 'on' : '' };
     };
-    const DOC_CARDS = [
-      { id: 'plan', color: 'blue', emoji: '📋', tag: 'Template', title: 'Simple business plan', desc: 'A one-page plan to make your idea clear and actionable.', cta: 'Open template' },
-      { id: 'pricing', color: 'yellow', emoji: '💸', tag: 'Finance', title: 'Pricing your first offer', desc: 'A practical guide to pricing with confidence and room to grow.', cta: 'Read guide' },
-      { id: 'setup', color: 'lilac', emoji: '⚖️', tag: 'Legal', title: 'Business setup checklist', desc: 'Know what to consider before you start taking customers.', cta: 'Open checklist' },
-      { id: 'offer', color: 'mint', emoji: '📝', tag: 'Template', title: 'Offer one-pager', desc: 'Say what you sell, who it is for, and what it costs on a single page.', cta: 'Open template' }
-    ];
-    const EXPERTS = [
-      { id: 'alex', initials: 'AM', name: 'Alex Morgan', area: 'Small Business Strategy', when: 'Today · 2:00 PM', rating: '4.9', tag: 'setup' },
-      { id: 'jordan', initials: 'JP', name: 'Jordan Patel', area: 'Brand & Marketing', when: 'Tomorrow · 11:30 AM', rating: '5.0', tag: 'marketing' },
-      { id: 'riley', initials: 'RS', name: 'Riley Santos', area: 'Finance & Funding', when: 'Fri · 9:00 AM', rating: '4.9', tag: 'finance' }
-    ];
-    const PEOPLE = [
-      { id: 'samira', color: 'dark', emoji: '🌱', tag: 'Early-stage', name: 'Samira Okafor', desc: 'Supports consumer and community-focused founders across Southern California.', role: 'Angel investor', cta: 'Request intro', done: 'Intro requested' },
-      { id: 'david', color: 'blue', emoji: '🤝', tag: 'Mentor', name: 'David Chen', desc: 'Former operator who helps founders clarify their offer and find their first 100 customers.', role: 'Growth & strategy', cta: 'Request intro', done: 'Intro requested' },
-      { id: 'launchpad', color: 'yellow', emoji: '🚀', tag: 'Partner', name: 'Launchpad Collective', desc: 'A local network connecting student ventures with pilot opportunities and small grants.', role: 'Programs & grants', cta: 'Learn more', done: 'Connection saved' }
-    ];
+    const coursesRaw = COURSE_DATA.map((c) => {
+      const m = META[c.id];
+      return { id: c.id, name: c.name, blurb: c.blurb, cap: c.cap, mods: c.mods, code: m[0], hours: m[1], topics: m[2], stage: m[3] };
+    });
+    const byId = (id) => coursesRaw.find((c) => c.id === id) || coursesRaw[0];
+    const modDone = (c, i) => !!st.done[c.id + '-' + i];
+    const doneN = (c) => c.mods.filter((_, i) => modDone(c, i)).length;
+    const pctOf = (c) => Math.round((doneN(c) + (st.cap[c.id] ? 1 : 0)) / (c.mods.length + 1) * 100);
+    const complete = (c) => doneN(c) === c.mods.length && !!st.cap[c.id];
+    const totalParts = coursesRaw.reduce((s, c) => s + c.mods.length + 1, 0) || 1;
+    const doneParts = coursesRaw.reduce((s, c) => s + doneN(c) + (st.cap[c.id] ? 1 : 0), 0);
+    const overall = Math.round(doneParts / totalParts * 100);
 
-    const P = st.progress;
-    const viewForNav = st.view === 'lesson' ? 'courses' : st.view === 'doc' ? 'documents' : st.view;
+    const DOCS = [
+      { id: 'customer', topic: 'Marketing', slug: 'marketing', stage: 'idea', kind: 'Guide', meta: 'About 4 min', title: 'How to define your first customer', desc: 'Get specific about who you help before you spend money on ads or a logo.', kicker: 'Guide · Marketing', note: 'A short way to get specific before you spend money on ads or a logo.', takeaway: 'You can describe one person, the moment they look for help, and why they would pick you.', sections: [['Start with a person', 'College students is a starting point. Students who want graduation photos but do not know which photographer to trust is a customer you can serve.'], ['Use the three-question test', 'What are they trying to do? What is getting in their way? What would make the next step feel easy? Write the answers in their words.']] },
+      { id: 'pricing', topic: 'Finance', slug: 'finance', stage: 'launch', kind: 'Guide', meta: 'About 4 min', title: 'Pricing your first offer', desc: 'A practical guide to pricing with confidence and room to grow.', kicker: 'Guide · Finance', note: 'A practical way to price with room to learn.', takeaway: 'The price covers the work, the month, and a little room to be wrong.', sections: [['Start from the delivery', 'Write the time, materials, and tools for one order. That is the floor, not the price.'], ['Say what is included', 'A clear list makes it easier to raise the price later without it feeling random.']] },
+      { id: 'setup', topic: 'Legal', slug: 'setup', stage: 'idea', kind: 'Checklist', meta: '4 questions', title: 'Business setup checklist', desc: 'Know what to consider before you start taking customers.', kicker: 'Checklist · Legal and setup', note: 'What to consider before you start taking customers. This is a list to think through, not legal advice.', takeaway: 'You know which setup questions are done and which ones still need a person.', sections: [['Use it as a pass', 'Check what you already have. Leave the rest as questions for an expert or a campus office.']], blanks: [['Name', 'The name customers will see, and whether you need to register it.'], ['Money', 'A separate account or a clear way to keep business money apart.'], ['Records', 'Where invoices, receipts, and agreements will live.']] }
+    ];
+    const SHELF = [
+      { id: 'v01', topic: 'foundations', title: "Thiel's Law", desc: 'Peter Thiel on getting the foundation right.', author: 'Peter Thiel', role: 'Cofounder of PayPal and Palantir', stat: '$1.5B sale', photo: '/assets/academy/shelf/peter-thiel.jpg', takeaway: 'You can name what you are building that does not already exist.', sections: [['The law', 'A foundation is a belief about this customer that people building the same category do not share. The offer comes after the belief.'], ['Start from a secret', 'Write the thing you believe about this customer that most people building the same category do not. If you cannot name it, you are planning a copy.']] },
+      { id: 'v02', topic: 'marketing', title: 'The Mom Test', desc: 'Rob Fitzpatrick on customer conversations that tell the truth.', author: 'Rob Fitzpatrick', role: 'YC startup used by Sony and MTV', stat: '~$1M/year agency', photo: '', takeaway: 'You have notes from a conversation about their life, not their opinion of your pitch.', sections: [['Ask about their life, not your idea', 'Would you use this invites a polite yes. Ask what they did the last time the problem showed up, what it cost them, and what they tried.'], ['The past is evidence', 'Compliments and hypotheticals are not demand. A real conversation names a recent moment, a workaround, and whether they already spend time or money on it.']] },
+      { id: 'v03', topic: 'foundations', title: 'Build, Measure, Learn', desc: 'Eric Ries on launching before you are ready.', author: 'Eric Ries', role: 'Long-Term Stock Exchange founder', stat: '$169M raised', photo: '/assets/academy/shelf/eric-ries.jpg', takeaway: 'You know the assumption you are testing and what result would change the plan.', sections: [['Test the risky assumption', 'The first version is the smallest thing that can prove or kill the belief the business depends on. It is not a smaller version of the final product.'], ['A pivot is a decision', 'Change the strategy when the evidence says the assumption was wrong. Do not change the whole idea because one week felt slow.']] },
+      { id: 'v04', topic: 'marketing', title: 'What Job Are You Hired For?', desc: 'Clayton Christensen on why customers really buy.', author: 'Clayton Christensen', role: 'Harvard professor of disruption', stat: 'Innosight sold for $100M', photo: '/assets/academy/shelf/clayton-christensen.jpg', takeaway: 'You can name the job customers hire you for, and the customer the bigger player is ignoring.', sections: [['They hire you for a job', 'Customers do not buy a category. They hire something to make progress in a specific moment.'], ['Start where the giant is not looking', 'A small offer can win by serving a person the established player considers too small, too awkward, or not worth the current product.']] },
+      { id: 'v05', topic: 'marketing', title: 'Be a Purple Cow', desc: 'Seth Godin on making something worth talking about.', author: 'Seth Godin', role: 'Founded Yoyodyne', stat: 'Sold to Yahoo for $30M', photo: '/assets/academy/shelf/seth-godin.jpg', takeaway: 'You can name the smallest group that would notice if you disappeared.', sections: [['Remarkable is in the offer', 'People talk about something that is worth a remark. A louder ad does not fix an offer that looks like everyone else.'], ['The smallest audience that would miss you', 'Pick the narrow group you can serve so specifically that they tell each other.']] },
+      { id: 'v06', topic: 'operations', title: 'Never Split the Difference', desc: 'Chris Voss on negotiating like an FBI agent.', author: 'Chris Voss', role: 'Former FBI lead negotiator', stat: '5M+ copies sold', photo: '/assets/academy/shelf/chris-voss.jpg', takeaway: 'You can say their concern back in their words before you ask for the next step.', sections: [['Mirror before you move', 'Repeat the last few words they said, then wait. People correct and expand. That is more useful than a faster counteroffer.'], ['Aim for that is right', 'Summarize their concern until they say you got it. You are right is politeness. That is right means they feel understood.']] },
+      { id: 'v07', topic: 'marketing', title: 'Make Offers So Good People Feel Stupid Saying No', desc: 'Shape the result, the odds, the time, and the effort.', author: 'Alex Hormozi', role: 'Founder of Acquisition.com', stat: '$250M+ portfolio revenue', photo: '', takeaway: 'Your offer names the result, the odds, the time, and the effort it asks of them.', sections: [['Four parts of the offer', 'The result they want, how likely it feels, how long it takes, and how much effort it asks of them. Raise the first two. Lower the last two.'], ['Make it specific', 'A vague offer is easy to decline. Name who it is for, what they get, and what done looks like.']] },
+      { id: 'v08', topic: 'finance', title: 'Read the Term Sheet Before You Sign It', desc: 'Tell the money terms from the control terms.', author: 'Brad Feld & Mendelson', role: 'Venture capitalists', stat: 'Nearly $3.5B under management', photo: '/assets/academy/shelf/brad-feld.jpg', takeaway: 'You can point to the terms that decide the money and the terms that decide who decides.', sections: [['Money and control are different pages', 'Some terms decide what you are paid if it works. Others decide who can block a decision, hire, or sell.'], ['Ask what the sentence does', 'If you cannot explain a term in one sentence, you do not understand it yet. This is a reading guide, not legal advice.']] },
+      { id: 'v09', topic: 'operations', title: "Your Output Is Your Team's Output", desc: 'Put the week into the few activities that raise what your team ships.', author: 'Andy Grove', role: 'Former CEO of Intel', stat: 'Grew revenue from $1.9B to $26B', photo: '/assets/academy/shelf/andy-grove.jpg', takeaway: 'You can name the few activities that raise the output of the people around you.', sections: [['Output is what the group ships', 'Your result is the output of the people you direct and the people you influence. A busy week that does not raise their output is not leverage.'], ['The 1:1 is where the work gets clear', 'Use it to hear what is stuck, decide the next action, and leave with an owner.']] },
+      { id: 'v10', topic: 'operations', title: '1% Better Every Day', desc: 'James Clear on systems that beat goals.', author: 'James Clear', role: 'Built a newsletter with 3M readers', stat: '30M copies sold', photo: '/assets/academy/shelf/james-clear.jpg', takeaway: 'You have a practice you can repeat this week, not only a target for the month.', sections: [['A system you can do on a bad day', 'A goal says where you are going. A system is what you do on Tuesday. Make the Tuesday version small enough that you still do it.'], ['Stack it on something that already happens', 'Attach the practice to a moment you do not skip. One percent is the repeat, not the mood.']] },
+      { id: 'v11', topic: 'foundations', exclusive: true, title: 'The Introduction', desc: 'How to ask for a meeting so the right person can say yes.', author: 'Campus Connect', role: 'Campus Connect Exclusive', stat: '', photo: '', takeaway: 'You can ask for a conversation without sending your entire history.', sections: [['One decision, not your life story', 'Bring the decision you are trying to make, a draft they can look at, and what a useful next step would be.'], ['Match the person to the ask', 'An investor, a mentor, and a campus partner are not the same conversation. Say which one you want, and why them.']] },
+      { id: 'v12', topic: 'foundations', exclusive: true, title: "The Founder's Notebook", desc: 'The short record Campus Connect expects you to keep.', author: 'Campus Connect', role: 'Campus Connect Exclusive', stat: '', photo: '', takeaway: 'Your notebook is current enough to hand to someone who asked tell me more.', sections: [['Four pages, kept current', 'The offer, the customer, the price, and this month’s result. If those four are blank, the rest of the shelf is still theory.'], ['Bring it with you', 'Experts and investors can help faster when this notebook is specific. Update it after a real conversation, not only after a good week.']] }
+    ];
+    const TPL_GROUPS = [['planning', 'Planning'], ['marketing', 'Marketing'], ['sales', 'Sales and customers'], ['finance', 'Finance'], ['operations', 'Operations'], ['legal', 'Legal and protection']];
+
+    const q = (st.searchQ || '').trim().toLowerCase();
+    const match = (text) => !q || String(text || '').toLowerCase().indexOf(q) !== -1;
+    const view = st.view;
+    const libView = view === 'documents' || view === 'shelf' || view === 'templates' || view === 'doc';
+    const courseView = view === 'courses' || view === 'course' || view === 'lesson' || view === 'cert';
+    const active = view === 'founder' ? 'investors' : libView ? 'documents' : courseView ? 'courses' : view;
+    const libTab = view === 'doc' ? (st.docKind === 'volume' ? 'shelf' : st.docKind === 'template' ? 'templates' : 'documents') : (view === 'shelf' || view === 'templates' ? view : view === 'documents' ? 'documents' : '');
     const ICON = {
-      home: 'M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z',
-      courses: 'M6 4h12v16H6zM9 8h6M9 12h6',
-      documents: 'M7 3h8l4 4v14H7zM15 3v5h5',
-      office: 'M9 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM16 7a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4.5 18c.6-2.4 2.4-3.6 4.6-3.6s4 1.2 4.6 3.6M14 14.6c1.4-.4 2.8-.2 4 .8.8.7 1.3 1.6 1.5 2.6',
-      investors: 'M4 16l5-5 3 3 8-8M14 6h6v6',
-      about: 'M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 16c.6-1.5 1.6-2.2 3-2.2s2.4.7 3 2.2M15 9h3M15 12h3'
+      home: ['M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z'],
+      courses: ['M6 4h12v16H6z', 'M9 8h6M9 12h6'],
+      documents: ['M7 3h8l4 4v14H7z', 'M15 3v5h5'],
+      office: ['M9 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8z', 'M16 7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z', 'M4.5 18c.6-2.4 2.4-3.6 4.6-3.6s4 1.2 4.6 3.6', 'M14 14.6c1.4-.4 2.8-.2 4 .8.8.7 1.3 1.6 1.5 2.6'],
+      investors: ['M4 16l5-5 3 3 8-8', 'M14 6h6v6'],
+      about: ['M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z', 'M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4z', 'M7 16c.6-1.5 1.6-2.2 3-2.2s2.4.7 3 2.2', 'M15 9h3M15 12h3']
     };
-    const link = (id, label, count) => { const on = viewForNav === id; return { isLink: true, isLabel: false, label, count: count || '', icon: ICON[id], cls: 'ac-link' + (on ? ' on' : ''), current: on ? 'page' : 'false', go: this.go(id) }; };
-    const lab = (label) => ({ isLabel: true, isLink: false, label });
-    const side = [link('home', 'Home'), lab('Learn'), link('courses', 'Courses', '5'), link('documents', 'Library', '5'), lab('Connect'), link('office', 'Experts'), link('investors', 'Investors'), lab('Your business'), link('about', 'Business profile')];
-    const mob = [['home', 'Home'], ['courses', 'Courses'], ['documents', 'Library'], ['office', 'Experts'], ['investors', 'Investors'], ['about', 'Profile']].map((m) => ({ label: m[1], cls: viewForNav === m[0] ? 'on' : '', go: this.go(m[0]) }));
+    const link = (id, label, count) => {
+      const on = active === id;
+      return { isLink: true, isLabel: false, isSub: false, label: label, hasCount: !!count, count: count || '', paths: ICON[id].map((d) => ({ d: d })), cls: 'ac-link' + (on ? ' on' : ''), current: on ? 'page' : 'false', go: this.go(id === 'documents' ? 'documents' : id) };
+    };
+    const sub = (id, label) => ({ isSub: true, isLink: false, isLabel: false, label: label, cls: 'ac-sublink' + (libTab === id ? ' on' : ''), go: this.go(id === 'documents' ? 'documents' : id) });
+    const side = [link('home', 'Home'), { isLabel: true, isLink: false, isSub: false, label: 'Learn' }, link('courses', 'Courses', '8'), link('documents', 'Library', '99'), sub('documents', 'Documents'), sub('shelf', 'Founders Shelf'), sub('templates', 'Templates'), { isLabel: true, isLink: false, isSub: false, label: 'Connect' }, link('office', 'Experts'), link('investors', 'Investors'), { isLabel: true, isLink: false, isSub: false, label: 'Your business' }, link('about', 'Business profile')];
 
-    const openLesson = (id) => (e) => { this.top(e); this.setState({ view: 'lesson', lessonId: id }); };
-    const courseFilterDefs = [['all', 'All courses'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['operations', 'Operations'], ['legal', 'Legal'], ['setup', 'Business setup']];
-    const courseFilters = courseFilterDefs.map((f) => { const on = st.courseFilter === f[0]; return { label: f[1], on, cls: 'ac-filter' + (on ? ' on' : ''), pick: () => this.setState({ courseFilter: f[0] }) }; });
-    const courses = COURSES.filter((c) => st.courseFilter === 'all' || c.topics.split(' ').indexOf(st.courseFilter) !== -1).map((c) => {
-      const pct = P[c.id];
-      return { title: c.title, desc: c.desc, color: c.color, emoji: c.emoji, length: c.length, pct, status: pct >= 100 ? 'Complete' : pct > 0 ? pct + '% complete' : 'Not started', cta: pct >= 100 ? 'Review →' : pct > 0 ? 'Continue →' : 'Start course →', open: openLesson(c.id) };
+    const filters = (defs, current, key) => defs.map((f) => {
+      const on = current === f[0];
+      return { label: f[1], on: on, cls: 'ac-filter' + (on ? ' on' : ''), pick: () => { const n = { bookingsOnly: false }; n[key] = f[0]; this.setState(n); } };
+    });
+    const openCourse = (id) => (e) => { this.top(e); this.setState({ view: 'course', courseId: id, lastId: id, searchQ: '' }); };
+    const openMod = (id, i) => (e) => { this.top(e); this.setState({ view: 'lesson', courseId: id, mod: i, lastId: id }); };
+
+    const courseFilters = filters([['all', 'All courses'], ['foundations', 'Foundations'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['operations', 'Operations'], ['setup', 'Business setup']], st.courseFilter, 'courseFilter');
+    const courses = coursesRaw.filter((c) => (st.courseFilter === 'all' || c.topics === st.courseFilter) && match(c.code + ' ' + c.name + ' ' + c.blurb)).map((c) => {
+      const p = pctOf(c);
+      const done = complete(c);
+      return Object.assign({ title: c.name, desc: c.blurb, code: c.code, pct: p, startHere: c.id === 'crash' && p === 0, state: p === 0 ? 'is-idle' : done ? 'is-done' : 'is-going', status: p === 0 ? 'Not started' : done ? 'Completed' : p + '% complete', cta: p === 0 ? 'Start course' : done ? 'Review course' : 'Continue', open: openCourse(c.id) }, bits(c.stage));
     });
 
-    const Lsrc = LESSONS[st.lessonId] || LESSONS.basics;
-    const Lc = COURSES.find((c) => c.id === st.lessonId) || COURSES[0];
-    const lpct = P[Lc.id];
-    const lesson = { kicker: lpct >= 100 ? 'Course · Complete' : Lsrc.kicker, title: Lsrc.title, note: lpct >= 100 ? 'You have finished every module in this course.' : Lsrc.note, pct: lpct, takeaway: Lsrc.takeaway, modules: Lsrc.modules.map((m) => ({ h: m[0], p: m[1] })), markLabel: lpct >= 100 ? 'Course complete ✓' : 'Mark module complete' };
+    const cur = byId(st.courseId);
+    const curPct = cur ? pctOf(cur) : 0;
+    const curDone = cur ? doneN(cur) : 0;
+    const nextMod = cur ? cur.mods.findIndex((_, i) => !modDone(cur, i)) : 0;
+    const course = cur ? {
+      title: cur.name, desc: cur.blurb, kicker: cur.code + (cur.id === 'crash' ? ' · Start here' : ''), hours: cur.hours.replace(' hours', ''), modulesN: cur.mods.length, doneN: curDone, pct: curPct, cap: cur.cap,
+      action: curPct === 0 ? 'Start course' : complete(cur) ? 'Review course' : 'Continue course',
+      continue: nextMod === -1 ? this.go('cert', { courseId: cur.id }) : openMod(cur.id, nextMod < 0 ? 0 : nextMod),
+      certificate: this.go('cert', { courseId: cur.id }),
+      certLabel: complete(cur) ? 'View certificate' : 'Certificate',
+      capMark: st.cap[cur.id] ? '✓' : '★', capCls: st.cap[cur.id] ? 'ac-tick' : 'ac-num',
+      capNote: st.cap[cur.id] ? 'Submitted' : cur.mods.length + ' modules come first',
+      submitCap: () => {
+        if (this.state.cap[cur.id]) { this.flash('Capstone already submitted'); return; }
+        if (doneN(cur) < cur.mods.length) { this.flash('Finish the modules before the capstone'); return; }
+        const cap = Object.assign({}, this.state.cap); cap[cur.id] = true; this.setState({ cap: cap }); this.flash('Capstone submitted');
+      },
+      back: openCourse(cur.id),
+      mods: cur.mods.map((m, i) => ({ n: i + 1, title: m.t, num: modDone(cur, i) ? '✓' : String(i + 1), numCls: modDone(cur, i) ? 'ac-tick' : 'ac-num', meta: m.cards.length + ' topics' + (modDone(cur, i) ? ' · Completed' : ''), open: openMod(cur.id, i) }))
+    } : { mods: [], title: '', desc: '', kicker: '', hours: '', modulesN: 0, doneN: 0, pct: 0, cap: '', action: '', continue: this.go('courses'), certificate: this.go('courses'), certLabel: '', capMark: '', capCls: '', capNote: '', submitCap: () => {}, back: this.go('courses') };
 
-    const Dsrc = LIBRARY[st.docId] || LIBRARY.customer;
-    const doc = { kicker: Dsrc.kicker, title: Dsrc.title, note: Dsrc.note, takeaway: Dsrc.takeaway, sections: (Dsrc.sections || []).map((m) => ({ h: m[0], p: m[1] })), blanks: (Dsrc.blanks || []).map((m) => ({ h: m[0], p: m[1] })), saveLabel: st.saved[st.docId] ? 'Saved to library ✓' : 'Save to library' };
-    const docs = DOC_CARDS.map((d) => ({ title: d.title, desc: d.desc, color: d.color, emoji: d.emoji, tag: d.tag, cta: d.cta, open: (e) => { this.top(e); this.setState({ view: 'doc', docId: d.id }); } }));
+    const mod = cur && cur.mods[st.mod] ? cur.mods[st.mod] : (cur ? cur.mods[0] : { t: '', h: '', cards: [] });
+    const modIndex = cur && cur.mods[st.mod] ? st.mod : 0;
+    const lesson = {
+      kicker: (cur ? cur.code : '') + ' · Module ' + (modIndex + 1) + ' of ' + (cur ? cur.mods.length : 0),
+      title: mod.t, hook: mod.h, note: 'The ideas in this module, before the activity and the summary in the full course.',
+      topics: (mod.cards || []).map((t) => ({ t: t })),
+      markLabel: cur && modDone(cur, modIndex) ? 'Module complete ✓' : 'Mark module complete',
+      mark: () => {
+        if (!cur || modDone(cur, modIndex)) return;
+        const done = Object.assign({}, this.state.done); done[cur.id + '-' + modIndex] = true;
+        this.setState({ done: done, lastId: cur.id });
+        this.flash('Module marked complete');
+      },
+      nextLabel: cur && modIndex + 1 < cur.mods.length ? 'Next module' : 'Back to syllabus',
+      next: cur && modIndex + 1 < cur.mods.length ? openMod(cur.id, modIndex + 1) : openCourse(cur ? cur.id : 'crash')
+    };
+    const leftN = cur ? (cur.mods.length - curDone) + (st.cap[cur.id] ? 0 : 1) : 0;
+    const cert = { ok: !!(cur && complete(cur)), locked: !(cur && complete(cur)), line: cur ? cur.code + ' ' + cur.name : '', meta: cur ? cur.mods.length + ' modules and a capstone · ' + cur.hours : '', left: leftN + (leftN === 1 ? ' requirement still open.' : ' requirements still open.') };
 
-    const expertFilterDefs = [['all', 'All experts'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['setup', 'Legal & setup']];
-    const expertFilters = expertFilterDefs.map((f) => { const on = st.expertFilter === f[0]; return { label: f[1], on, cls: 'ac-filter' + (on ? ' on' : ''), pick: () => this.setState({ expertFilter: f[0] }) }; });
-    const experts = EXPERTS.filter((x) => st.expertFilter === 'all' || x.tag === st.expertFilter).map((x) => {
-      const done = !!st.booked[x.id];
-      return { initials: x.initials, name: x.name, area: x.area, when: x.when, rating: x.rating, cls: 'ac-cta' + (done ? ' done' : ''), label: done ? 'Booked ✓' : 'Book 30 min',
-        book: () => { if (this.state.booked[x.id]) return; const b = Object.assign({}, this.state.booked); b[x.id] = true; this.setState({ booked: b }); this.flash('Session reserved with ' + x.name); } };
+    const last = byId(st.lastId) || coursesRaw[0];
+    const lastPct = last ? pctOf(last) : 0;
+    const resume = last ? Object.assign({
+      kicker: lastPct ? 'Continue learning' : 'Start here',
+      title: last.name, code: last.code, hours: last.hours, where: last.mods.length + ' modules',
+      badge: last.code.replace(' ', '\n'),
+      pct: lastPct, status: lastPct <= 0 ? 'Not started' : complete(last) ? 'Complete' : lastPct + '% complete',
+      action: complete(last) ? 'Review →' : lastPct ? 'Resume →' : 'Start →',
+      open: lastPct ? openCourse(last.id) : openMod(last.id, 0)
+    }, bits(last.stage)) : { kicker: '', title: '', code: '', hours: '', where: '', badge: '', pct: 0, status: '', action: '', open: this.go('courses'), stage: '', stageLabel: '', on1: '', on2: '', on3: '', on4: '' };
+
+    const docFilters = filters([['all', 'All documents'], ['foundations', 'Foundations'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['operations', 'Operations'], ['setup', 'Business setup']], st.docFilter, 'docFilter');
+    const docs = DOCS.filter((d) => (st.docFilter === 'all' || d.slug === st.docFilter) && match(d.title + ' ' + d.desc)).map((d) => Object.assign({ title: d.title, desc: d.desc, topic: d.topic, meta: d.meta, cta: d.kind === 'Checklist' ? 'Open checklist' : 'Read guide', open: (e) => { this.top(e); this.setState({ view: 'doc', docKind: 'guide', docId: d.id }); } }, bits(d.stage)));
+    const shelfFilters = filters([['all', 'All volumes'], ['foundations', 'Foundations'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['operations', 'Operations'], ['setup', 'Business setup']], st.shelfFilter, 'shelfFilter');
+    const initials = (name) => name.split(/[^A-Za-z]+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('');
+    const shelf = SHELF.map((d, i) => ({
+      vol: 'Volume ' + String(i + 1).padStart(2, '0'), title: d.title, desc: d.desc, author: d.author, role: d.role, stat: d.stat || 'Campus Connect Exclusive', exclusive: !!d.exclusive, topic: d.topic, text: d.title + ' ' + d.desc + ' ' + d.author,
+      hasPhoto: !!d.photo, noPhoto: !d.photo, photo: d.photo, initials: initials(d.author),
+      open: (e) => { this.top(e); this.setState({ view: 'doc', docKind: 'volume', docId: d.id }); }
+    })).filter((d) => (st.shelfFilter === 'all' || d.topic === st.shelfFilter) && match(d.text));
+    const stageFilters = filters([['all', 'All levels'], ['idea', 'Idea'], ['launch', 'Launch'], ['growing', 'Growing'], ['scaling', 'Scaling']], st.tplStage, 'tplStage');
+    const tplFilters = filters([['all', 'All categories']].concat(TPL_GROUPS), st.tplGroup, 'tplGroup');
+    const tplItems = TEMPLATE_DATA.filter((t) => (st.tplGroup === 'all' || t.group === st.tplGroup) && (st.tplStage === 'all' || (t.essential || []).indexOf(st.tplStage) !== -1) && match(t.code + ' ' + t.title + ' ' + t.about));
+    const tplGroups = TPL_GROUPS.map((g) => ({
+      name: g[1],
+      items: tplItems.filter((t) => t.group === g[0]).map((t) => Object.assign({
+        code: t.code, title: t.title, desc: t.about, kind: t.format === 'Excel' ? 'Spreadsheet' : 'Document',
+        open: (e) => { this.top(e); this.setState({ view: 'doc', docKind: 'template', docId: t.id }); }
+      }, bits(t.stage)))
+    })).filter((g) => g.items.length);
+
+    const openDoc = (kind, id) => (e) => { this.top(e); this.setState({ view: 'doc', docKind: kind, docId: id }); };
+    let doc = { kicker: '', title: '', note: '', sections: [], blanks: [], takeaway: '', hasTakeaway: false, legal: false, hasAuthor: false, hasPhoto: false, noPhoto: true, photo: '', initials: '', author: '', role: '', saveLabel: '', save: () => {}, back: this.go('documents'), backName: 'Documents', stage: '', stageLabel: '', on1: '', on2: '', on3: '', on4: '' };
+    if (st.docKind === 'guide') {
+      const item = DOCS.find((d) => d.id === st.docId) || DOCS[0];
+      doc = Object.assign(doc, bits(item.stage), { kicker: item.kicker, title: item.title, note: item.note, takeaway: item.takeaway, hasTakeaway: true, sections: item.sections.map((m) => ({ h: m[0], p: m[1] })), blanks: (item.blanks || []).map((m) => ({ h: m[0], p: m[1] })), saveLabel: st.saved[item.id] ? 'Saved to library ✓' : 'Save to library', save: () => { const s = Object.assign({}, this.state.saved); s[item.id] = true; this.setState({ saved: s }); this.flash('Saved to your library'); }, back: this.go('documents'), backName: 'Documents' });
+    } else if (st.docKind === 'volume') {
+      const item = SHELF.find((d) => d.id === st.docId) || SHELF[0];
+      const n = String(SHELF.indexOf(item) + 1).padStart(2, '0');
+      doc = Object.assign(doc, { kicker: (item.exclusive ? 'Campus Connect Exclusive · ' : '') + 'The Founders Shelf · Volume ' + n, title: item.title, note: item.desc, takeaway: item.takeaway, hasTakeaway: true, hasAuthor: true, hasPhoto: !!item.photo, noPhoto: !item.photo, photo: item.photo, initials: initials(item.author), author: item.author, role: item.role, sections: item.sections.map((m) => ({ h: m[0], p: m[1] })), saveLabel: st.saved[item.id] ? 'Saved to library ✓' : 'Save to library', save: () => { const s = Object.assign({}, this.state.saved); s[item.id] = true; this.setState({ saved: s }); this.flash('Saved to your library'); }, back: this.go('shelf'), backName: 'Founders Shelf' });
+    } else if (st.docKind === 'template') {
+      const item = TEMPLATE_DATA.find((t) => t.id === st.docId) || TEMPLATE_DATA[0] || { id: '', code: '', title: '', about: '', format: 'Word', group: '', stage: 'idea' };
+      const group = (TPL_GROUPS.find((g) => g[0] === item.group) || ['', ''])[1];
+      const word = (stage) => ({ idea: 'Essential', launch: 'Essential', growing: 'Useful', scaling: 'Useful' }[stage] || 'Skip for now');
+      doc = Object.assign(doc, bits(item.stage), { kicker: 'Template · ' + group, title: item.title, note: item.about, legal: item.group === 'legal', sections: [{ h: item.code + ' · ' + (item.format === 'Excel' ? 'Excel workbook' : 'Word document'), p: 'In the full Business Hub this downloads as a file you fill in and keep with your business records.' }], blanks: [{ h: 'This stage', p: word(item.stage) + ' while you are at ' + (STAGE_L[item.stage] || 'this stage') + '.' }], saveLabel: 'Download template', save: () => this.flash('Template download opens in the full Business Hub'), back: this.go('templates'), backName: 'Templates' });
+    }
+
+    const EXPERTS = [
+      { id: 'alex', initials: 'AM', name: 'Alex Morgan', area: 'Small Business Strategy', when: 'Today · 2:00 PM', tag: 'strategy', stage: 'growing' },
+      { id: 'jordan', initials: 'JP', name: 'Jordan Patel', area: 'Brand & Marketing', when: 'Tomorrow · 11:30 AM', tag: 'marketing', stage: 'launch' },
+      { id: 'riley', initials: 'RS', name: 'Riley Santos', area: 'Finance & Funding', when: 'Fri · 9:00 AM', tag: 'finance', stage: 'scaling' }
+    ];
+    const expertFilters = filters([['all', 'All experts'], ['marketing', 'Marketing'], ['finance', 'Finance'], ['legal', 'Legal & setup']], st.bookingsOnly ? '' : st.expertFilter, 'expertFilter');
+    const experts = EXPERTS.filter((x) => {
+      if (st.bookingsOnly) return !!st.booked[x.id];
+      return st.expertFilter === 'all' || x.tag === st.expertFilter;
+    }).map((x) => {
+      const booked = !!st.booked[x.id];
+      return Object.assign({ initials: x.initials, name: x.name, area: x.area, when: x.when, cls: 'ac-cta ac-locked' + (booked ? ' done' : ''), label: booked ? 'Booked' : 'Book 30 min', book: () => {} }, bits(x.stage));
     });
+
+    const PEOPLE = [
+      { id: 'samira', name: 'Samira Okafor', desc: 'Supports consumer and community-focused founders across Southern California.', role: 'Angel investor', tag: 'Early-stage', stage: 'launch', photo: '/assets/academy/samira-okafor.jpg', imgCls: '', initials: '' },
+      { id: 'david', name: 'David Chen', desc: 'Former operator who helps founders clarify their offer and find their first 100 customers.', role: 'Growth & strategy', tag: 'Mentor', stage: 'launch', photo: '/assets/academy/david-chen.png', imgCls: 'mid', initials: '' },
+      { id: 'launchpad', name: 'Launchpad Collective', desc: 'A local network connecting student ventures with pilot opportunities and small grants.', role: 'Programs & grants', tag: 'Partner', stage: 'idea', photo: '', imgCls: '', initials: 'LC' }
+    ];
     const people = PEOPLE.map((p) => {
       const done = !!st.intros[p.id];
-      return { name: p.name, desc: p.desc, role: p.role, color: p.color, emoji: p.emoji, tag: p.tag, cls: 'ac-cta' + (done ? ' done' : ''), label: done ? p.done + ' ✓' : p.cta,
-        act: () => { if (this.state.intros[p.id]) return; const i = Object.assign({}, this.state.intros); i[p.id] = true; this.setState({ intros: i }); this.flash(p.done); } };
+      const label = p.id === 'launchpad' ? (done ? 'Connection saved' : 'Learn more') : (done ? 'Requested' : 'Request intro');
+      return Object.assign({ name: p.name, desc: p.desc, role: p.role, tag: p.tag, hasPhoto: !!p.photo, noPhoto: !p.photo, photo: p.photo, imgCls: p.imgCls, initials: p.initials, photoBg: p.photo ? '' : 'background:#1c3148', cls: 'ac-cta ac-locked' + (done ? ' done' : ''), label: label, act: () => {} }, bits(p.stage));
     });
 
+    const FOUNDER_FIELDS = [['name', 'Business name', 'The name people should remember.', false], ['offer', 'What you do', 'One sentence a stranger could repeat.', true], ['customer', 'Who you serve', 'The person and the moment they need you.', true], ['why', 'Why now', 'What changed that makes this the moment.', true], ['traction', 'Traction', 'Sales, customers, reviews, or progress so far.', true], ['need', 'What you need', 'Money, advice, a pilot, or an introduction.', true], ['connection', 'Kind of connection', 'Mentor, angel, partner, grant, or something else.', false]];
+    const founder = st.founder || {};
+    const filled = FOUNDER_FIELDS.filter((f) => String(founder[f[0]] || '').trim()).length;
+    const founderFields = FOUNDER_FIELDS.map((f) => ({
+      label: f[1], help: f[2], value: founder[f[0]] || '', area: f[3], line: !f[3],
+      edit: (e) => { const next = Object.assign({}, this.state.founder); next[f[0]] = e.target.value; this.setState({ founder: next }); }
+    }));
     const bookedCount = Object.keys(st.booked).length;
-    const sessions = 1 + bookedCount;
-    const basicsPct = P.basics;
 
     return {
-      screenH: (this.props && this.props.screenH) ?? '720px',
-      screenRadius: (this.props && this.props.screenRadius) ?? '0',
-      side, mob,
-      v: { home: st.view === 'home', courses: st.view === 'courses', lesson: st.view === 'lesson', documents: st.view === 'documents', doc: st.view === 'doc', office: st.view === 'office', investors: st.view === 'investors', about: st.view === 'about', profile: st.view === 'profile' },
-      goHome: this.go('home'), goCourses: this.go('courses'), goDocuments: this.go('documents'), goOffice: this.go('office'), goAbout: this.go('about'), goProfile: this.go('profile'),
-      openBasics: openLesson('basics'), openMarketing: openLesson('marketing'),
-      openCustomerDoc: (e) => { this.top(e); this.setState({ view: 'doc', docId: 'customer' }); },
-      searchQ: st.searchQ, onSearchQ: (e) => this.setState({ searchQ: e.target.value }),
-      onSearchSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.flash('Searching courses, documents, and people…'); },
+      screenH: (this.props && this.props.screenH) || '720px',
+      screenRadius: (this.props && this.props.screenRadius) || '0',
+      side: side,
+      v: { home: view === 'home', courses: view === 'courses', course: view === 'course', lesson: view === 'lesson', cert: view === 'cert', documents: view === 'documents', shelf: view === 'shelf', templates: view === 'templates', doc: view === 'doc', office: view === 'office', investors: view === 'investors', founder: view === 'founder', about: view === 'about', profile: view === 'profile' },
+      goHome: this.go('home'), goCourses: this.go('courses'), goOffice: this.go('office'), goAbout: this.go('about'), goProfile: this.go('profile'), goInvestors: this.go('investors'), goFounder: this.go('founder'), goTemplates: this.go('templates'),
+      locked: () => {},
+      openMarketing: openCourse('mkt'),
       noNotifs: () => this.flash('No new notifications'),
       editProfile: () => this.flash('Profile editor opened'),
-      inProgress: COURSES.filter((c) => P[c.id] > 0 && P[c.id] < 100).length,
+      showBookings: () => { const n = Object.keys(this.state.booked).length; if (!n) { this.flash('No sessions booked yet'); return; } this.setState({ bookingsOnly: true, expertFilter: 'all' }); this.flash(n === 1 ? '1 session booked' : n + ' sessions booked'); },
+      searchQ: st.searchQ, onSearch: (e) => this.setState({ searchQ: e.target.value }),
+      inProgress: coursesRaw.filter((c) => pctOf(c) > 0 && !complete(c)).length,
       docsReady: 12 + Object.keys(st.saved).length,
-      sessions, sessionWord: sessions === 1 ? 'expert session' : 'expert sessions',
-      basicsPct, remaining: 100 - basicsPct,
-      basicsNote: basicsPct >= 100 ? 'Course complete · 6 modules · 2h 40m' : '8 min left in Module ' + Math.min(6, Math.floor(basicsPct / 16.7) + 1) + ' · 6 modules · 2h 40m',
-      readyNote: basicsPct >= 100 ? 'Foundation complete. Time to book an expert and plan your launch.' : 'Finish one more course to reach your next milestone.',
+      sessions: Math.max(1, bookedCount),
+      overall: overall, remaining: 100 - overall,
+      readyNote: overall === 0 ? 'You have not started a course yet.' : overall === 100 ? 'Every Startup Foundations course is complete.' : 'You are ' + overall + '% through Startup Foundations.',
+      resume: resume,
+      courseFilters: courseFilters, courses: courses, coursesEmpty: courses.length === 0,
+      course: course, lesson: lesson, cert: cert,
+      docFilters: docFilters, docs: docs, docsEmpty: docs.length === 0,
+      shelfFilters: shelfFilters, shelf: shelf, shelfEmpty: shelf.length === 0,
+      stageFilters: stageFilters, tplFilters: tplFilters, tplGroups: tplGroups, tplEmpty: tplGroups.length === 0,
+      doc: doc,
+      expertFilters: expertFilters, experts: experts, expertsEmpty: experts.length === 0,
+      people: people,
+      founderHeadline: st.founderSaved && String(founder.offer || '').trim() ? founder.offer.trim() : 'Make it easy for the right person to say “tell me more.”',
+      founderPct: Math.round(filled / 7 * 100), founderFilled: filled, founderFields: founderFields,
+      saveFounder: (e) => { if (e && e.preventDefault) e.preventDefault(); },
       bookTick: bookedCount ? '✓' : '!', bookTickCls: 'ac-tick' + (bookedCount ? '' : ' pending'),
       healthBook: bookedCount ? 'Expert hour booked' : 'Book your next expert hour',
-      bars: [[30, 'W1', 0], [43, 'W2', 0], [37, 'W3', 0], [61, 'W4', 1], [76, 'W5', 1], [Math.min(100, 90 + Object.keys(st.saved).length * 2 + bookedCount * 3), 'This week', 1]].map((b) => ({ h: b[0], label: b[1], c: b[2] ? '#2458f5' : '#b9c9ff' })),
-      courseFilters, courses, lesson,
-      markComplete: () => {
-        const id = Lc.id; const cur = this.state.progress[id];
-        if (cur >= 100) return;
-        const next = Math.min(100, cur + Lc.step);
-        const pr = Object.assign({}, this.state.progress); pr[id] = next;
-        this.setState({ progress: pr });
-        this.flash(next >= 100 ? 'Course complete — nice work!' : 'Module marked complete');
-      },
-      chat: st.chat.map((m) => ({ text: m.text, cls: 'ac-bubble ' + (m.me ? 'me' : 'ai') })),
-      chatDraft: st.chatDraft, onChatDraft: (e) => this.setState({ chatDraft: e.target.value }),
-      sendChat: (e) => {
-        if (e && e.preventDefault) e.preventDefault();
-        const t = (this.state.chatDraft || '').trim(); if (!t) return;
-        this.setState({ chatDraft: '', chat: this.state.chat.concat([{ me: true, text: t }, { me: false, text: 'That’s a thoughtful question. Start by writing down what you know, then use the guide’s checklist to turn it into one small next action.' }]) });
-      },
-      docs, doc,
-      saveDoc: () => { const s = Object.assign({}, this.state.saved); s[this.state.docId] = true; this.setState({ saved: s }); this.flash('Saved to your library'); },
-      expertFilters, experts, people,
       toast: st.toast
     };
   }

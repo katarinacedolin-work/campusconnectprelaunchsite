@@ -97,7 +97,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #151515;outline-offset:3p
 <div style="padding: 26px 18px 18px; display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; align-items: center; justify-content: space-between">
 <span style="display: flex; align-items: center; gap: 6px"><img src="/assets/campus-connect-logo.png" alt="Campus Connect" style="display: block; height: 22px; width: auto"><span style="color: #B8B8BC; font-weight: 900">·</span><img src="/assets/sdsu-logo.png" alt="SDSU" style="display: block; height: 22px; width: auto"></span>
-<span style="display: flex; width: 34px; height: 34px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 11px; font-weight: 600; align-items: center; justify-content: center">KC</span>
+<span style="display: flex; width: 34px; height: 34px; border-radius: 50%; background: #3157FF; color: #FAFAF7; font-size: 11px; font-weight: 600; align-items: center; justify-content: center">JS</span>
 </div>
 <p style="margin: 0; padding: 16px; border-radius: 18px; background: #3157FF; color: #FAFAF7; font-family: 'Avenir Next', 'Trebuchet MS', Inter, sans-serif; font-weight: 800; font-size: 22px; line-height: 1.05; letter-spacing: -0.04em"><span style="display: block; margin-bottom: 6px; font-family: Inter, sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #F6C945">The student marketplace</span>Someone on campus does that.</p>
 <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E6E6DF; color: #6B6B66; font-size: 13px">

@@ -68,42 +68,42 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <div style="flex: 1 1 520px; min-width: 0">
 <p style="margin: 0 0 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">Campus Connect Academy</p>
 <h1 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(54px, 7.6vw, 120px); line-height: 0.9; letter-spacing: -0.06em">Learn to scale what you started.</h1>
-<p style="margin: 34px 0 0; max-width: 520px; font-size: 18px; color: #C2C2BD">Workshops, playbooks and expert sessions that take student businesses from first sale to a company that grows beyond its founder.</p>
+<p style="margin: 34px 0 0; max-width: 520px; font-size: 18px; color: #C2C2BD">Startup Foundations courses, a library of guides and templates, and experts and investors when you need a next step.</p>
 </div>
 
 <div style="flex: 1 1 460px; min-width: 0; display: flex; justify-content: center">
-<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Academy demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 30px 0 10px; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
+<button type="button" class="cc-laptop-btn" onClick="{{ openDemo }}" onPointerMove="{{ heroMove }}" onPointerLeave="{{ heroLeave }}" aria-label="Open the interactive Business Hub demo" style="width: 100%; min-width: 0; display: flex; justify-content: center; padding: 30px 0 10px; border: 0; background: transparent; perspective: 1600px; cursor: pointer; font: inherit; color: inherit">
 <span class="cc-laptop" style="width: 620px; max-width: 100%">
 <span style="display: block; padding: 12px; border-radius: 22px; background: #22232A; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 120px rgba(0,0,0,0.6)">
-<span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F8F8F7; color: #101116; text-align: left; font-family: 'DM Sans', sans-serif">
+<span style="position: relative; display: flex; height: 350px; border-radius: 12px; overflow: hidden; background: #F3F4F6; color: #1c2128; text-align: left; font-family: Inter, sans-serif">
 <span style="flex: 0 0 112px; display: flex; flex-direction: column; gap: 7px; padding: 14px 10px; background: #FFFFFF; border-right: 1px solid #E6E7EB">
-<span style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px"><span style="display: flex; gap: 2px"><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: skewY(-8deg)"></span><span style="width: 9px; height: 13px; border-radius: 4px 7px 7px 4px; background: #2458F5; transform: scaleX(-1) skewY(-8deg)"></span></span><span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 9px; line-height: .9; letter-spacing: -0.5px">campus<br>connect<span style="display: block; color: #DF7F7B; font-size: 6px; margin-top: 2px">ACADEMY</span></span></span>
-<span style="padding: 5px 7px; border-radius: 7px; background: #EEF1FF; color: #2458F5; font-size: 9px; font-weight: 700">Home</span>
+<span style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px"><span style="width: 16px; height: 16px; border-radius: 4px; background: #15253d; color: #fff; font-size: 7px; font-weight: 600; display: grid; place-items: center; font-family: Georgia, serif">CC</span><span style="font-weight: 600; font-size: 8px; line-height: 1.15">Campus Connect<span style="display: block; color: #8b939e; font-size: 6px; font-weight: 600; letter-spacing: .1em; margin-top: 2px">BUSINESS HUB</span></span></span>
+<span style="padding: 4px 7px; border-radius: 6px; background: #f3f6fa; color: #15253d; box-shadow: inset 0 0 0 1px #1a4480; font-size: 9px; font-weight: 600">Home</span>
 <span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">LEARN</span>
-<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Courses</span>
-<span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Library</span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A414C; font-weight: 500">Courses <span style="float: right; color: #5f6874">8</span></span>
+<span style="padding: 2px 7px; font-size: 9px; color: #3A414C; font-weight: 500">Library <span style="float: right; color: #5f6874">99</span></span>
 <span style="padding: 0 7px; font-size: 7px; font-weight: 800; color: #9AA0AA; letter-spacing: .08em">CONNECT</span>
 <span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Experts</span>
 <span style="padding: 2px 7px; font-size: 9px; color: #3A3F49; font-weight: 600">Investors</span>
-<span style="margin-top: auto; display: flex; align-items: center; gap: 5px"><span style="width: 20px; height: 20px; border-radius: 50%; background: #DF7F7B; color: #fff; font-size: 7px; font-weight: 800; display: grid; place-items: center">KC</span><span style="font-size: 8px; font-weight: 700">Katarina C.</span></span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 5px"><span style="width: 20px; height: 20px; border-radius: 50%; background: #15253d; color: #fff; font-size: 7px; font-weight: 600; display: grid; place-items: center">JS</span><span style="font-size: 8px; font-weight: 700">John Smith</span></span>
 </span>
 <span style="flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px">
-<span style="display: block; height: 18px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E6E7EB"></span>
-<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #2458F5">GOOD MORNING, KATARINA</span>
-<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 17px; line-height: 1.05; letter-spacing: -0.8px">Build the business<br>you came here to start.</span>
+<span style="font-size: 7px; font-weight: 600; letter-spacing: .12em; color: #6a7380">GOOD MORNING, JOHN</span>
+<span style="font-family: Georgia, serif; font-weight: 600; font-size: 16px; line-height: 1.15">Build the business<br>you came here to start.</span>
 <span style="display: flex; gap: 8px; flex: 1; min-height: 0">
-<span style="flex: 1.4; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 14px; background: linear-gradient(145deg, #4D78FF, #2458F5 55%, #1D4FE8); color: #fff">
-<span style="font-size: 7px; font-weight: 800; letter-spacing: .12em; color: #D7E2FF">CONTINUE LEARNING</span>
-<span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; line-height: 1.1">Business Basics Bootcamp</span>
-<span style="margin-top: auto; display: flex; align-items: center; gap: 6px"><span style="flex: 1; height: 5px; border-radius: 9px; background: rgba(255,255,255,.3); overflow: hidden"><span style="display: block; width: 68%; height: 100%; background: #fff"></span></span><span style="font-size: 9px; font-weight: 700">68%</span></span>
+<span style="flex: 1.4; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 12px; background: #15253d; color: #f4f6fa">
+<span style="font-size: 7px; font-weight: 600; letter-spacing: .12em; color: #8ea0bf">START HERE</span>
+<span style="font-family: Georgia, serif; font-weight: 600; font-size: 13px; line-height: 1.15">Business Crash Course</span>
+<span style="font-size: 8px; color: #b7c2d4">SF 101 · 8 modules · 3.5 hours</span>
+<span style="margin-top: auto; display: flex; align-items: center; gap: 6px"><span style="flex: 1; height: 3px; border-radius: 9px; background: rgba(255,255,255,.12)"></span><span style="font-size: 9px; font-weight: 600">0%</span></span>
 </span>
 <span style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; background: #fff; border: 1px solid #E6E7EB">
-<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: conic-gradient(#2458F5 0 68%, #EDF0F4 68% 100%)"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 11px">68%</span></span>
-<span style="font-size: 8px; font-weight: 700">Launch readiness</span>
+<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #e7eaef"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; font-family: Georgia, serif; font-weight: 600; font-size: 11px">0%</span></span>
+<span style="font-size: 8px; font-weight: 600">Course progress</span>
 </span>
 </span>
 </span>
-<span class="cc-tap cc-tap-ink" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1px solid rgba(250,250,247,0.16); font-size: 13px; font-weight: 700; white-space: nowrap"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Click to open the Academy</span>
+<span class="cc-tap cc-tap-ink" aria-hidden="true" style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #151515; color: #FAFAF7; border: 1px solid rgba(250,250,247,0.16); font-size: 13px; font-weight: 700; white-space: nowrap"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>Open the Business Hub</span>
 </span>
 </span>
 <span style="display: block; height: 18px; margin: 0 -34px; border-radius: 4px 4px 22px 22px; background: linear-gradient(180deg, #4A4B53, #26272D); box-shadow: 0 30px 50px rgba(0,0,0,0.55)"></span>
@@ -135,11 +135,11 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px)">
 <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 60px; margin-bottom: 44px">
 <div style="flex: 1 1 560px; min-width: 0">
-<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">Three tracks</p>
+<p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #3157FF">Four stages</p>
 <h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: 0.95; letter-spacing: -0.05em">Where is your business right now?</h2>
 </div>
 <div role="group" aria-label="Choose your stage" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-radius: 999px; background: #EFEFEA">
-<sc-for list="{{ stages }}" as="s" hint-placeholder-count="3">
+<sc-for list="{{ stages }}" as="s" hint-placeholder-count="4">
 <button type="button" aria-pressed="{{ s.selected }}" onClick="{{ s.pick }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 22px; border: 0; border-radius: 999px; background: {{ s.bg }}; color: {{ s.fg }}; font-weight: 600; font-size: 15px; box-shadow: {{ s.shadow }}; transition: background .25s, color .25s">
 <span style="width: 10px; height: 10px; border-radius: 50%; background: {{ s.dot }}"></span>{{ s.label }}</button>
 </sc-for>
@@ -177,7 +177,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <div style="flex: 1 1 380px; min-width: 0">
 <p style="margin: 0 0 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #67C7FF">Try it</p>
 <h2 style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(40px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.05em">Are you ready to scale?</h2>
-<p style="margin: 22px 0 0; max-width: 420px; font-size: 17px; color: #B9B9B4">Check off what's already true for your business. The Academy fills in the rest.</p>
+<p style="margin: 22px 0 0; max-width: 420px; font-size: 17px; color: #B9B9B4">Check off what's already true for your business. Startup Foundations fills in the rest.</p>
 <div style="margin-top: 40px">
 <p style="margin: 0; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(72px, 8vw, 120px); line-height: 1; letter-spacing: -0.06em; color: {{ readyColor }}">{{ readyPct }}%</p>
 <div aria-hidden="true" style="margin-top: 16px; height: 10px; border-radius: 999px; background: rgba(250,250,247,0.12); overflow: hidden"><div style="width: {{ readyPct }}%; height: 100%; border-radius: 999px; background: {{ readyColor }}; transition: width .5s cubic-bezier(.2,.7,.2,1), background .4s"></div></div>
@@ -202,7 +202,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 <div class="cc-zoom" style="width: 1100px; max-width: 100%; box-sizing: border-box; border-radius: 20px; overflow: hidden; background: #1A1B20; border: 1px solid rgba(250,250,247,0.14); box-shadow: 0 60px 140px rgba(0,0,0,0.6)">
 <div aria-hidden="true" style="display: flex; align-items: center; gap: 14px; height: 42px; padding: 0 16px">
 <span style="display: flex; gap: 7px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FF6B6B"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #F6C945"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #5BD68A"></span></span>
-<span style="flex: 1; display: flex; justify-content: center"><span style="padding: 5px 16px; border-radius: 999px; background: rgba(250,250,247,0.07); font-size: 12px; color: #B9B9B4">campus connect · academy demo</span></span>
+<span style="flex: 1; display: flex; justify-content: center"><span style="padding: 5px 16px; border-radius: 999px; background: rgba(250,250,247,0.07); font-size: 12px; color: #B9B9B4">campus connect · business hub</span></span>
 <span style="width: 50px"></span>
 </div>
 <dc-import name="AcademyApp" screen-h="min(700px, calc(100vh - 170px))" screen-radius="0" hint-size="100%,700px"></dc-import>
@@ -218,7 +218,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #67C7FF;outline-offset:3p
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { stage: 1, checks: { 0: true, 4: true }, demoOpen: false };
+    this.state = { stage: 0, checks: { 0: true, 4: true }, demoOpen: false };
   }
   setTilt(e, maxX, maxY, hero) {
     const src = e.currentTarget;
@@ -255,15 +255,18 @@ class Component extends DCLogic {
     const cols = colDefs.map((c, i) => Object.assign({}, c, { x: -230 + i * 96, y: -36 + (i % 2) * 10, delay: (0.15 + i * 0.14).toFixed(2) }));
 
     const trackDefs = [
-      { id: 'launch', label: 'Launch', dot: '#FF6B6B', bg: '#FF6B6B', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#FF6B6B', accentFg: '#151515',
-        headline: 'From idea to first customers.', desc: 'For founders with an idea or a brand-new business who want to prove people will pay.', outcome: 'A live business with paying customers',
-        modules: [['Open your storefront', 'Launch on the campus marketplace from day one, before everything is figured out.'], ['Validate demand', 'Use real buyers and real orders to learn what people want.'], ['Price your offer', 'Set prices that cover your time and costs.'], ['Land your first 10 customers', 'Simple outreach that works on a campus.']] },
-      { id: 'grow', label: 'Grow', dot: '#B28CFF', bg: '#B28CFF', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#B28CFF', accentFg: '#151515',
-        headline: 'From first customers to steady sales.', desc: 'For founders with traction who want growth that doesn’t depend on luck or late nights.', outcome: 'Predictable, growing monthly sales',
-        modules: [['Marketing on a student budget', 'Content, referrals and partnerships that compound.'], ['Turn buyers into regulars', 'Reviews, follow-ups and repeat business.'], ['Know your numbers', 'Margins, cash flow and what to track weekly.'], ['Systems that save time', 'Booking, fulfillment and templates you can reuse.']] },
-      { id: 'scale', label: 'Scale', dot: '#3157FF', bg: '#3157FF', fg: '#FAFAF7', panel: 'rgba(14,15,18,0.22)', accent: '#3157FF', accentFg: '#FAFAF7',
-        headline: 'From side project to real company.', desc: 'For founders ready to grow beyond themselves — with a team, structure and capital.', outcome: 'A business that grows beyond you',
-        modules: [['Hire your first team', 'Find, pay and lead your first helpers or hires.'], ['Operations & delegation', 'Document how things run so others can run them.'], ['Legal structure & contracts', 'Form the business properly and protect it.'], ['Raise your first capital', 'Grants, competitions and pitching investors.']] }
+      { id: 'idea', label: 'Idea', dot: '#F15A9C', bg: '#F15A9C', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#F15A9C', accentFg: '#151515',
+        headline: 'Turn a guess into a foundation.', desc: 'For founders who have an idea and need to see whether people will pay, and what “official” actually means.', outcome: 'A launch plan and a structure you understand',
+        modules: [['SF 101 · Business Crash Course', 'The whole startup journey in eight modules: idea, marketing, money, operations, sales, setup, risk, and funding.'], ['SF 160 · Setting Up Your Business', 'Structure, registration, licenses, taxes, and the records that protect you.']] },
+      { id: 'launch', label: 'Launch', dot: '#7B4DFF', bg: '#7B4DFF', fg: '#FAFAF7', panel: 'rgba(14,15,18,0.22)', accent: '#7B4DFF', accentFg: '#FAFAF7',
+        headline: 'Get the offer, the price, and the risk in writing.', desc: 'For founders ready to put a customer, a number, and a backup plan on the page.', outcome: 'A message, a price, and a risk plan',
+        modules: [['SF 110 · Marketing', 'Find your people, build a brand they recognize, and turn scrolls into sales.'], ['SF 120 · Finance', 'Profit, cash flow, budgets, and the metrics that tell you if it is working.'], ['SF 150 · Business Risk Basics', 'Spot what could go wrong and make a plan before it is a crisis.']] },
+      { id: 'growing', label: 'Growing', dot: '#3B82F6', bg: '#3B82F6', fg: '#FAFAF7', panel: 'rgba(14,15,18,0.22)', accent: '#3B82F6', accentFg: '#FAFAF7',
+        headline: 'Build the engine that keeps the promise.', desc: 'For founders with customers who need delivery, relationships, and a repeatable way to grow.', outcome: 'Operations and a growth engine',
+        modules: [['SF 130 · Operations', 'Processes, products, tools, and the systems that let you grow without chaos.'], ['SF 140 · Business Development', 'Find opportunities, close deals, and turn partnerships into repeatable growth.']] },
+      { id: 'scaling', label: 'Scaling', dot: '#22C55E', bg: '#22C55E', fg: '#151515', panel: 'rgba(250,250,247,0.55)', accent: '#22C55E', accentFg: '#151515',
+        headline: 'Raise money without guessing at the terms.', desc: 'For founders deciding whether outside capital helps, and how to read what they are signing.', outcome: 'A funding plan you can explain',
+        modules: [['SF 170 · Investors and Funding', 'Pick a source, understand the terms, vet investors, and spot predatory deals.']] }
     ];
     const si = st.stage == null ? 1 : st.stage;
     const stages = trackDefs.map((t, i) => {
@@ -296,14 +299,14 @@ class Component extends DCLogic {
     });
     const done = checks.filter((c) => c.on).length;
     const readyPct = Math.round((done / checkDefs.length) * 100);
-    const readyNote = done <= 2 ? 'Start with the Launch track.' : done <= 4 ? 'You’re ready for the Grow track.' : 'You’re ready for the Scale track.';
-    const readyColor = done <= 2 ? '#FF6B6B' : done <= 4 ? '#B28CFF' : '#67C7FF';
+    const readyNote = done <= 1 ? 'Start with the Idea stage.' : done <= 3 ? 'You’re ready for the Launch stage.' : done <= 5 ? 'You’re ready for the Growing stage.' : 'You’re ready for the Scaling stage.';
+    const readyColor = done <= 1 ? '#F15A9C' : done <= 3 ? '#7B4DFF' : done <= 5 ? '#3B82F6' : '#22C55E';
 
     const support = [
-      { color: '#3157FF', title: 'A campus storefront', body: 'A verified store on the marketplace, with bookings, orders, tickets and reviews built in.' },
-      { color: '#B28CFF', title: 'Founder curriculum', body: 'Academy courses on pricing, marketing, legal basics and money, applied to the real business.' },
+      { color: '#1A4480', title: 'Startup Foundations', body: 'Eight courses, from the crash course through funding, each with a syllabus and a capstone.' },
+      { color: '#7B4DFF', title: 'A business library', body: 'Guides, the Founders Shelf, and 84 templates for planning, money, customers, and legal basics.' },
       { color: '#67C7FF', title: 'Expert office hours', body: 'One-on-one time with marketing experts, startup operators and industry mentors.' },
-      { color: '#F6C945', title: 'Investor access', body: 'A founder and business profile investors can browse, and one-on-one calls when they want to meet.' }
+      { color: '#F6C945', title: 'Investor access', body: 'A founder profile mentors and early funders can read, and a way to request an introduction.' }
     ];
     return {
       support,
